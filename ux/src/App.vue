@@ -1,18 +1,15 @@
 <template>
-<div id="app" style="display: flex;justify-content:center" >
-<!--  <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">-->
-<!--    <el-menu-item index="1" v-show="!(path ==='/login'||'/'||'register')"><router-link to="/login" style="display:block;height:inherit">登录</router-link></el-menu-item>-->
-<!--    <el-menu-item index="2" v-show="!(path ==='/login'||'/'||'register')"><router-link to="/register" style="display:block;height:inherit">注册</router-link></el-menu-item>-->
+  <div id="app">
     <router-view/>
-<!--  </el-menu>-->
-</div>
+<!--  <el-image :src="require('@/assets/peach.jpg')"></el-image>-->
+  </div>
 </template>
 
 <script>
   import product from "./components/product";
   import admin from "./components/admin";
   import change from "./components/change";
-  import login from "./components/login";
+  import login from "./views/login";
   import page1 from "./components/page1";
   import register from "./components/register";
 export default {
@@ -38,15 +35,16 @@ export default {
 </script>
 
 <style>
-/*#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}*/
+*{
+  margin: 0;
+  padding: 0;
+}
 a{
   text-decoration:none;
+}
+body{
+  background:url("assets/peach.jpg") repeat fixed;
+  background-size: 30%;
+  /*opacity: 0.8;*/
 }
 </style>

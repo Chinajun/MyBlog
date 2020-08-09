@@ -12,9 +12,10 @@ Vue.use(VueSession);
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies);
 import Vuex from 'vuex'
-Vue.use(Vuex)
+Vue.use(Vuex);
 import store from './store'
 Vue.config.productionTip = false;
+import 'font-awesome/css/font-awesome.css' //引用fa
 new Vue({
   el: '#app',
   router,

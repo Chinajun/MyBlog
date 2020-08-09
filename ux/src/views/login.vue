@@ -1,29 +1,40 @@
 <template>
   <div>
-    <el-card class="box-card" style="margin:100px auto">
-        <div slot="header" class="clearfix">
-            <span>论坛</span>
+    <cyj-header></cyj-header>
+    <div class="loginBox">
+      <el-card class="box-card-login">
+        <div slot="header">
+          <span>论坛</span>
         </div>
         <div class="text item">
-            <el-form ref="form" :model="form" label-width="80px">
+          <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="用户名">
-                <el-input v-model="form.username" type="text"></el-input>
+              <el-input v-model="form.username" type="text"></el-input>
             </el-form-item>
             <el-form-item label="密码">
-                <el-input v-model="form.password" type="password"></el-input>
+              <el-input v-model="form.password" type="password"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="submit" @click="onSubmit">登录</el-button>
             </el-form-item>
-        </el-form>
+          </el-form>
         </div>
-    </el-card>
+      </el-card>
+    </div>
+    <cyj-footer></cyj-footer>
   </div>
 </template>
 <script>
-  import axios from 'axios'
+  import axios from 'axios';
+  import header from "../components/header";
+  import footer from "../components/footer";
+
   export default {
     name:'login',
+    components:{
+      'cyj-header':header,
+      'cyj-footer':footer
+    },
     data :function() {
       return {
         form:{
@@ -63,6 +74,9 @@
   }
 </script>
 <style>
+  .loginBox{
+    padding-top: 200px;
+  }
   .text {
     font-size: 14px;
   }
@@ -71,17 +85,9 @@
     margin-bottom: 18px;
   }
 
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-  .clearfix:after {
-    clear: both
-  }
-
-  .box-card {
+  .box-card-login {
     width: 480px;
+    margin: 0 auto;
   }
   a{
     text-decoration:none;

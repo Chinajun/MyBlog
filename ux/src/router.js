@@ -1,30 +1,20 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
-import login  from './components/login.vue';
-import register  from './components/register.vue';
-import page1 from './components/page1.vue';
-import admin from './components/admin.vue';
-import change from './components/change.vue';
-import product from './components/product.vue';
-import vuex from "./components/vuex";
+import home from "./views/home";
+import note from "./views/note";
+import message from "./views/message";
+import about from "./views/about";
+import login from "./views/login"
 
-
-//定义routes路由的集合，数组类型
 const routes=[
-    //单个路由均为对象类型，path代表的是路径，component代表组件
-    {path:'/login',component:login},
-    {path:"/register",component:register},
-    //可以配置重定向
-    // {path:'',redirect:"login"},
-    //或者重新写个路径为空的路由
-    // {path:"",component:login},
-    {path:'/page1',component:page1,name:'page1'},
-    {path:'/admin',component:admin},
-    {path:'/change',component:change},
-    {path:'/product',component:product},
-    {path:"",component:login},
-    {path:"/vuex",component:vuex},
+    {path:"",component:home},
+    {path:"/home",component:home,name:home},//主页
+    {path:"/note",component:note,name:note},//文章-笔记
+    // {path:"/daily",component:daily,name:daily},//文章-日常
+    {path:"/message",component:message,name:message},//留言板
+    {path:"/about",component:about,name:about},//关于我
+    {path:"/login",component:login,name:login},//登录
 ];
 
 //实例化VueRouter并将routes添加进去
