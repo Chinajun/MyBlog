@@ -4,7 +4,7 @@
     <div class="loginBox">
       <el-card class="box-card-login">
         <div slot="header">
-          <span>论坛</span>
+          <span>登录</span>
         </div>
         <div class="text item">
           <el-form ref="form" :model="form" label-width="80px">

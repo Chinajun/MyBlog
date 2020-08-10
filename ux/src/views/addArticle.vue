@@ -1,10 +1,11 @@
+<!-- 发表文章界面 -->
 <template>
   <div>
     <cyj-header></cyj-header>
     <div class="bodyBox">
       <el-row>
         <el-col :sm="24" :md="16">
-          <cyj-article :isNote=true></cyj-article>
+          <cyj-add></cyj-add>
         </el-col>
         <el-col :sm="24" :md="8" >
           <cyj-right></cyj-right>
@@ -16,15 +17,23 @@
 </template>
 <script>
   import header from '../components/header.vue';
-  import article from "../components/article";
   import right from "../components/right";
   import footer from "../components/footer";
+  import add from "../components/add";
   export default {
     components:{
       'cyj-header':header,
       'cyj-right':right,
       'cyj-footer':footer,
-      'cyj-article':article
+      'cyj-add':add
+    },
+    data(){
+      return {
+
+      }
+    },
+    methods:{
+
     }
   }
 </script>

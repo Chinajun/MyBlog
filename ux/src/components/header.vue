@@ -17,11 +17,11 @@
             <div class="userBox">
               <!-- 未登录 -->
               <div v-show="!loginStatus">
-                <a @click="toLogin()">登录</a>  |  <a>注册</a>
+                <a @click="toLogin()">登录</a>  |  <a @click="toRegister">注册</a>
               </div>
               <!-- 已登录 -->
               <div v-show="loginStatus">
-                <a>个人中心</a>
+                <a>个人中心</a>  |  <a>退出登录</a>
               </div>
             </div>
           </el-menu>
@@ -44,6 +44,9 @@ export default {
     },
     toLogin(){
       this.$router.push('login');
+    },
+    toRegister(){
+      this.$router.push('register');
     }
   }
 }

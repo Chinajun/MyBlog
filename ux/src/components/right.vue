@@ -112,7 +112,4 @@
   .rightBox-2 .users .item{
     margin: 10px 15px;
   }
-  .box-card{
-    margin: 50px 100px;
-  }
 </style>

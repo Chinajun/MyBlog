@@ -13,6 +13,14 @@
 </template>
 <script></script>
 <style>
+  .box-card{
+    margin: 50px 100px;
+  }
+  .box-card:hover{
+    box-shadow: 0px 1rem 2rem 0px rgba(48, 55, 66, 0.15);
+    transform: translate(0,-5px);
+    transition-delay: 0s !important;
+  }
   .about-img{
     width: 100%;
     margin-bottom: 20px;

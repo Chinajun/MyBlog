@@ -5,7 +5,7 @@
       <el-card class="box-card">
         <div slot="header">
           <span>{{item.name}}</span>
-          <el-button style="float: right; padding: 3px 0" type="text">查看详情</el-button>
+          <el-button style="float: right; padding: 3px 0" type="text" @click="toDetail">查看详情</el-button>
         </div>
         <div v-for="o in 4" :key="o" class="text item">
           {{'列表内容 ' + o }}
@@ -32,7 +32,9 @@
       }
     },
     methods:{
-
+      toDetail(){
+        this.$router.push("articleDetail")
+      }
     }
   }
 </script>

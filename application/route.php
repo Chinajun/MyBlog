@@ -18,3 +18,5 @@ Route::post('product/getProduct','product/Product/GetProduct');
 Route::post('product/deleteProduct','product/Product/DeleteProduct');
 Route::post('product/readProduct','product/Product/ReadProduct');
 Route::post('product/findProduct','product/Product/FindProduct');
+
+Route::post('blog/register','blog/User/register');

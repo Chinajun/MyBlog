@@ -11,7 +11,7 @@
   import change from "./components/change";
   import login from "./views/login";
   import page1 from "./components/page1";
-  import register from "./components/register";
+  import register from "./views/register";
 export default {
   name: 'App',
   comments:{

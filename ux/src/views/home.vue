@@ -42,7 +42,4 @@
   .bodyBox{
     padding-top: 100px;
   }
-  .test{
-    background-color: #8cc5ff;
-  }
 </style>
