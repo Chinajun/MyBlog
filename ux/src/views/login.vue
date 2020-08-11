@@ -7,11 +7,11 @@
           <span>登录</span>
         </div>
         <div class="text item">
-          <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="用户名">
-              <el-input v-model="form.username" type="text"></el-input>
+          <el-form ref="form" :model="form" label-width="80px" :rules="loginRules">
+            <el-form-item label="手机号" prop="phone">
+              <el-input v-model="form.phone" type="text"></el-input>
             </el-form-item>
-            <el-form-item label="密码">
+            <el-form-item label="密码" prop="password">
               <el-input v-model="form.password" type="password"></el-input>
             </el-form-item>
             <el-form-item>
@@ -38,15 +38,25 @@
     data :function() {
       return {
         form:{
-          username : "",
+          phone : "",
           password : ""
+        },
+        loginRules:{
+          password: [
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
+          ],
+          phone: [
+            { required: true, message: '请输入手机号', trigger: 'blur' },
+            { min: 11, max: 11, message: '手机号格式错误', trigger: 'blur' }
+          ]
         }
       }
     },
     methods: {
       onSubmit() {
-        axios.post("/api/register/login", {
-          username: this.form.username,
+        axios.post("/api/blog/login", {
+          phone: this.form.phone,
           password: this.form.password
         }).then((response) => {
           if (response.data.code === 0) {//登陆成功
@@ -54,12 +64,8 @@
               message: response.data.msg,
               type: 'success'
             });
-            this.$router.replace({//repalce:没有页面记录，无法返回上一页
-              name: 'page1',
-              params: {
-                username: this.form.username
-              }
-            });
+            this.$cookies.set("username",response.data.username);
+            this.$router.replace('home');
           } else {//登陆失败
             this.$message({
               message: response.data.msg,

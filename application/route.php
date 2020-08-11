@@ -20,3 +20,5 @@ Route::post('product/readProduct','product/Product/ReadProduct');
 Route::post('product/findProduct','product/Product/FindProduct');
 
 Route::post('blog/register','blog/User/register');
+Route::post('blog/validateUser','blog/User/validateUser');
+Route::post('blog/login','blog/User/login');

@@ -21,7 +21,7 @@
               </div>
               <!-- 已登录 -->
               <div v-show="loginStatus">
-                <a>个人中心</a>  |  <a>退出登录</a>
+                <a>个人中心</a>  |  <a @click="logout">退出登录</a>
               </div>
             </div>
           </el-menu>
@@ -38,7 +38,16 @@ export default {
       loginStatus:false
     }
   },
+  mounted:function(){
+    this.isLogin();
+  },
   methods:{
+    // 判断登陆情况
+    isLogin(){
+      if(this.$cookies.get("username")){
+        this.loginStatus = true;
+      }
+    },
     handleSelect(key, keyPath){
       // console.log(key, keyPath);
     },
@@ -47,6 +56,11 @@ export default {
     },
     toRegister(){
       this.$router.push('register');
+    },
+    logout(){
+      this.$cookies.remove("username");
+      this.$router.go(0);
+      // this.loginStatus = false;
     }
   }
 }

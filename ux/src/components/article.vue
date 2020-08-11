@@ -56,7 +56,14 @@
         this.$router.push("articleDetail");
       },
       addArticle(){
-        this.$router.push('addArticle');
+        if(this.$cookies.get("username")){
+          this.$router.push('addArticle');
+        }else{
+          this.$message({
+            message: '登陆后才能发表文章',
+            type: 'error'
+          });
+        }
       }
     }
   }

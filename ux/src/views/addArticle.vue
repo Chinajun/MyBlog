@@ -1,6 +1,6 @@
 <!-- 发表文章界面 -->
 <template>
-  <div>
+  <div v-show="loginStatus">
     <cyj-header></cyj-header>
     <div class="bodyBox">
       <el-row>
@@ -29,11 +29,19 @@
     },
     data(){
       return {
-
+        loginStatus:false
       }
     },
+    mounted:function(){
+      this.isLogin();
+    },
     methods:{
-
+      // 判断登陆情况
+      isLogin(){
+        if(this.$cookies.get("username")){
+          this.loginStatus = true;
+        }
+      },
     }
   }
 </script>

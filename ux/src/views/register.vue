@@ -40,13 +40,6 @@
         'cyj-footer':footer
       },
         data :function() {
-          // const validateUsername = (rule, value, callback) => {
-          //   if (value.length == 0) {
-          //     callback(new Error('请输入用户名'))
-          //   } else {
-          //     callback()
-          //   }
-          // }
           var validatePass = (rule, value, callback) => {
             if (value === '') {
               callback(new Error('请再次输入密码'));
@@ -54,6 +47,48 @@
               callback(new Error('两次输入密码不一致!'));
             } else {
               callback();
+            }
+          };
+          var validateUsername = (rule, value, callback) => {
+            if (value === '') {
+              callback(new Error('请输入用户名'));
+            } else if (value.length>6||value.length<2) {
+              callback(new Error('长度为2-6个字符'));
+            } else {
+              axios.post("/api/blog/validateUser",{
+                type: 'username',
+                value: value
+              }).then((response)=> {
+                console.log(response.data);
+                if (response.data.code===0){
+                  callback(new Error('该用户名已被注册'));
+                }else{
+                  callback();
+                }
+              }).catch(function(error) {
+                console.log(error);
+              });
+            }
+          };
+          var validatePhone = (rule, value, callback) => {
+            if (value === '') {
+              callback(new Error('请输入手机号'));
+            } else if (value.length!==11) {
+              callback(new Error('手机号格式错误'));
+            } else {
+              axios.post("/api/blog/validateUser",{
+                type: 'phone',
+                value: value
+              }).then((response)=> {
+                console.log(response.data);
+                if (response.data.code===0){
+                  callback(new Error('该手机号已被注册'));
+                }else{
+                  callback();
+                }
+              }).catch(function(error) {
+                console.log(error);
+              });
             }
           };
             return {
@@ -66,16 +101,18 @@
               },
               registerRules:{
                 username: [
-                  { required: true, message: '请输入用户名', trigger: 'blur' },
-                  { min: 2, max: 6, message: '长度在 2 到 6 个字符', trigger: 'blur' }
+                  // { required: true, message: '请输入用户名', trigger: 'blur' },
+                  // { min: 2, max: 6, message: '长度在 2 到 6 个字符', trigger: 'blur' },
+                  { required: true,trigger: 'blur', validator: validateUsername }
                 ],
                 password: [
                   { required: true, message: '请输入密码', trigger: 'blur' },
                   { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
                 ],
                 phone: [
-                  { required: true, message: '请输入手机号', trigger: 'blur' },
-                  { min: 11, max: 11, message: '手机号格式错误', trigger: 'blur' }
+                  // { required: true, message: '请输入手机号', trigger: 'blur' },
+                  // { min: 11, max: 11, message: '手机号格式错误', trigger: 'blur' },
+                  { required: true,trigger: 'blur', validator: validatePhone }
                 ],
                 checkPass: [
                   { required: true, trigger: 'blur', validator: validatePass }
@@ -87,20 +124,6 @@
 
       },
       methods: {
-        // getMsg(){
-        //   axios.post("/register/getMsg").then((response) => {
-        //     console.log(response.data.code);
-        //     if(response.data.code!==1){
-        //       this.$router.go(-1);
-        //       this.$message({
-        //         message: response.data.msg,
-        //         type: 'error'
-        //       });
-        //     }
-        //   }).catch(function (error) {
-        //     console.log(error);
-        //   });
-        // },
         onSubmit() {
           this.$refs.registerForm.validate(valid => {
             if (valid) {
