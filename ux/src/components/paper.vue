@@ -4,41 +4,60 @@
     <div v-for="(item,index) in paperList" :key="index">
       <el-card class="box-card">
         <div slot="header">
-          <span>{{item.name}}</span>
-          <el-button style="float: right; padding: 3px 0" type="text" @click="toDetail">查看详情</el-button>
+          <span>{{item.title}}</span>
+          <el-button style="float: right; padding: 3px 0" type="text" @click="toDetail(item)">查看详情</el-button>
         </div>
-        <div v-for="o in 4" :key="o" class="text item">
-          {{'列表内容 ' + o }}
+        <div class="paper-content">
+          {{item.content|ellipsis}}
         </div>
       </el-card>
     </div>
   </div>
 </template>
 <script>
+  import axios from "axios";
+
   export default {
     data (){
       return{
-        paperList:[
-          {
-            name:'文章1'
-          },
-          {
-            name:'文章2'
-          },
-          {
-            name:'文章3'
-          },
-        ]
+        paperList:[]
+      }
+    },
+    mounted() {
+      this.getAllArticle();
+    },
+    filters: {
+      // 过滤器 限制文章内容显示字符
+      ellipsis (value) {
+        if (!value) return '';
+        if (value.length > 150) {
+          return value.slice(0,150) + '...'
+        }
+        return value
       }
     },
     methods:{
-      toDetail(){
-        this.$router.push("articleDetail")
+      toDetail(item){
+        this.$router.push({path:"articleDetail",query:{Id:item.Id}})
+      },
+      getAllArticle(){
+        axios.post("/api/blog/getArticle").then((response) => {
+          this.paperList = [];
+          for(let i=0;i<response.data.length;i++){
+            this.paperList.push(response.data[i]);
+          }
+        }).catch(function (error) {
+          console.log(error);
+        });
       }
     }
   }
 </script>
 <style>
+  .paper-content{
+    margin: 10px;
+    line-height: 30px;
+  }
   .box-card{
     margin: 50px 100px;
   }

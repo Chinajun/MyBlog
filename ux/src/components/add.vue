@@ -7,30 +7,70 @@
         <el-button style="float: right; padding: 3px 0" type="text"  @click="toLast">返回</el-button>
       </div>
       <div class="msg-container">
-        <el-form model="">
+        <el-form :model="articleForm" :rules="articleRules" ref="articleForm">
           <div class="add-btn">
             <span>请选择文章标签：</span>
-            <el-radio v-model="mark" label="笔记" border>笔记</el-radio>
-            <el-radio v-model="mark" label="日常" border>日常</el-radio>
+            <el-radio v-model="articleForm.mark" label="笔记" border>笔记</el-radio>
+            <el-radio v-model="articleForm.mark" label="日常" border>日常</el-radio>
           </div>
-          <el-form-item><el-input type="text" :rows="2" placeholder="标题"></el-input></el-form-item>
-          <el-form-item><el-input type="textarea" :rows="10" placeholder="内容"></el-input></el-form-item>
-          <el-form-item><el-button type="primary" class="msg-btn">发布</el-button></el-form-item>
+          <el-form-item prop="title"><el-input v-model="articleForm.title" type="text" :rows="2" placeholder="标题"></el-input></el-form-item>
+          <el-form-item prop="content"><el-input v-model="articleForm.content" type="textarea" :rows="10" placeholder="内容"></el-input></el-form-item>
+          <el-form-item><el-button type="primary" class="msg-btn" @click="onSubmit">发布</el-button></el-form-item>
         </el-form>
       </div>
     </el-card>
   </div>
 </template>
 <script>
+  import axios from "axios";
+
   export default {
     data(){
       return{
-        mark:"笔记"
+        articleForm:{
+          title:"",
+          content:"",
+          mark:"笔记",
+          create_time:""
+        },
+        articleRules:{
+          title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+          content: [{ required: true, message: '请输入内容', trigger: 'blur' }]
+        }
       }
     },
     methods:{
       toLast(){
         this.$router.go(-1)
+      },
+      onSubmit(){
+        this.$refs.articleForm.validate(valid => {
+          if(valid){
+            this.articleForm.create_time = Math.round(new Date() / 1000);
+            axios.post("/api/blog/addArticle", {
+              title: this.articleForm.title,
+              content: this.articleForm.content,
+              mark: this.articleForm.mark,
+              username: this.$cookies.get("username"),
+              create_time:this.articleForm.create_time
+            }).then((response) => {
+              if (response.data.code === 0) {
+                this.$message({
+                  message: response.data.msg,
+                  type: 'success'
+                });
+                this.$router.go(-1);
+              } else {
+                this.$message({
+                  message: response.data.msg,
+                  type: 'error'
+                });
+              }
+            }).catch(function (error) {
+              console.log(error);
+            });
+          }
+        });
       }
     }
   }

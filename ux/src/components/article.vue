@@ -38,23 +38,46 @@
   </div>
 </template>
 <script>
+  import axios from "axios";
+
   export default {
     data(){
       return{
-        articleList:[
-          {title:"测试",username:"菅野千寻"},
-          {title:"测试测试",username:"早川杏仁子"}
-        ]
+        articleMark:"",
+        articleList:[]
       }
     },
     props:{
       isNote:""
     },
+    mounted:function(){
+      this.getArticle();
+    },
     methods:{
-      articleDetail(row,event,column){
-        console.log(row,event,column);
-        this.$router.push("articleDetail");
+      // 获取文章简略信息
+      getArticle(){
+        if(this.isNote===true){
+          this.articleMark = "笔记"
+        }else{
+          this.articleMark = "日常"
+        }
+        axios.post("/api/blog/getArticle",{
+          mark:this.articleMark
+        }).then((response) => {
+          this.articleList = [];
+          for(let i=0;i<response.data.length;i++){
+            this.articleList.push(response.data[i]);
+          }
+        }).catch(function (error) {
+          console.log(error);
+        });
       },
+      // 跳转文章详情界面
+      articleDetail(row,event,column){
+        // console.log(row,event,column);
+        this.$router.push({path:"articleDetail",query:{Id:row.Id}})
+      },
+      // 跳转新增文章界面
       addArticle(){
         if(this.$cookies.get("username")){
           this.$router.push('addArticle');

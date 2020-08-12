@@ -19,39 +19,81 @@
       <div slot="header">
         <span class="msg-title">发表评论</span>
         <div class="msg-container">
-          <el-form model="">
-            <el-form-item><el-input type="textarea" :rows="2" placeholder="说点什么吧..."></el-input></el-form-item>
+          <el-form :model="commentList" ref="commentList">
+            <el-form-item prop="content"><el-input v-model="commentList.content" type="textarea" :rows="2" placeholder="说点什么吧..."></el-input></el-form-item>
             <el-form-item><el-button type="primary" class="msg-btn">发送</el-button></el-form-item>
           </el-form>
         </div>
       </div>
       <div v-for="(item,index) in msgList" :key="index" class="msg-box">
-        <div class="pict">
-          <img :src="require('@/assets/touxiang.jpg')" class="touxiang-mid">
+        <div>
+          <div class="pict">
+            <img :src="require('@/assets/touxiang.jpg')" class="touxiang-mid">
+          </div>
+          <div class="others">
+            <div class="others-username">{{item.username}}</div>
+            <div class="others-time">{{item.time}}</div>
+            <div class="others-content">{{item.content}}</div>
+          </div>
         </div>
-        <div class="others">
-          <div class="others-username">{{item.username}}</div>
-          <div class="others-time">{{item.time}}</div>
-          <div class="others-content">{{item.content}}</div>
+<!--        <div class="underComment" v-for="(item,index) in msgList2" :key="index" >-->
+<!--          <div class="pict">-->
+<!--            <img :src="require('@/assets/touxiang.jpg')" class="touxiang-small">-->
+<!--          </div>-->
+<!--          <div class="othersComment">-->
+<!--            <div class="othersComment-username">{{item.comment.username}}</div>-->
+<!--            <div class="othersComment-time">{{item.comment.time}}</div>-->
+<!--            <div class="othersComment-content">{{item.comment.content}}</div>-->
+<!--          </div>-->
+<!--        </div>-->
+        <div class="underComment" v-show="item.haveComment">
+          <div class="pict">
+            <img :src="require('@/assets/touxiang.jpg')" class="touxiang-small">
+          </div>
+          <div class="othersComment">
+            <div class="othersComment-username">{{item.comment.username}}</div>
+            <div class="othersComment-time">{{item.comment.time}}</div>
+            <div class="othersComment-content">{{item.comment.content}}</div>
+          </div>
         </div>
-        <br>
       </div>
     </el-card>
   </div>
 </template>
 <script>
+  import axios from "axios";
+
   export default {
     data(){
       return{
         msgList:[
-          {username:"菅野千寻",time:"2020/8/9 16:18",content:"测试测试"},
-          {username:"菅野千寻",time:"2020/8/9 16:18",content:"测试测试"},
-          {username:"菅野千寻",time:"2020/8/9 16:18",content:"测试测试"}
-        ]
+          {username:"菅野千寻",time:"2020/8/9 16:18",content:"测测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测",haveComment:false,comment:{username:"",time:"",content:"ceshiceshi"}},
+          {username:"菅野千寻",time:"2020/8/9 16:18",content:"测试测试",haveComment:true,comment:{username:"早川杏仁子",time:"2020/8/11 21:40",content:"留言留言"}}
+        ],
+        commentList:{
+          content:""
+        }
       }
     },
+    mounted() {
+    },
     methods:{
-
+      // 获得留言板评论（aid=0）
+      getMsgComment(){
+        axios.post("/api/blog/getComment",{
+          aid:0
+        }).then((response) => {
+          this.msgList=[];
+          for(let i=0;i<response.data.length;i++){
+            if(response.data.pid===0){
+              this.msgList.push(response.data[i]);
+              // TODO 再建一个子评论表
+            }
+          }
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
     }
   }
 </script>
@@ -89,10 +131,15 @@
     width: 70px;
     border-radius: 50%;
   }
+  .touxiang-small{
+    width: 50px;
+    border-radius: 50%;
+  }
   .pict{
     float: left;
   }
   .others{
+    padding-bottom: 20px;
     margin-left: 100px;
   }
   .others-username{
@@ -103,9 +150,32 @@
     font-size: 12px;
     color: #8c939d;
     float: right;
+    margin-left: 30px;
   }
   .others-content{
+    width: 430px;
     font-size: 14px;
     margin: 10px;
+  }
+  .othersComment-username{
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .othersComment-time{
+    font-size: 10px;
+    color: #8c939d;
+    float: right;
+    margin-left: 30px;
+  }
+  .othersComment-content{
+    width: 360px;
+    font-size: 14px;
+    margin: 10px;
+  }
+  .othersComment{
+    margin-left: 70px;
+  }
+  .underComment{
+    margin: 10px 0 10px 100px;
   }
 </style>
