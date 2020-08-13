@@ -12,6 +12,8 @@
         </div>
       </el-card>
     </div>
+    <div class="loadMore" v-if="page<page_count"><el-button @click='loadMore'>点击加载更多</el-button></div>
+    <div class="loadMore" v-else ><el-button>没有更多了</el-button></div>
   </div>
 </template>
 <script>
@@ -20,7 +22,9 @@
   export default {
     data (){
       return{
-        paperList:[]
+        paperList:[],
+        page:1,
+        page_count:''
       }
     },
     mounted() {
@@ -41,14 +45,22 @@
         this.$router.push({path:"articleDetail",query:{Id:item.Id}})
       },
       getAllArticle(){
-        axios.post("/api/blog/getArticle").then((response) => {
-          this.paperList = [];
-          for(let i=0;i<response.data.length;i++){
-            this.paperList.push(response.data[i]);
+        axios.post("/api/blog/getArticle",{
+          page:this.page
+        }).then((response) => {
+          // this.paperList = [];
+          this.page_count = response.data.data.count/10;
+          for(let i=0;i<response.data.data.result.length;i++){
+            this.paperList.push(response.data.data.result[i]);
           }
         }).catch(function (error) {
           console.log(error);
         });
+      },
+      // 点击加载更多
+      loadMore(){
+        this.page+=1;
+        this.getAllArticle();
       }
     }
   }
@@ -65,5 +77,9 @@
     box-shadow: 0px 1rem 2rem 0px rgba(48, 55, 66, 0.15);
     transform: translate(0,-5px);
     transition-delay: 0s !important;
+  }
+  .loadMore{
+    margin: 50px 100px;
+    text-align: center;
   }
 </style>

@@ -33,40 +33,54 @@
           <el-table-column prop="title"></el-table-column>
           <el-table-column prop="username"></el-table-column>
         </el-table>
+        <el-pagination
+          style="float: right"
+          :page-size="10"
+          layout="prev, pager, next"
+          @current-change="handleCurrentChange"
+          :total="this.page_count">
+        </el-pagination>
       </div>
     </el-card>
   </div>
 </template>
 <script>
   import axios from "axios";
-
   export default {
     data(){
       return{
         articleMark:"",
-        articleList:[]
+        articleList:[],
+        page:1,
+        page_count:''
       }
     },
     props:{
       isNote:""
     },
     mounted:function(){
+      this.judgeMark();
       this.getArticle();
     },
     methods:{
-      // 获取文章简略信息
-      getArticle(){
+      // 判断本页标签
+      judgeMark(){
         if(this.isNote===true){
           this.articleMark = "笔记"
         }else{
           this.articleMark = "日常"
         }
+      },
+      // 获取文章简略信息
+      getArticle(){
         axios.post("/api/blog/getArticle",{
-          mark:this.articleMark
+          mark:this.articleMark,
+          page:this.page
         }).then((response) => {
           this.articleList = [];
-          for(let i=0;i<response.data.length;i++){
-            this.articleList.push(response.data[i]);
+          this.page_count = response.data.data.count;
+          for(let i=0;i<response.data.data.result.length;i++){
+            this.articleList.push(response.data.data.result[i]);
           }
         }).catch(function (error) {
           console.log(error);
@@ -87,6 +101,10 @@
             type: 'error'
           });
         }
+      },
+      handleCurrentChange(val){
+        this.page = val;
+        this.getArticle();
       }
     }
   }
