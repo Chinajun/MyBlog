@@ -16,10 +16,14 @@ class Comment extends Controller
             ->limit(($data['page']-1)*10,10)->order("create_time desc")->select();
         $pid[] = "";
         for ($i=0;$i<sizeof($result_fa);$i++){
+            $result_fa[$i]['create_time'] = date('Y-m-d H:i:s',$result_fa[$i]['create_time']);
             $pid[$i] = $result_fa[$i]['Id'];
         }
         $result_son = $comment->where('aid',$data['aid'])->where('pid','in',$pid)
             ->order("create_time desc")->select();
+        for ($i=0;$i<sizeof($result_son);$i++){
+            $result_son[$i]['create_time'] = date('Y-m-d H:i:s',$result_son[$i]['create_time']);
+        }
         return [
             'code'=>200,
             'data'=>[

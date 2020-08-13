@@ -39,7 +39,7 @@
           </div>
           <div class="others">
             <div class="others-username">{{item.username}}</div>
-            <div class="others-time">{{item.time}}</div>
+            <div class="others-time">{{item.create_time}}</div>
             <div class="others-content">{{item.content}}</div>
             <el-button style="float: right; padding: 3px 0" type="text" @click="toDetail(item)">回复</el-button>
           </div>
@@ -50,7 +50,7 @@
           </div>
           <div class="othersComment">
             <div class="othersComment-username">{{item2.username}}</div>
-            <div class="othersComment-time">{{item2.time}}</div>
+            <div class="othersComment-time">{{item2.create_time}}</div>
             <div class="othersComment-content">{{item2.content}}</div>
           </div>
         </div>
@@ -127,6 +127,8 @@
           this.msgList=[];
           this.page_count = response.data.data.count;
           for(let i=0;i<response.data.data.result_fa.length;i++){
+            // console.log(response.data.data.result_fa[i].create_time);
+            // response.data.data.result_fa[i].create_time
             this.msgList.push(response.data.data.result_fa[i]);
             this.msgList[i].comment = [];
           }

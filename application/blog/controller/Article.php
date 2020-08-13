@@ -36,11 +36,14 @@ class Article extends Controller
             $count = $article->where('mark',$data['mark'])->count();
             $result = $article->where('mark',$data['mark'])
                 ->limit(($data['page']-1)*10,10)->order("create_time desc")->select();
-        }else{
+        }else{// 首页
             $count = $article->count();
 //            return Db::query('select * from article');
             $result = $article->limit(($data['page']-1)*10,10)
                 ->order("create_time desc")->select();
+            for ($i=0;$i<sizeof($result);$i++){
+                $result[$i]['create_time'] = date('Y-m-d H:i:s',$result[$i]['create_time']);
+            }
         }
         return [
             'code'=>200,
@@ -57,6 +60,10 @@ class Article extends Controller
     public function getDetailArticle(){
         $data = request()->param();
         $article = new \app\blog\model\Article();
-        return $article->where('Id',$data['Id'])->find();
+        $result = $article->where('Id',$data['Id'])->find();
+        for ($i=0;$i<sizeof($result);$i++){
+            $result[$i]['create_time'] = date('Y-m-d H:i:s',$result[$i]['create_time']);
+        }
+        return $result;
     }
 }
