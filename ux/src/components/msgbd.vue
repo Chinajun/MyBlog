@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card class="box-card">
+    <el-card class="box-card" v-if="isMsgbd">
       <div slot="header" class="msg-title">留言板</div>
       <img :src="require('@/assets/msg.jpg')" class="msg-img">
       <div class="msg-desc">
@@ -15,13 +15,20 @@
         </p>
       </div>
     </el-card>
+    <el-card class="box-card" v-else>
+      <div slot="header">
+        <span class="msg-title">{{title}}</span>
+        <el-button style="float: right; padding: 3px 0" type="text"  @click="toLast">返回</el-button>
+      </div>
+      <div class="detail-desc"><pre>{{content}}</pre></div>
+    </el-card>
     <el-card class="box-card">
       <div slot="header">
         <span class="msg-title">发表评论</span>
         <div class="msg-container">
           <el-form :model="commentList" ref="commentList">
             <el-form-item prop="content"><el-input v-model="commentList.content" type="textarea" :rows="2" placeholder="说点什么吧..."></el-input></el-form-item>
-            <el-form-item><el-button type="primary" class="msg-btn">发送</el-button></el-form-item>
+            <el-form-item><el-button type="primary" class="msg-btn" @click="onSubmit">发送</el-button></el-form-item>
           </el-form>
         </div>
       </div>
@@ -34,29 +41,27 @@
             <div class="others-username">{{item.username}}</div>
             <div class="others-time">{{item.time}}</div>
             <div class="others-content">{{item.content}}</div>
+            <el-button style="float: right; padding: 3px 0" type="text" @click="toDetail(item)">回复</el-button>
           </div>
         </div>
-<!--        <div class="underComment" v-for="(item,index) in msgList2" :key="index" >-->
-<!--          <div class="pict">-->
-<!--            <img :src="require('@/assets/touxiang.jpg')" class="touxiang-small">-->
-<!--          </div>-->
-<!--          <div class="othersComment">-->
-<!--            <div class="othersComment-username">{{item.comment.username}}</div>-->
-<!--            <div class="othersComment-time">{{item.comment.time}}</div>-->
-<!--            <div class="othersComment-content">{{item.comment.content}}</div>-->
-<!--          </div>-->
-<!--        </div>-->
-        <div class="underComment" v-show="item.haveComment">
+        <div class="underComment" v-for="(item2,index2) in msgList[index].comment" :key="index2">
           <div class="pict">
             <img :src="require('@/assets/touxiang.jpg')" class="touxiang-small">
           </div>
           <div class="othersComment">
-            <div class="othersComment-username">{{item.comment.username}}</div>
-            <div class="othersComment-time">{{item.comment.time}}</div>
-            <div class="othersComment-content">{{item.comment.content}}</div>
+            <div class="othersComment-username">{{item2.username}}</div>
+            <div class="othersComment-time">{{item2.time}}</div>
+            <div class="othersComment-content">{{item2.content}}</div>
           </div>
         </div>
       </div>
+      <el-pagination
+        style="float: right"
+        :page-size="10"
+        layout="prev, pager, next"
+        @current-change="handleCurrentChange"
+        :total="this.page_count">
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -66,38 +71,124 @@
   export default {
     data(){
       return{
-        msgList:[
-          {username:"菅野千寻",time:"2020/8/9 16:18",content:"测测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测",haveComment:false,comment:{username:"",time:"",content:"ceshiceshi"}},
-          {username:"菅野千寻",time:"2020/8/9 16:18",content:"测试测试",haveComment:true,comment:{username:"早川杏仁子",time:"2020/8/11 21:40",content:"留言留言"}}
-        ],
+        // 文章详情
+        title:"",
+        content:"",
+        username:"",
+        create_time:"",
+        // 评论
+        msgList:[],
+        // 发表评论
         commentList:{
-          content:""
-        }
+          content:"",
+          create_time:""
+        },
+        aid:0,
+        pid:0,
+        page:1,
+        page_count:3 //TODO
       }
     },
+    props:{
+      isMsgbd:""
+    },
     mounted() {
+      if(this.isMsgbd===false){
+        this.aid = this.$route.query.Id;
+        this.getDetailArticle();
+      }
+      this.getMsgComment();
     },
     methods:{
-      // 获得留言板评论（aid=0）
+      // 文章详情页
+      toLast(){
+        this.$router.go(-1)
+      },
+      // 根据Id获取文章信息
+      getDetailArticle() {
+        // console.log(this.$route.query);
+        axios.post("/api/blog/getDetailArticle",{
+          Id:this.$route.query.Id
+        }).then((response) => {
+          this.title = response.data.title;
+          this.content = response.data.content;
+          this.username = response.data.username;
+          this.create_time = response.data.create_time;
+        }).catch(function (error) {
+          console.log(error);
+        });
+      },
+      // 获得评论（留言板aid=0,父评论pid=0）
       getMsgComment(){
         axios.post("/api/blog/getComment",{
-          aid:0
+          aid:this.aid,
+          page:this.page
         }).then((response) => {
           this.msgList=[];
-          for(let i=0;i<response.data.length;i++){
-            if(response.data.pid===0){
-              this.msgList.push(response.data[i]);
-              // TODO 再建一个子评论表
+          this.page_count = response.data.data.count;
+          for(let i=0;i<response.data.data.result_fa.length;i++){
+            this.msgList.push(response.data.data.result_fa[i]);
+            this.msgList[i].comment = [];
+          }
+          for(let i=0;i<response.data.data.result_son.length;i++){
+            for(let j=0;j<this.msgList.length;j++){
+              if(this.msgList[j].Id===response.data.data.result_son[i].pid){
+                this.msgList[j].comment.push(response.data.data.result_son[i]);
+              }
             }
+          }
+          // console.log(this.msgList);
+        }).catch(function (error) {
+          console.log(error);
+        });
+      },
+      // 分页
+      handleCurrentChange(val){
+        this.page = val;
+        this.getMsgComment();
+      },
+      // 发表评论
+      onSubmit(){
+        this.commentList.create_time = Math.round(new Date() / 1000);
+        axios.post("/api/blog/addComment", {
+          content: this.commentList.content,
+          username: this.$cookies.get("username"),
+          create_time:this.commentList.create_time,
+          aid:this.aid,
+          pid:this.pid
+        }).then((response) => {
+          if (response.data.code === 0) {
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
+            this.$router.go(0);
+          } else {
+            this.$message({
+              message: response.data.msg,
+              type: 'error'
+            });
           }
         }).catch(function (error) {
           console.log(error);
         });
-      }
+      },
     }
   }
 </script>
 <style>
+  /* pre自动换行 */
+  pre{
+    white-space: pre-wrap;           /* css-3 */
+    white-space: -moz-pre-wrap;      /* Mozilla, since 1999 */
+    /*white-space: -pre-wrap;          !* Opera 4-6 *!*/
+    white-space: -o-pre-wrap;        /* Opera 7 */
+    word-wrap: break-word;           /* Internet Explorer 5.5+ */
+  }
+  .detail-desc{
+    margin: 20px;
+    line-height: 30px;
+  }
   .box-card{
     margin: 50px 100px;
   }
@@ -176,6 +267,7 @@
     margin-left: 70px;
   }
   .underComment{
-    margin: 10px 0 10px 100px;
+    margin: 10px 0 20px 100px;
   }
+
 </style>

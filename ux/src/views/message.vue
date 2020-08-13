@@ -4,7 +4,7 @@
     <div class="bodyBox">
       <el-row>
         <el-col :sm="24" :md="16">
-          <cyj-msgbd></cyj-msgbd>
+          <cyj-msgbd :isMsgbd=true></cyj-msgbd>
         </el-col>
         <el-col :sm="24" :md="8" >
           <cyj-right></cyj-right>

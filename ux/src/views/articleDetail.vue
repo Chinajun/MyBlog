@@ -4,7 +4,7 @@
     <div class="bodyBox">
       <el-row>
         <el-col :sm="24" :md="16">
-          <cyj-detail></cyj-detail>
+          <cyj-msgbd :isMsgbd=false></cyj-msgbd>
         </el-col>
         <el-col :sm="24" :md="8" >
           <cyj-right></cyj-right>
@@ -18,13 +18,13 @@
   import header from '../components/header.vue';
   import right from "../components/right";
   import footer from "../components/footer";
-  import detail from "../components/detail";
+  import msgbd from "../components/msgbd";
   export default {
     components:{
       'cyj-header':header,
       'cyj-right':right,
       'cyj-footer':footer,
-      'cyj-detail':detail
+      'cyj-msgbd':msgbd
     }
   }
 </script>
