@@ -20,7 +20,14 @@
         <span class="msg-title">{{title}}</span>
         <el-button style="float: right; padding: 3px 0" type="text"  @click="toLast">返回</el-button>
       </div>
-      <div class="detail-desc"><pre>{{content}}</pre></div>
+      <div class="detail-desc">
+        <div class="article-info">
+          <h1 class="info-title">{{title}}</h1>
+          <i class="fa fa-user"></i>{{username}}
+          <i class="el-icon-time"></i>{{create_time}}
+          <el-tag>{{mark}}</el-tag>
+        </div>
+        <pre>{{content}}</pre></div>
     </el-card>
     <el-card class="box-card">
       <div slot="header">
@@ -41,7 +48,28 @@
             <div class="others-username">{{item.username}}</div>
             <div class="others-time">{{item.create_time}}</div>
             <div class="others-content">{{item.content}}</div>
-            <el-button style="float: right; padding: 3px 0" type="text" @click="toDetail(item)">回复</el-button>
+            <el-dropdown trigger="click" :hide-on-click="false" class="drop_down">
+              <span class="reply">
+                回复<i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>
+                  <el-input v-model="reply" type="text" placeholder="回复TA..." class="drop_down_input">
+                    <el-button
+                      slot="append"
+                      icon="el-icon-check"
+                      @click="toReply(item)"/></el-input>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+
+<!--            <el-button style="float: right; padding: 3px 0" type="text" @click="isReply(index)" v-if="!item.showReply">回复</el-button>-->
+<!--            <el-button style="float: right; padding: 3px 0" type="text" @click="isReply(index)" v-else>取消回复</el-button>-->
+<!--            <el-input v-model="reply" type="text" placeholder="回复TA..." v-if="!item.showReply">-->
+<!--              <el-button-->
+<!--              slot="append"-->
+<!--              icon="el-icon-check"-->
+<!--              @click="toReply"/></el-input>-->
           </div>
         </div>
         <div class="underComment" v-for="(item2,index2) in msgList[index].comment" :key="index2">
@@ -83,10 +111,12 @@
           content:"",
           create_time:""
         },
+        // 回复评论
+        reply:"",
         aid:0,
         pid:0,
         page:1,
-        page_count:3 //TODO
+        page_count:0
       }
     },
     props:{
@@ -114,6 +144,7 @@
           this.content = response.data.content;
           this.username = response.data.username;
           this.create_time = response.data.create_time;
+          this.mark = response.data.mark;
         }).catch(function (error) {
           console.log(error);
         });
@@ -127,8 +158,6 @@
           this.msgList=[];
           this.page_count = response.data.data.count;
           for(let i=0;i<response.data.data.result_fa.length;i++){
-            // console.log(response.data.data.result_fa[i].create_time);
-            // response.data.data.result_fa[i].create_time
             this.msgList.push(response.data.data.result_fa[i]);
             this.msgList[i].comment = [];
           }
@@ -175,6 +204,34 @@
           console.log(error);
         });
       },
+      // 回复
+      toReply(item){
+        // console.log(this.reply);
+        // console.log(item);
+        // this.commentList.create_time = Math.round(new Date() / 1000);
+        axios.post("/api/blog/addComment", {
+          content: this.reply,
+          username: this.$cookies.get("username"),
+          create_time: Math.round(new Date() / 1000),
+          aid:this.aid,
+          pid:item.Id
+        }).then((response) => {
+          if (response.data.code === 0) {
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
+            this.$router.go(0);
+          } else {
+            this.$message({
+              message: response.data.msg,
+              type: 'error'
+            });
+          }
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
     }
   }
 </script>
@@ -186,6 +243,8 @@
     /*white-space: -pre-wrap;          !* Opera 4-6 *!*/
     white-space: -o-pre-wrap;        /* Opera 7 */
     word-wrap: break-word;           /* Internet Explorer 5.5+ */
+    font-family: "Microsoft YaHei";
+    font-size: 15px;
   }
   .detail-desc{
     margin: 20px;
@@ -271,5 +330,25 @@
   .underComment{
     margin: 10px 0 20px 100px;
   }
-
+  .article-info{
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #8c939d;
+  }
+  .article-info i{
+    margin: 20px 10px 0 20px;
+  }
+  .info-title{
+    color: #303133;
+  }
+  .reply{
+    color: #3a8ee6;
+  }
+  .drop_down{
+    float: right; padding: 3px 0;
+  }
+  .drop_down_input{
+    width: 400px;
+  }
 </style>

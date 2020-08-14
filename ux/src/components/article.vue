@@ -52,7 +52,7 @@
         articleMark:"",
         articleList:[],
         page:1,
-        page_count:''
+        page_count:0
       }
     },
     props:{
