@@ -65,6 +65,8 @@
               type: 'success'
             });
             this.$cookies.set("username",response.data.username);
+            localStorage.setItem('userInfo',JSON.stringify(response.data.data.userInfo));
+            localStorage.setItem('authKey',response.data.data.authKey);
             this.$router.replace('home');
           } else {//登陆失败
             this.$message({

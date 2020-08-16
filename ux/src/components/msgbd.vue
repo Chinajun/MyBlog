@@ -206,9 +206,6 @@
       },
       // 回复
       toReply(item){
-        // console.log(this.reply);
-        // console.log(item);
-        // this.commentList.create_time = Math.round(new Date() / 1000);
         axios.post("/api/blog/addComment", {
           content: this.reply,
           username: this.$cookies.get("username"),

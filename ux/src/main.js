@@ -16,6 +16,23 @@ Vue.use(Vuex);
 import store from './store'
 Vue.config.productionTip = false;
 import 'font-awesome/css/font-awesome.css' //引用fa
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+  document.title = to.meta.title
+  }
+  // 判断该路由是否需要登录权限
+  if (to.meta.type === 'login') {
+    if (localStorage.getItem('userInfo')) {
+      next()
+    } else {
+      next('/login')
+    }
+  } else {
+    next()  // 确保一定要有next()被调用
+  }
+});
+
 new Vue({
   el: '#app',
   router,
@@ -23,4 +40,5 @@ new Vue({
   components: { App },
   template: '<App/>'
 });
+
 

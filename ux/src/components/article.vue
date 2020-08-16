@@ -93,14 +93,7 @@
       },
       // 跳转新增文章界面
       addArticle(){
-        if(this.$cookies.get("username")){
-          this.$router.push('addArticle');
-        }else{
-          this.$message({
-            message: '登陆后才能发表文章',
-            type: 'error'
-          });
-        }
+        this.$router.push('addArticle');
       },
       handleCurrentChange(val){
         this.page = val;

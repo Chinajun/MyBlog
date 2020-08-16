@@ -31,7 +31,7 @@
           title:"",
           content:"",
           mark:"笔记",
-          create_time:""
+          create_time:"",
         },
         articleRules:{
           title: [{ required: true, message: '请输入标题', trigger: 'blur' }],

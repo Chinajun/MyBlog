@@ -3,7 +3,6 @@
   <div class="headerBox">
     <el-row>
       <el-col :span="24">
-<!--      <el-col :span="24" style="background: #000000">   style="background: #ffa7cd" -->
         <div class="menuBox">
           <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" router>
             <el-menu-item index="home">首页</el-menu-item>
@@ -31,6 +30,8 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -44,8 +45,10 @@ export default {
   methods:{
     // 判断登陆情况
     isLogin(){
-      if(this.$cookies.get("username")){
+      if(localStorage.getItem('userInfo')) {
         this.loginStatus = true;
+      } else {
+        this.loginStatus = false;
       }
     },
     handleSelect(key, keyPath){
@@ -58,9 +61,27 @@ export default {
       this.$router.push('register');
     },
     logout(){
-      this.$cookies.remove("username");
-      this.$router.go(0);
-      // this.loginStatus = false;
+      this.$confirm('是否确认退出?', '退出提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        axios.post("/api/blog/logout").then((response) => {
+          if (response.data.code === 0) {
+            localStorage.removeItem('userInfo');
+            this.$cookies.remove('username');
+            this.loginStatus = false;
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
+          }
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }).catch((error) => {
+        console.log(error);
+      });
     }
   }
 }
