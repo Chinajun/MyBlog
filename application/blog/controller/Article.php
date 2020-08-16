@@ -60,6 +60,8 @@ class Article extends Controller
         $data = request()->param();
         $article = new \app\blog\model\Article();
         $result = $article->where('Id',$data['Id'])->find();
+        $result['view'] = $result['view']+1;
+        $article->where('Id',$result['Id'])->update(['view'=>$result['view']]);
         $result['create_time'] = date('Y-m-d H:i:s',$result['create_time']);
         return $result;
     }

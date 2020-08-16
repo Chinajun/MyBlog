@@ -17,7 +17,7 @@
     </el-card>
     <el-card class="box-card" v-else>
       <div slot="header">
-        <span class="msg-title">{{title}}</span>
+        <span class="msg-title">文章详情</span>
         <el-button style="float: right; padding: 3px 0" type="text"  @click="toLast">返回</el-button>
       </div>
       <div class="detail-desc">
@@ -25,6 +25,7 @@
           <h1 class="info-title">{{title}}</h1>
           <i class="fa fa-user"></i>{{username}}
           <i class="el-icon-time"></i>{{create_time}}
+          <i class="el-icon-view"></i>{{view}}
           <el-tag>{{mark}}</el-tag>
         </div>
         <pre>{{content}}</pre></div>
@@ -97,6 +98,7 @@
         content:"",
         username:"",
         create_time:"",
+        view:0,
         // 评论
         msgList:[],
         // 发表评论
@@ -138,6 +140,7 @@
           this.username = response.data.username;
           this.create_time = response.data.create_time;
           this.mark = response.data.mark;
+          this.view = response.data.view;
         }).catch(function (error) {
           console.log(error);
         });
