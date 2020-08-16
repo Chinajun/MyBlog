@@ -42,13 +42,14 @@
       <div v-for="(item,index) in msgList" :key="index" class="msg-box">
         <div>
           <div class="pict">
-            <img :src="require('@/assets/touxiang.jpg')" class="touxiang-mid">
+<!--            <img :src="require('@/assets/tx2.jpg')" class="touxiang-mid">-->
+            <img :src="require('@/assets/tx'+item.img+'.jpg')" class="touxiang-mid">
           </div>
           <div class="others">
             <div class="others-username">{{item.username}}</div>
             <div class="others-time">{{item.create_time}}</div>
             <div class="others-content">{{item.content}}</div>
-            <el-dropdown trigger="click" :hide-on-click="false" class="drop_down">
+            <el-dropdown trigger="click" :hide-on-click="false" class="drop_down" @visible-change="handleChange()">
               <span class="reply">
                 回复<i class="el-icon-arrow-down el-icon--right"></i>
               </span>
@@ -62,19 +63,11 @@
                 </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-
-<!--            <el-button style="float: right; padding: 3px 0" type="text" @click="isReply(index)" v-if="!item.showReply">回复</el-button>-->
-<!--            <el-button style="float: right; padding: 3px 0" type="text" @click="isReply(index)" v-else>取消回复</el-button>-->
-<!--            <el-input v-model="reply" type="text" placeholder="回复TA..." v-if="!item.showReply">-->
-<!--              <el-button-->
-<!--              slot="append"-->
-<!--              icon="el-icon-check"-->
-<!--              @click="toReply"/></el-input>-->
           </div>
         </div>
         <div class="underComment" v-for="(item2,index2) in msgList[index].comment" :key="index2">
           <div class="pict">
-            <img :src="require('@/assets/touxiang.jpg')" class="touxiang-small">
+            <img :src="require('@/assets/tx'+item2.img+'.jpg')" class="touxiang-small">
           </div>
           <div class="othersComment">
             <div class="othersComment-username">{{item2.username}}</div>
@@ -168,7 +161,6 @@
               }
             }
           }
-          // console.log(this.msgList);
         }).catch(function (error) {
           console.log(error);
         });
@@ -183,7 +175,7 @@
         this.commentList.create_time = Math.round(new Date() / 1000);
         axios.post("/api/blog/addComment", {
           content: this.commentList.content,
-          username: this.$cookies.get("username"),
+          uid: JSON.parse(localStorage.getItem('userInfo')).Id,
           create_time:this.commentList.create_time,
           aid:this.aid,
           pid:this.pid
@@ -206,9 +198,11 @@
       },
       // 回复
       toReply(item){
+        // console.log(this.$cookies.get("username"));
         axios.post("/api/blog/addComment", {
           content: this.reply,
-          username: this.$cookies.get("username"),
+          uid: JSON.parse(localStorage.getItem('userInfo')).Id,
+          // username: this.$cookies.get("username"),
           create_time: Math.round(new Date() / 1000),
           aid:this.aid,
           pid:item.Id
@@ -228,6 +222,10 @@
         }).catch(function (error) {
           console.log(error);
         });
+      },
+      // 下拉框关闭/打开执行的方法
+      handleChange(){
+        this.reply = "";
       }
     }
   }

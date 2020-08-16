@@ -41,6 +41,7 @@ export default {
 }
 a{
   text-decoration:none;
+  color: #303133;
 }
 body{
   background:url("assets/peach.jpg") repeat fixed;

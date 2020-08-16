@@ -69,7 +69,7 @@ export default {
         axios.post("/api/blog/logout").then((response) => {
           if (response.data.code === 0) {
             localStorage.removeItem('userInfo');
-            this.$cookies.remove('username');
+            // this.$cookies.remove('uid');
             this.loginStatus = false;
             this.$message({
               message: response.data.msg,

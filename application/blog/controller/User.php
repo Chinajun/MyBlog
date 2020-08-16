@@ -85,4 +85,12 @@ class User extends Controller
             'msg' => '退出成功'
         ];
     }
+
+    /**
+     * 获取全部用户（不超过7个）
+     */
+    public function getUsers(){
+        $user = new \app\blog\model\User();
+        return $user->limit(0,7)->select();
+    }
 }

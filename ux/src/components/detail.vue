@@ -20,7 +20,7 @@
       </div>
       <div v-for="(item,index) in msgList" :key="index" class="msg-box">
         <div class="pict">
-          <img :src="require('@/assets/touxiang.jpg')" class="touxiang-mid">
+          <img :src="require('@/assets/tx999.jpg')" class="touxiang-mid">
         </div>
         <div class="others">
           <div class="others-username">{{item.username}}</div>

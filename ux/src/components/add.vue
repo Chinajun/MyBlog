@@ -51,7 +51,7 @@
               title: this.articleForm.title,
               content: this.articleForm.content,
               mark: this.articleForm.mark,
-              username: this.$cookies.get("username"),
+              username: JSON.parse(localStorage.getItem('userInfo')).username,
               create_time:this.articleForm.create_time
             }).then((response) => {
               if (response.data.code === 0) {

@@ -64,7 +64,7 @@
               message: response.data.msg,
               type: 'success'
             });
-            this.$cookies.set("username",response.data.username);
+            // this.$cookies.set("uid",response.data.data.userInfo.Id);
             localStorage.setItem('userInfo',JSON.stringify(response.data.data.userInfo));
             localStorage.setItem('authKey',response.data.data.authKey);
             this.$router.replace('home');

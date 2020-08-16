@@ -132,7 +132,8 @@
                 username: this.registerForm.username,
                 password: this.registerForm.password,
                 phone:this.registerForm.phone,
-                create_time:this.registerForm.create_time
+                create_time:this.registerForm.create_time,
+                img:parseInt(Math.random()*6)
               }).then((response)=> {
                 console.log(response.data);
                 if (response.data.code===0){

@@ -11,7 +11,7 @@ class Comment extends Model
         try {
             $comment->data([
                 'content' => $data['content'],
-                'username' =>$data['username'],
+                'uid' =>$data['uid'],
                 'create_time' => $data['create_time'],
                 'aid' => $data['aid'],
                 'pid' => $data['pid']
