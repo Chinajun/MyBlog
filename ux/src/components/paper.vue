@@ -1,6 +1,15 @@
 <!-- 文章列表 -->
 <template>
   <div>
+    <el-card class="box-card paper-card" :body-style="{ padding: '0px' }">
+      <img :src="require('@/assets/a0.jpg')" class="paper-img">
+      <div style="padding: 14px;">
+        <span>好吃的汉堡</span>
+        <div class="bottom clearfix">
+          <el-button type="text" class="button">操作按钮</el-button>
+        </div>
+      </div>
+    </el-card>
     <div v-for="(item,index) in paperList" :key="index">
       <el-card class="box-card">
         <div slot="header">
@@ -81,5 +90,12 @@
   .loadMore{
     margin: 50px 100px;
     text-align: center;
+  }
+  /* 新卡片*/
+  /*.paper-card{*/
+  /*  padding: 0;*/
+  /*}*/
+  .paper-img{
+    width: 810px;
   }
 </style>

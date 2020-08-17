@@ -92,7 +92,7 @@ export default {
     z-index: 100;
     position: fixed;
     height: 60px;
-    /*opacity: 0.8;*/
+    /*opacity: 0.6;*/
   }
   .menuBox .el-menu-demo{
     padding-left: 15%;

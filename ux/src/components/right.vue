@@ -1,7 +1,7 @@
 <!-- 右侧列表 -->
 <template>
   <div>
-    <div class="rightBox-1">
+    <div class="rightBox-1" id="rightBox-1">
       <el-card>
         <img :src="require('@/assets/tx999.jpg')" class="touxiang">
         <div class="intro-1">
@@ -26,7 +26,7 @@
         </div>
       </el-card>
     </div>
-    <div class="rightBox-2">
+    <div class="rightBox-2" id="rightBox-2">
       <el-card>
         <div class="intro-2">
           <span>我的朋友们</span>
@@ -41,6 +41,17 @@
         </div>
       </el-card>
     </div>
+<!--    <div>-->
+<!--      <section :class="fixDo?'rs2 fixed':'rs2'" @click="lovemeFun">-->
+<!--        <p>-->
+<!--          Do you like me?-->
+<!--        </p>-->
+<!--        <div class="">-->
+<!--          <i :class="loveme?'heart active':'heart'" ></i>-->
+<!--          <span>{{likeNum}}</span>-->
+<!--        </div>-->
+<!--      </section>-->
+<!--    </div>-->
   </div>
 </template>
 <script>
@@ -54,12 +65,32 @@
           // qq:"require('@/assets/qq.jpg')",
           // wechat:"require('@/assets/wechat.png')",
         },
-        userList:[]
+        userList:[],
       }
     },
     mounted() {
       this.getUsers();
     },
+    // watch:{
+    //   isFixed(old,newV){
+    //     // 鼠标滚动时
+    //     window.onscroll=function(){
+    //       var topScroll =document.body.scrollTop;//滚动的距离,距离顶部的距离
+    //       var pageScroll1 = document.getElementById("rightBox-1");
+    //       var pageScroll2 = document.getElementById("rightBox-2");//获取到导航栏id
+    //       if(topScroll >= 150){
+    //         debugger
+    //         //当滚动距离小于250的时候执行下面的内容，也就是让导航栏恢复原状
+    //         pageScroll1.style.position = 'static';
+    //       }else{
+    //         debugger
+    //         //当滚动距离大于250px时执行下面的东西
+    //         pageScroll1.style.position = 'fixed';
+    //         console.log(pageScroll1)
+    //       }
+    //     }
+    //   }
+    // },
     methods:{
       getUsers(){
         axios.post("/api/blog/getUsers",).then((response) => {
@@ -131,4 +162,67 @@
     text-align: center;
     border-radius: 50%;
   }
+
+  /*!*************do you like me*******************!*/
+  /*.rightlistBox .rs2{*/
+  /*  !*padding:10px 0 4px 0;*!*/
+  /*  min-height: 100px;*/
+  /*}*/
+  /*.rightlistBox .rs2.fixed{*/
+  /*  position: fixed;*/
+  /*  top:40px;*/
+  /*  width:22%;*/
+  /*}*/
+  /*.rightlistBox .rs2 p{*/
+  /*  color:#DF2050;*/
+  /*  cursor: pointer;*/
+  /*  font-size: 20px;*/
+  /*  margin-bottom: 10px;*/
+  /*  white-space: nowrap;*/
+  /*  overflow: hidden;*/
+  /*  text-overflow: ellipsis;*/
+  /*  text-align: center;*/
+  /*  margin-top:10px;*/
+  /*  font-weight: 500;*/
+  /*}*/
+  /*.rightlistBox .rs2 div{*/
+  /*  color:#DF2050;*/
+  /*  cursor: pointer;*/
+  /*  text-align: center;*/
+  /*  font-size: 40px;*/
+  /*  position: absolute;*/
+  /*  width:100%;*/
+  /*  height:100px;*/
+  /*  line-height: 100px;*/
+  /*  left:0;*/
+  /*  top:30px;*/
+  /*}*/
+  /*.rightlistBox .rs2 div i.heart{*/
+  /*  display: inline-block;*/
+  /*  text-align: center;*/
+  /*  width: 100px;*/
+  /*  height: 100px;*/
+  /*  margin-left: -20px;*/
+  /*  margin-top:-5px;*/
+  /*  background: url(../../static/img/heart.png) no-repeat;*/
+  /*  background-position: 0 0;*/
+  /*  cursor: pointer;*/
+  /*  -webkit-transition: background-position 1s steps(28);*/
+  /*  transition: background-position 1s steps(28);*/
+  /*  -webkit-transition-duration: 0s;*/
+  /*  transition-duration: 0s;*/
+  /*  vertical-align: middle;*/
+  /*}*/
+  /*.rightlistBox .rs2 div i.heart:hover{*/
+  /*  transform: scale(1.15);*/
+  /*  -webkit-transform: scale(1.15);*/
+  /*}*/
+  /*.rightlistBox .rs2 div i.heart.active{*/
+  /*  -webkit-transition-duration: 1s;*/
+  /*  transition-duration: 1s;*/
+  /*  background-position: -2800px 0;*/
+  /*}*/
+  /*.rightlistBox .rs2 div span{*/
+  /*  margin-left: -30px;*/
+  /*}*/
 </style>
