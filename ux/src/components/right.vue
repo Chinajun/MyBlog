@@ -122,7 +122,6 @@
   .rightBox-2-home{
     width: 400px;
     margin: 400px 0;
-    /*margin: 50px 0;*/
     right: 7%;
     top: 10%;
   }
@@ -131,7 +130,7 @@
     position: fixed;
     margin: 400px 0;
   }
-  .rightBox-1:hover,.rightBox-2:hover{
+  .rightBox-1:hover,.rightBox-2:hover,.rightBox-1-home:hover,.rightBox-2-home:hover{
     box-shadow: 0px 1rem 2rem 0px rgba(48, 55, 66, 0.15);
     transform: translate(0,-5px);
     transition-delay: 0s !important;

@@ -1,15 +1,18 @@
 <!-- 文章列表 -->
 <template>
   <div>
-    <el-card class="box-card paper-card" :body-style="{ padding: '0px' }">
-      <img :src="require('@/assets/a0.jpg')" class="paper-img">
-      <div style="padding: 14px;">
-        <span>好吃的汉堡</span>
-        <div class="bottom clearfix">
-          <el-button type="text" class="button">操作按钮</el-button>
-        </div>
-      </div>
-    </el-card>
+<!--    <el-card class="box-card paper-card" :body-style="{ padding: '0px' }">-->
+<!--      <img :src="require('@/assets/a0.jpg')" class="paper-img">-->
+<!--      <div style="padding: 14px;">-->
+<!--        <span style="float: left;padding-bottom: 3px">好吃的汉堡</span>-->
+<!--        <div class="bottom clearfix">-->
+<!--          <el-button style="float: right; padding: 3px 0" type="text" @click="toDetail(item)">查看详情</el-button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </el-card>-->
+    <div class="box-card">
+      <img class="article-img" :src="require('@/assets/a0.jpg')"/>
+    </div>
     <div v-for="(item,index) in paperList" :key="index">
       <el-card class="box-card">
         <div slot="header">
@@ -75,6 +78,10 @@
   }
 </script>
 <style>
+  .article-img{
+    width: 100%;
+  }
+  /* test */
   .paper-content{
     margin: 10px;
     line-height: 30px;
@@ -92,9 +99,9 @@
     text-align: center;
   }
   /* 新卡片*/
-  /*.paper-card{*/
-  /*  padding: 0;*/
-  /*}*/
+  .paper-card{
+    /*border-radius: 3%;*/
+  }
   .paper-img{
     width: 810px;
   }

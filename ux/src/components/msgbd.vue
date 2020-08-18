@@ -1,3 +1,4 @@
+<!-- 留言板和文章详情 -->
 <template>
   <div>
     <el-card class="box-card" v-if="isMsgbd">
@@ -28,7 +29,21 @@
           <i class="el-icon-view"></i>{{view}}
           <el-tag>{{mark}}</el-tag>
         </div>
-        <pre>{{content}}</pre></div>
+        <pre>{{content}}</pre>
+      </div>
+      <div class="shareBox">
+        分享到:
+        <a href="#" class="ds-weibo fa fa-weibo" @click="shareWeibo()"></a>
+        <a href="#" class="ds-qq fa fa-qq" @click="shareQQ()"></a>
+<!--        <div class="dlikeColBox">-->
+<!--          <div class="dlikeBox" @click="likecollectHandle(1)" >-->
+<!--            <i :class="likeArt?'fa fa-fw fa-heart':'fa fa-fw fa-heart-o'" ></i>喜欢 | {{likeCount}}-->
+<!--          </div>-->
+<!--          <div class="dcollectBox" @click="likecollectHandle(2)" >-->
+<!--            <i :class="collectArt?'fa fa-fw fa-star':'fa fa-fw fa-star-o'" ></i>收藏 | {{collectCount}}-->
+<!--          </div>-->
+<!--        </div>-->
+      </div>
     </el-card>
     <el-card class="box-card">
       <div slot="header">
@@ -89,7 +104,6 @@
 </template>
 <script>
   import axios from "axios";
-
   export default {
     data(){
       return{
@@ -98,6 +112,7 @@
         content:"",
         username:"",
         create_time:"",
+        mark:"",
         view:0,
         // 评论
         msgList:[],
@@ -229,6 +244,13 @@
       // 下拉框关闭/打开执行的方法
       handleChange(){
         this.reply = "";
+      },
+      // 分享
+      shareWeibo(){ // TODO 网站地址
+        window.open('http://service.weibo.com/share/share.php?title=一起来看看吧：《'+this.title+'》作者：'+this.username+'，地址：');
+      },
+      shareQQ(){
+        window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://www.baidu.com&desc=《'+this.title+'》作者：'+this.username+'&summary=一起来看看吧');
       }
     }
   }
@@ -348,5 +370,40 @@
   }
   .drop_down_input{
     width: 400px;
+  }
+  /* 分享图标 */
+  .shareBox {
+    margin-top:40px;
+    position: relative;
+  }
+  .shareBox a{
+    position: relative;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    border-radius: 50%;
+    line-height: 32px;
+    text-align: center;
+    vertical-align: middle;
+    margin: 4px;
+    background: #fff;
+    transition: background 0.6s ease-out;
+  }
+  .ds-weibo{
+    border: 1px solid #ff763b;
+    color: #ff763b;
+  }
+  .ds-weibo:hover{
+    color: #fff;
+    background: #ff763b;
+  }
+  .ds-qq{
+    color: #56b6e7;
+    border: 1px solid #56b6e7;
+  }
+  .ds-qq:hover{
+    color: #fff;
+    background: #56b6e7;
   }
 </style>
