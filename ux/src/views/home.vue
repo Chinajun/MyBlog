@@ -1,7 +1,7 @@
 <!-- 首页 -->
 <template>
   <div>
-    <cyj-header class="home-header"></cyj-header>
+    <cyj-header></cyj-header>
     <div>
       <img class="headImg" :src="require('@/assets/header.jpg')"/>
       <!-- 遮罩层 -->
@@ -25,7 +25,7 @@
           <cyj-paper></cyj-paper>
         </el-col>
         <el-col :sm="24" :md="8">
-          <cyj-right></cyj-right>
+          <cyj-right :isHome=true></cyj-right>
         </el-col>
       </el-row>
     </div>
@@ -123,7 +123,7 @@
       },
       toDown(){
         var PageId = document.querySelector('#page');
-        // console.log(PageId.offsetTop);
+        // console.log(this.pageHeight);
         window.scrollTo({
           'top': PageId.offsetTop,
           'behavior': 'smooth'
@@ -133,9 +133,9 @@
   }
 </script>
 <style>
-  .home-header{
-    opacity: 0.7;
-  }
+  /*.home-header{*/
+  /*  opacity: 0.7;*/
+  /*}*/
   .headImg{
     width: 100%;
     height: 100vh;

@@ -1,7 +1,7 @@
 <!-- 右侧列表 -->
 <template>
   <div>
-    <div class="rightBox-1" id="rightBox-1">
+      <div :class="isHome?'rightBox-1-home':'rightBox-1'" id="rightBox-1">
       <el-card>
         <img :src="require('@/assets/tx999.jpg')" class="touxiang">
         <div class="intro-1">
@@ -26,7 +26,7 @@
         </div>
       </el-card>
     </div>
-    <div class="rightBox-2" id="rightBox-2">
+    <div :class="isHome?'rightBox-2-home':'rightBox-2'" id="rightBox-2">
       <el-card>
         <div class="intro-2">
           <span>我的朋友们</span>
@@ -41,6 +41,7 @@
         </div>
       </el-card>
     </div>
+<!--   do you like me -->
 <!--    <div>-->
 <!--      <section :class="fixDo?'rs2 fixed':'rs2'" @click="lovemeFun">-->
 <!--        <p>-->
@@ -57,6 +58,9 @@
 <script>
   import axios from "axios";
   export default {
+    props:{
+      isHome:''
+    },
     data(){
       return{
         contactList:{
@@ -66,31 +70,30 @@
           // wechat:"require('@/assets/wechat.png')",
         },
         userList:[],
+        top:0,
       }
     },
     mounted() {
       this.getUsers();
     },
-    // watch:{
-    //   isFixed(old,newV){
-    //     // 鼠标滚动时
-    //     window.onscroll=function(){
-    //       var topScroll =document.body.scrollTop;//滚动的距离,距离顶部的距离
-    //       var pageScroll1 = document.getElementById("rightBox-1");
-    //       var pageScroll2 = document.getElementById("rightBox-2");//获取到导航栏id
-    //       if(topScroll >= 150){
-    //         debugger
-    //         //当滚动距离小于250的时候执行下面的内容，也就是让导航栏恢复原状
-    //         pageScroll1.style.position = 'static';
-    //       }else{
-    //         debugger
-    //         //当滚动距离大于250px时执行下面的东西
-    //         pageScroll1.style.position = 'fixed';
-    //         console.log(pageScroll1)
-    //       }
-    //     }
-    //   }
-    // },
+    created() {
+      var that_isHome = this.isHome;
+      window.onscroll = function(){
+        var t = document.documentElement.scrollTop || document.body.scrollTop;
+        if(that_isHome===true){
+          var pageScroll1 = document.getElementById("rightBox-1");
+          var pageScroll2 = document.getElementById("rightBox-2");
+          var PageId = document.querySelector('#page');
+          if(t>PageId.offsetTop){
+            pageScroll1.style.position = 'fixed';
+            pageScroll2.style.position = 'fixed';
+          }else{
+            pageScroll1.style.position = 'static';
+            pageScroll2.style.position = 'static';
+          }
+        }
+      }
+    },
     methods:{
       getUsers(){
         axios.post("/api/blog/getUsers",).then((response) => {
@@ -100,15 +103,28 @@
         }).catch(function (error) {
           console.log(error);
         });
-      }
+      },
     }
   }
 </script>
 <style>
+  .rightBox-1-home{
+    width: 400px;
+    margin: 50px 0;
+    right: 7%;
+    top: 10%;
+  }
   .rightBox-1{
     width: 400px;
     margin: 50px 0;
     position: fixed;
+  }
+  .rightBox-2-home{
+    width: 400px;
+    margin: 400px 0;
+    /*margin: 50px 0;*/
+    right: 7%;
+    top: 10%;
   }
   .rightBox-2{
     width: 400px;
@@ -149,7 +165,7 @@
     border-radius: 50%;
     margin: 10px;
   }
-  .rightBox-2 .users{
+  .users{
     margin: 0px 10px 10px 20px;
     float: left;
   }
