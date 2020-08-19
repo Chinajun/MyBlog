@@ -159,6 +159,7 @@
     z-index: 2;
     font-size: 45px;
     color: #d9d9d9;
+    overflow: hidden;
   }
   .headWord .i-left{
     position: absolute;
