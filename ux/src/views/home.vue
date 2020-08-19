@@ -14,9 +14,9 @@
         </div>
         <i class="fa fa-quote-right i-right"></i>
         <span class="i-from">—— {{hitokoto.username}}</span>
-        <div class="i-down">
-          <i class="el-icon-arrow-down" @click="toDown()"></i>
-        </div>
+      </div>
+      <div class="i-down">
+        <i class="el-icon-arrow-down" @click="toDown()"></i>
       </div>
     </div>
     <div class="bodyBox" id="page">
@@ -152,7 +152,8 @@
   }
   .headWord{
     width: 100%;
-    height: 300px;
+    height: 350px;
+    /*height: 300px;*/
     position: absolute;
     top:400px;
     margin-top: -150px;
@@ -193,13 +194,15 @@
     top: 90%;
     right: 20%;
   }
+  .i-down{
+    position: absolute;
+    left: 50%;
+    top: 80%;
+  }
   .i-down i{
     color: #d9d9d9;
     font-size: 60px;
     font-weight: bold;
-    position: absolute;
-    top: 130%;
-    right: 50%;
   }
   .i-down i:hover{
     color: #8c939d;

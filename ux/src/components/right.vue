@@ -42,16 +42,19 @@
 <!--      </el-card>-->
 <!--    </div>-->
 <!--   do you like me -->
-    <div>
-      <section class="rs2" @click="lovemeFun">
-        <p>
-          Do you like me?
-        </p>
-        <div class="">
-          <i :class="loveme?'heart active':'heart'" ></i>
-          <span>{{likeNum}}</span>
-        </div>
-      </section>
+    <div class="rightBox-2">
+      <el-card>
+        <section class="rs2">
+          <p>
+            Do you like me?
+          </p>
+          <div class="rs2-like">
+            <i class="heart" @click="addLike"></i>
+            <!--          <i :class="loveme?'heart active':'heart'" ></i>-->
+            <span>{{likeNum}}</span>
+          </div>
+        </section>
+      </el-card>
     </div>
   </div>
 </template>
@@ -71,6 +74,7 @@
         },
         userList:[],
         top:0,
+        likeNum:0,
       }
     },
     mounted() {
@@ -104,6 +108,9 @@
           console.log(error);
         });
       },
+      addLike(){
+
+      }
     }
   }
 </script>
@@ -188,56 +195,59 @@
   /*  top:40px;*/
   /*  width:22%;*/
   /*}*/
-  /*.rightlistBox .rs2 p{*/
-  /*  color:#DF2050;*/
-  /*  cursor: pointer;*/
-  /*  font-size: 20px;*/
-  /*  margin-bottom: 10px;*/
-  /*  white-space: nowrap;*/
-  /*  overflow: hidden;*/
-  /*  text-overflow: ellipsis;*/
-  /*  text-align: center;*/
-  /*  margin-top:10px;*/
-  /*  font-weight: 500;*/
-  /*}*/
-  /*.rightlistBox .rs2 div{*/
-  /*  color:#DF2050;*/
-  /*  cursor: pointer;*/
-  /*  text-align: center;*/
-  /*  font-size: 40px;*/
-  /*  position: absolute;*/
-  /*  width:100%;*/
-  /*  height:100px;*/
-  /*  line-height: 100px;*/
-  /*  left:0;*/
-  /*  top:30px;*/
-  /*}*/
-  /*.rightlistBox .rs2 div i.heart{*/
-  /*  display: inline-block;*/
-  /*  text-align: center;*/
-  /*  width: 100px;*/
-  /*  height: 100px;*/
-  /*  margin-left: -20px;*/
-  /*  margin-top:-5px;*/
-  /*  background: url(../../static/img/heart.png) no-repeat;*/
-  /*  background-position: 0 0;*/
-  /*  cursor: pointer;*/
-  /*  -webkit-transition: background-position 1s steps(28);*/
-  /*  transition: background-position 1s steps(28);*/
-  /*  -webkit-transition-duration: 0s;*/
-  /*  transition-duration: 0s;*/
-  /*  vertical-align: middle;*/
-  /*}*/
-  /*.rightlistBox .rs2 div i.heart:hover{*/
-  /*  transform: scale(1.15);*/
-  /*  -webkit-transform: scale(1.15);*/
-  /*}*/
+  .rs2 p{
+    color:#DF2050;
+    cursor: pointer;
+    font-size: 20px;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    margin-top:10px;
+    font-weight: 500;
+  }
+  .rs2-like{
+    color:#DF2050;
+    cursor: pointer;
+    text-align: center;
+    font-size: 40px;
+    position: absolute;
+    width:100%;
+    height:100px;
+    line-height: 100px;
+    left:0;
+    top:30px;
+  }
+  .heart{
+    width: 50px;
+    height: 50px;
+    /*test*/
+    display: inline-block;
+    text-align: center;
+    /*width: 100px;*/
+    /*height: 100px;*/
+    margin-left: -20px;
+    margin-top:-5px;
+    background-image: url("../assets/heart.png");
+    background-size: 100% 100%;
+    cursor: pointer;
+    -webkit-transition: background-position 1s steps(28);
+    transition: background-position 1s steps(28);
+    -webkit-transition-duration: 0s;
+    transition-duration: 0s;
+    vertical-align: middle;
+  }
+  .heart:hover{
+    transform: scale(1.15);
+    -webkit-transform: scale(1.15);
+  }
   /*.rightlistBox .rs2 div i.heart.active{*/
   /*  -webkit-transition-duration: 1s;*/
   /*  transition-duration: 1s;*/
   /*  background-position: -2800px 0;*/
   /*}*/
-  /*.rightlistBox .rs2 div span{*/
-  /*  margin-left: -30px;*/
-  /*}*/
+  .rs2 div span{
+    margin-left: -30px;
+  }
 </style>
