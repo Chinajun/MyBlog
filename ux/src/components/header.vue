@@ -71,6 +71,7 @@ export default {
             localStorage.removeItem('userInfo');
             // this.$cookies.remove('uid');
             this.loginStatus = false;
+            this.$router.go(0);
             this.$message({
               message: response.data.msg,
               type: 'success'

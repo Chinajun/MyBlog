@@ -32,8 +32,15 @@
       }
     },
     mounted:function(){
+      this.getUserInfo();
     },
     methods:{
+      // 在本页退出登陆后，自动跳转到首页
+      getUserInfo(){
+        if(!localStorage.getItem('userInfo')){
+          this.$router.push('home');
+        }
+      }
     }
   }
 </script>
