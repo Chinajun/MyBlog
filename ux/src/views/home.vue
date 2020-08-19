@@ -9,9 +9,9 @@
       </div>
       <div class="headWord">
         <i class="fa fa-quote-left i-left"></i>
-        <span class="word">
+        <div class="word">
           <span v-for="(letter,index) in words" :key="index">{{letter}}</span>
-        </span>
+        </div>
         <i class="fa fa-quote-right i-right"></i>
         <span class="i-from">—— {{hitokoto.username}}</span>
         <div class="i-down">
@@ -170,15 +170,21 @@
     top: 60%;
   }
   .headWord .word{
+    width: 80%;
+    height: 50%;
     position: absolute;
-    left: 45%;
-    margin-left: -250px;
+    left: 50%;
+    /*margin-left: -250px;*/
     top: 30%;
     text-align: center;
     color: white;
     font-weight: 400 !important;
     line-height: 1 !important;
     font-size: 2rem !important;
+  }
+  .word span{
+    position: relative;
+    left: -50%;
   }
   .headWord .i-from{
     font-size: 30px;

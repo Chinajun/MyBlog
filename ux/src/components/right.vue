@@ -26,33 +26,33 @@
         </div>
       </el-card>
     </div>
-    <div :class="isHome?'rightBox-2-home':'rightBox-2'" id="rightBox-2">
-      <el-card>
-        <div class="intro-2">
-          <span>我的朋友们</span>
-        </div>
-        <div class="users" v-for="(item,index) in userList" :key="index">
-          <el-tooltip  class="item" :content="item.username">
-            <img :src="require('@/assets/tx'+item.img+'.jpg')" class="touxiang-small">
-          </el-tooltip>
-        </div>
-        <div class="users users-more" v-show="userList.length==7">
-          <a><i class="el-icon-more"></i></a>
-        </div>
-      </el-card>
-    </div>
-<!--   do you like me -->
-<!--    <div>-->
-<!--      <section :class="fixDo?'rs2 fixed':'rs2'" @click="lovemeFun">-->
-<!--        <p>-->
-<!--          Do you like me?-->
-<!--        </p>-->
-<!--        <div class="">-->
-<!--          <i :class="loveme?'heart active':'heart'" ></i>-->
-<!--          <span>{{likeNum}}</span>-->
+<!--    <div :class="isHome?'rightBox-2-home':'rightBox-2'" id="rightBox-2">-->
+<!--      <el-card>-->
+<!--        <div class="intro-2">-->
+<!--          <span>我的朋友们</span>-->
 <!--        </div>-->
-<!--      </section>-->
+<!--        <div class="users" v-for="(item,index) in userList" :key="index">-->
+<!--          <el-tooltip  class="item" :content="item.username">-->
+<!--            <img :src="require('@/assets/tx'+item.img+'.jpg')" class="touxiang-small">-->
+<!--          </el-tooltip>-->
+<!--        </div>-->
+<!--        <div class="users users-more" v-show="userList.length==7">-->
+<!--          <a><i class="el-icon-more"></i></a>-->
+<!--        </div>-->
+<!--      </el-card>-->
 <!--    </div>-->
+<!--   do you like me -->
+    <div>
+      <section class="rs2" @click="lovemeFun">
+        <p>
+          Do you like me?
+        </p>
+        <div class="">
+          <i :class="loveme?'heart active':'heart'" ></i>
+          <span>{{likeNum}}</span>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 <script>
@@ -179,10 +179,10 @@
   }
 
   /*!*************do you like me*******************!*/
-  /*.rightlistBox .rs2{*/
-  /*  !*padding:10px 0 4px 0;*!*/
-  /*  min-height: 100px;*/
-  /*}*/
+  .rs2{
+    /*padding:10px 0 4px 0;*/
+    min-height: 100px;
+  }
   /*.rightlistBox .rs2.fixed{*/
   /*  position: fixed;*/
   /*  top:40px;*/
