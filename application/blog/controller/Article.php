@@ -33,10 +33,19 @@ class Article extends Controller
         $data = request()->param();
         $article = new \app\blog\model\Article();
         if(sizeof($data)>1){
-            $count = $article->where('mark',$data['mark'])->count();
-            $result = $article->where('mark',$data['mark'])
-                ->limit(($data['page']-1)*10,10)->order("create_time desc")->select();
-        }else{// 首页
+            // 文章列表页 前端传递的数据:mark,page
+            // 文章列表搜索页 前端传递的数据:mark,page,search
+            $map = [];
+            $map['title'] = ['like','%'.$data['search'].'%'];
+            $map['username'] = ['like','%'.$data['search'].'%'];
+            $count = $article->where('mark',$data['mark'])->where(function ($query) use ($map) {
+                $query->whereOr($map);
+            })->count();
+            $result = $article->where('mark',$data['mark'])->where(function ($query) use ($map) {
+                $query->whereOr($map);
+            })->limit(($data['page']-1)*10,10)->order("create_time desc")->select();
+        }else{
+            // 首页 前端传递的数据:page
             $count = $article->count();
             $result = $article->limit(($data['page']-1)*10,10)
                 ->order("create_time desc")->select();

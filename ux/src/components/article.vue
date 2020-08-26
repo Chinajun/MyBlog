@@ -1,3 +1,4 @@
+<!-- 文章列表页 -->
 <template>
   <div>
     <el-card class="box-card" v-if="isNote">
@@ -21,7 +22,11 @@
     <el-card class="box-card">
       <div slot="header">
         <span class="msg-title">文章列表</span>
-        <el-button style="float: right; padding: 3px 0" type="text"  @click="addArticle">发表文章</el-button>
+        <el-input placeholder="搜索文章标题或作者" v-model="selectArticle" class="select-article">
+          <el-button slot="append" icon="el-icon-search" @click="getArticle"/>
+        </el-input>
+<!--        <el-button style="float: right; padding: 3px 0" type="text"  @click="addArticle">发表文章</el-button>-->
+        <el-button style="float: right; padding: 10px 0" type="text"  @click="addArticle">发表文章</el-button>
       </div>
       <div>
         <el-table :data="articleList" style="width: 100%" :show-header="false" @row-click="articleDetail">
@@ -52,7 +57,8 @@
         articleMark:"",
         articleList:[],
         page:1,
-        page_count:0
+        page_count:0,
+        selectArticle:"", // 关键词搜索文章
       }
     },
     props:{
@@ -75,7 +81,8 @@
       getArticle(){
         axios.post("/api/blog/getArticle",{
           mark:this.articleMark,
-          page:this.page
+          page:this.page,
+          search:this.selectArticle
         }).then((response) => {
           this.articleList = [];
           this.page_count = response.data.data.count;
@@ -95,10 +102,16 @@
       addArticle(){
         this.$router.push('addArticle');
       },
+      // 页码改变
       handleCurrentChange(val){
         this.page = val;
         this.getArticle();
-      }
+      },
+      // 关键词搜索文章
+      // searchInput(){
+      //   console.log(this.selectArticle);
+      //
+      // }
     }
   }
 </script>
@@ -128,5 +141,9 @@
     text-align: center;
     font-size: 14px;
     line-height: 30px;
+  }
+  .select-article{
+    width: 50%;
+    left: 10%;
   }
 </style>

@@ -51,7 +51,7 @@
           <div class="rs2-like">
             <i class="heart" @click="addLike"></i>
             <!--          <i :class="loveme?'heart active':'heart'" ></i>-->
-            <span>{{likeNum}}</span>
+<!--            <span>{{likeNum}}</span>-->
           </div>
         </section>
       </el-card>
@@ -78,7 +78,11 @@
       }
     },
     mounted() {
-      this.getUsers();
+      // this.getUsers();
+      window.addEventListener('beforeunload', e => this.beforeunloadHandler(e))
+    },
+    destroyed() {
+      window.removeEventListener('beforeunload', e => this.beforeunloadHandler(e))
     },
     created() {
       var that_isHome = this.isHome;
@@ -110,7 +114,15 @@
       },
       addLike(){
 
-      }
+      },
+      beforeunloadHandler(e){
+        // if (e) {
+        //   // e.returnValue = "您是否确认离开此页面-您输入的数据可能不会被保存";
+        //   e.returnValue = "aaa-bbb";
+        // }
+        // return "ccc-ddd";
+        // // return "您是否确认离开此页面-您输入的数据可能不会被保存";
+      },
     }
   }
 </script>
