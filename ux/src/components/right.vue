@@ -26,36 +26,37 @@
         </div>
       </el-card>
     </div>
-<!--    <div :class="isHome?'rightBox-2-home':'rightBox-2'" id="rightBox-2">-->
-<!--      <el-card>-->
-<!--        <div class="intro-2">-->
-<!--          <span>我的朋友们</span>-->
-<!--        </div>-->
-<!--        <div class="users" v-for="(item,index) in userList" :key="index">-->
-<!--          <el-tooltip  class="item" :content="item.username">-->
-<!--            <img :src="require('@/assets/tx'+item.img+'.jpg')" class="touxiang-small">-->
-<!--          </el-tooltip>-->
-<!--        </div>-->
-<!--        <div class="users users-more" v-show="userList.length==7">-->
-<!--          <a><i class="el-icon-more"></i></a>-->
-<!--        </div>-->
-<!--      </el-card>-->
-<!--    </div>-->
-<!--   do you like me -->
-    <div class="rightBox-2">
+    <div :class="isHome?'rightBox-2-home':'rightBox-2'" id="rightBox-2">
       <el-card>
-        <section class="rs2">
-          <p>
-            Do you like me?
-          </p>
-          <div class="rs2-like">
-            <i class="heart" @click="addLike"></i>
-            <!--          <i :class="loveme?'heart active':'heart'" ></i>-->
-<!--            <span>{{likeNum}}</span>-->
-          </div>
-        </section>
+        <div class="intro-2">
+          <span>我的朋友们</span>
+        </div>
+        <div class="users" v-for="(item,index) in userList" :key="index">
+          <el-tooltip  class="item" :content="item.username">
+            <img :src="require('@/assets/tx'+item.img+'.jpg')" class="touxiang-small">
+          </el-tooltip>
+        </div>
+        <div class="users users-more" v-show="userList.length==7">
+          <a><i class="el-icon-more"></i></a>
+        </div>
       </el-card>
     </div>
+    <!--   do you like me -->
+<!--    <div class="rightBox-2">-->
+<!--      <el-card>-->
+<!--        <section class="rs2">-->
+<!--          <p>-->
+<!--            Do you like me?-->
+<!--          </p>-->
+<!--          <div class="rs2-like">-->
+<!--            <i :class="like?'heart-active':'heart'" @click="addLike"></i>-->
+<!--            &lt;!&ndash;          <i :class="loveme?'heart active':'heart'" ></i>&ndash;&gt;-->
+<!--&lt;!&ndash;            <span>{{likeNum}}</span>&ndash;&gt;-->
+<!--          </div>-->
+<!--        </section>-->
+<!--      </el-card>-->
+<!--    </div>-->
+    <!--   do you like me -->
   </div>
 </template>
 <script>
@@ -74,16 +75,17 @@
         },
         userList:[],
         top:0,
-        likeNum:0,
+        // likeNum:0,
+        // like:false,
       }
     },
     mounted() {
-      // this.getUsers();
-      window.addEventListener('beforeunload', e => this.beforeunloadHandler(e))
+      this.getUsers();
+      // window.addEventListener('beforeunload', e => this.beforeunloadHandler(e))
     },
-    destroyed() {
-      window.removeEventListener('beforeunload', e => this.beforeunloadHandler(e))
-    },
+    // destroyed() {
+    //   window.removeEventListener('beforeunload', e => this.beforeunloadHandler(e))
+    // },
     created() {
       var that_isHome = this.isHome;
       window.onscroll = function(){
@@ -112,17 +114,17 @@
           console.log(error);
         });
       },
-      addLike(){
-
-      },
-      beforeunloadHandler(e){
-        // if (e) {
-        //   // e.returnValue = "您是否确认离开此页面-您输入的数据可能不会被保存";
-        //   e.returnValue = "aaa-bbb";
-        // }
-        // return "ccc-ddd";
-        // // return "您是否确认离开此页面-您输入的数据可能不会被保存";
-      },
+      // addLike(){
+      //   // this.like = true;
+      // },
+      // beforeunloadHandler(e){
+      //   // if (e) {
+      //   //   // e.returnValue = "您是否确认离开此页面-您输入的数据可能不会被保存";
+      //   //   e.returnValue = "aaa-bbb";
+      //   // }
+      //   // return "ccc-ddd";
+      //   // // return "您是否确认离开此页面-您输入的数据可能不会被保存";
+      // },
     }
   }
 </script>
@@ -254,11 +256,11 @@
     transform: scale(1.15);
     -webkit-transform: scale(1.15);
   }
-  /*.rightlistBox .rs2 div i.heart.active{*/
-  /*  -webkit-transition-duration: 1s;*/
-  /*  transition-duration: 1s;*/
-  /*  background-position: -2800px 0;*/
-  /*}*/
+  .heart-active{
+    -webkit-transition-duration: 1s;
+    transition-duration: 1s;
+    background-position: -2800px 0;
+  }
   .rs2 div span{
     margin-left: -30px;
   }

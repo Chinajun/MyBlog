@@ -3,7 +3,9 @@
   <div>
     <el-card class="box-card" v-if="isNote">
       <div slot="header" class="msg-title">笔记</div>
-      <img :src="require('@/assets/note.jpg')" class="article-img-note">
+      <div class="article-img-note">
+        <img :src="require('@/assets/note.jpg')">
+      </div>
       <div class="about-desc">
         <p>
           记录一些学习笔记~
@@ -12,7 +14,9 @@
     </el-card>
     <el-card class="box-card" v-else>
       <div slot="header" class="msg-title">日常</div>
-      <img :src="require('@/assets/daily.jpg')" class="article-img-daily">
+      <div class="article-img-note">
+        <img :src="require('@/assets/daily.jpg')">
+      </div>
       <div class="about-desc">
         <p>
           日常分享
@@ -125,14 +129,12 @@
     transition-delay: 0s !important;
   }
   .article-img-note{
-    width: 40%;
-    margin-left: 30%;
+    display:flex;
+    justify-content:center;
     margin-bottom: 20px;
   }
-  .article-img-daily{
-    width: 50%;
-    margin-left: 25%;
-    margin-bottom: 20px;
+  .article-img-note img{
+    width: 40%;
   }
   .msg-title{
     font-weight: bold;

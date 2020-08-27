@@ -3,7 +3,9 @@
   <div>
     <el-card class="box-card" v-if="isMsgbd">
       <div slot="header" class="msg-title">留言板</div>
-      <img :src="require('@/assets/msg.jpg')" class="msg-img">
+      <div class="msg-img">
+        <img :src="require('@/assets/msg.jpg')">
+      </div>
       <div class="msg-desc">
         <p>
           1990年，旅行者1号于距地球64亿公里处最后一次回望母星，拍摄下这张照片。
@@ -279,7 +281,8 @@
     transition-delay: 0s !important;
   }
   .msg-img{
-    margin-left: 20%;
+    display:flex;
+    justify-content:center;
     margin-bottom: 20px;
   }
   .msg-title{

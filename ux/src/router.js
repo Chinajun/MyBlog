@@ -11,6 +11,7 @@ import articleDetail from "./views/articleDetail";
 import register from "./views/register";
 import addArticle from "./views/addArticle";
 import NotFound from "./views/NotFound";
+import center from "./views/center";
 
 const routes=[
     {path:"",component:home},
@@ -26,6 +27,11 @@ const routes=[
     {path:"/about",component:about,name:about,meta:{title: '关于我'}},//关于我
     {path:"/login",component:login,name:login,meta:{title: '登录'}},//登录
     {path:"/register",component:register,name:register,meta:{title: '注册'}},//注册
+    {path:"/center",component:center,name:center,
+      meta:{
+      title: '个人中心',
+        type: 'login'
+    }},//个人中心
     {path:"/articleDetail",component:articleDetail,name:articleDetail,meta:{title: '文章详情'}},// 文章详情页
     {path:'*',component:NotFound,name:NotFound,meta:{title: '404'}},//全不匹配的情况下，返回404，路由按顺序从上到下，依次匹配。最后一个*能匹配全部，
 ];
