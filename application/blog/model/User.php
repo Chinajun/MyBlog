@@ -85,4 +85,18 @@ class User extends Model
     public function getUserInfo($data,$user){
         return $user->where('Id','in',$data)->select();
     }
+
+    /**
+     * 更新用户信息
+     */
+    public function updateUser($data,$user){
+        try {
+            $map = $data;
+            unset($map['Id']);
+            return $user->where('Id',$data['Id'])->update($map);
+        }catch (\Exception $e){
+            $this->error = '出现错误';
+            return false;
+        }
+    }
 }

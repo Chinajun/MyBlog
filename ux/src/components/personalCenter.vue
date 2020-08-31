@@ -7,18 +7,41 @@
       </div>
       <div class="msg-container">
         <div class="headPicture">
-          <img :src="require('@/assets/tx999.jpg')">
+          <img :src="require('@/assets/tx'+this.userForm.img+'.jpg')">
+          <!-- 遮罩层 -->
+          <div class="changePicture" @mouseover="showMsg" @mouseout="removeMsg" @click="changePicture">
+            <p id="changePicture"></p>
+          </div>
+          <el-dialog
+            :visible.sync="showDialog"
+            title="修改头像"
+            :append-to-body="true"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            width="550px">
+            <div class="headPicture">
+              <img :src="require('@/assets/tx'+this.randomNum+'.jpg')">
+            </div>
+            <div class="headPicture">
+              <span @click="randomPicture">随机头像</span>
+              <el-divider direction="vertical"></el-divider>
+              <span>上传头像</span>
+            </div>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="showDialog = false">取 消</el-button>
+              <el-button type="primary" @click="submitPicture">确 定</el-button>
+            </span>
+          </el-dialog>
         </div>
-<!--        <el-form :model="articleForm" :rules="articleRules" ref="articleForm">-->
-<!--          <div class="add-btn">-->
-<!--            <span>请选择文章标签：</span>-->
-<!--            <el-radio v-model="articleForm.mark" label="笔记" border>笔记</el-radio>-->
-<!--            <el-radio v-model="articleForm.mark" label="日常" border>日常</el-radio>-->
-<!--          </div>-->
-<!--          <el-form-item prop="title"><el-input v-model="articleForm.title" type="text" :rows="2" placeholder="标题"></el-input></el-form-item>-->
-<!--          <el-form-item prop="content"><el-input v-model="articleForm.content" type="textarea" :rows="10" placeholder="内容"></el-input></el-form-item>-->
-<!--          <el-form-item><el-button type="primary" class="msg-btn" @click="onSubmit">发布</el-button></el-form-item>-->
-<!--        </el-form>-->
+        <el-divider><i class="el-icon-edit"></i></el-divider>
+        <el-form :model="userForm" :rules="userForm" ref="userForm">
+          <el-form-item prop="username">用户名<el-input v-model="userForm.username" type="text" placeholder="标题"></el-input></el-form-item>
+          <el-form-item prop="password">新密码<el-input v-model="userForm.content" type="password" placeholder="内容"></el-input></el-form-item>
+          <el-form-item prop="password2">确认密码<el-input v-model="userForm.content" type="password" placeholder="内容"></el-input></el-form-item>
+          <el-form-item prop="realName">真实姓名<el-input v-model="userForm.real_name" type="text" placeholder="标题"></el-input></el-form-item>
+          <el-form-item prop="phone">手机号码<el-input v-model="userForm.phone" type="text" placeholder="标题"></el-input></el-form-item>
+          <el-form-item><el-button type="primary" class="msg-btn" @click="onSubmit">提交</el-button></el-form-item>
+        </el-form>
       </div>
     </el-card>
   </div>
@@ -28,19 +51,51 @@
   export default {
     data(){
       return{
-        // articleForm:{
-        //   title:"",
-        //   content:"",
-        //   mark:"笔记",
-        //   create_time:"",
-        // },
-        // articleRules:{
-        //   title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
-        //   content: [{ required: true, message: '请输入内容', trigger: 'blur' }]
-        // }
+        showDialog:false,
+        randomNum:0,
+        userForm:{}
       }
     },
+    mounted() {
+      this.getInfo();
+    },
     methods:{
+      // 获取用户信息
+      getInfo(){
+        axios.post("/api/blog/getInfo",{
+          Id:JSON.parse(localStorage.getItem('userInfo')).Id
+        }).then((response)=> {
+          this.userForm = response.data.data[0];
+          this.randomNum = this.userForm.img;
+        }).catch(function(error) {
+          console.log(error);
+        });
+      },
+      showMsg(){
+        var changePicture = document.getElementById('changePicture');
+        changePicture.innerText = "修改头像";
+      },
+      removeMsg(){
+        var changePicture = document.getElementById('changePicture');
+        changePicture.innerText = "";
+      },
+      changePicture(){
+        this.showDialog = true;
+      },
+      randomPicture(){
+        this.randomNum = parseInt(Math.random()*6);
+      },
+      submitPicture(){
+        this.userForm.img = this.randomNum;
+        axios.post("/api/blog/updateUser",{
+          Id:JSON.parse(localStorage.getItem('userInfo')).Id,
+          img:this.randomNum
+        }).then((response)=> {
+          this.showDialog = false;
+        }).catch(function(error) {
+          console.log(error);
+        });
+      },
       onSubmit(){
         this.$refs.articleForm.validate(valid => {
           if(valid){
@@ -99,6 +154,26 @@
   .headPicture img{
     width: 150px;
     border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  .changePicture{
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    z-index: 4;
+  }
+  .changePicture p{
+    text-align: center;
+    margin-top: 70px;
+    color: white;
+  }
+  .changePicture:hover{
+    background-color:#000;
+    opacity: 0.4;
+  }
+  .headPicture span:hover{
+    color: #3a8ee6;
   }
   .msg-btn{
     width: 100%;

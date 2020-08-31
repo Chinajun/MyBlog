@@ -93,4 +93,37 @@ class User extends Controller
         $user = new \app\blog\model\User();
         return $user->limit(0,7)->select();
     }
+
+    /**
+     * 获取用户信息
+     */
+    public function getInfo(){
+        $data = request()->param();
+        $user = new \app\blog\model\User();
+        $result = $user->getUserInfo($data,$user);
+        return [
+            'code' => 0,
+            'data' => $result
+        ];
+    }
+
+    /**
+     * 修改用户信息
+     */
+    public function updateUser(){
+        $data = request()->param();
+        $user = new \app\blog\model\User();
+        $result = $user->updateUser($data,$user);
+        if($result==1){
+            return [
+                'code' => 0,
+                'msg' => '修改信息成功'
+            ];
+        }else{
+            return[
+                "code"=>400,
+                "msg"=>"修改信息失败"
+            ];
+        }
+    }
 }

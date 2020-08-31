@@ -16,11 +16,11 @@
             <div class="userBox">
               <!-- 未登录 -->
               <div v-show="!loginStatus">
-                <a @click="toLogin()">登录</a>  |  <a @click="toRegister">注册</a>
+                <a @click="toLogin">登录</a>  |  <a @click="toRegister">注册</a>
               </div>
               <!-- 已登录 -->
               <div v-show="loginStatus">
-                <a>个人中心</a>  |  <a @click="logout">退出登录</a>
+                <a @click="toCenter">个人中心</a>  |  <a @click="logout">退出登录</a>
               </div>
             </div>
           </el-menu>
@@ -59,6 +59,9 @@ export default {
     },
     toRegister(){
       this.$router.push('register');
+    },
+    toCenter(){
+      this.$router.push('center');
     },
     logout(){
       this.$confirm('是否确认退出?', '退出提示', {
