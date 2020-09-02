@@ -91,8 +91,21 @@ class User extends Model
      */
     public function updateUser($data,$user){
         try {
-            $map = $data;
-            unset($map['Id']);
+            if($data['oldPass']){
+                // 修改密码
+                $map = [];
+                $userInfo = $user->where('Id',$data['Id'])->find();
+                if (substr(md5($data['oldPass']), 8, 16) !== $userInfo['password']) {
+                    $this->error = '初始密码错误';
+                    return false;
+                }else{
+                    $map['password'] = substr(md5($data['newPass']),8,16);
+                }
+            }else{
+                // 修改头像
+                $map = $data;
+                unset($map['Id']);
+            }
             return $user->where('Id',$data['Id'])->update($map);
         }catch (\Exception $e){
             $this->error = '出现错误';

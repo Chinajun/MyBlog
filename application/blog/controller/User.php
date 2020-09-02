@@ -109,6 +109,8 @@ class User extends Controller
 
     /**
      * 修改用户信息
+     * 1. 头像
+     * 2. 密码
      */
     public function updateUser(){
         $data = request()->param();
@@ -122,7 +124,7 @@ class User extends Controller
         }else{
             return[
                 "code"=>400,
-                "msg"=>"修改信息失败"
+                "msg" => $user->getError()
             ];
         }
     }

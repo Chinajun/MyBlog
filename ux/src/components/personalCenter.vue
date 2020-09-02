@@ -34,12 +34,12 @@
           </el-dialog>
         </div>
         <el-divider><i class="el-icon-edit"></i></el-divider>
-        <el-form :model="userForm" :rules="userForm" ref="userForm">
-          <el-form-item prop="username">用户名<el-input v-model="userForm.username" type="text" placeholder="标题"></el-input></el-form-item>
-          <el-form-item prop="password">新密码<el-input v-model="userForm.content" type="password" placeholder="内容"></el-input></el-form-item>
-          <el-form-item prop="password2">确认密码<el-input v-model="userForm.content" type="password" placeholder="内容"></el-input></el-form-item>
-          <el-form-item prop="realName">真实姓名<el-input v-model="userForm.real_name" type="text" placeholder="标题"></el-input></el-form-item>
-          <el-form-item prop="phone">手机号码<el-input v-model="userForm.phone" type="text" placeholder="标题"></el-input></el-form-item>
+        <el-form :model="userForm" :rules="userRules" ref="userForm">
+          <el-form-item label="用户名" prop="username"><el-input v-model="userForm.username" type="text" placeholder="请输入用户名" disabled></el-input></el-form-item>
+          <el-form-item label="手机号码" prop="phone"><el-input v-model="userForm.phone" type="text" placeholder="请输入手机号码" disabled></el-input></el-form-item>
+          <el-form-item label="旧密码" prop="password0"><el-input v-model="userForm.password0" type="password" placeholder="请输入旧密码"></el-input></el-form-item>
+          <el-form-item label="新密码" prop="password1"><el-input v-model="userForm.password1" type="password" placeholder="请输入新密码"></el-input></el-form-item>
+          <el-form-item label="确认密码" prop="password2"><el-input v-model="userForm.password2" type="password" placeholder="请再次输入新密码"></el-input></el-form-item>
           <el-form-item><el-button type="primary" class="msg-btn" @click="onSubmit">提交</el-button></el-form-item>
         </el-form>
       </div>
@@ -49,19 +49,47 @@
 <script>
   import axios from "axios";
   export default {
-    data(){
+    data:function () {
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入新密码'));
+        } else if (value !== this.userForm.password1) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
       return{
         showDialog:false,
         randomNum:0,
-        userForm:{}
+        userForm:{
+          img:0
+        },
+        userRules:{
+          password0: [
+            { required: true, message: '请输入旧密码', trigger: 'blur' },
+            { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
+          ],
+          password1: [
+            { required: true, message: '请输入新密码', trigger: 'blur' },
+            { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
+          ],
+          password2: [
+            { required: true, trigger: 'blur', validator: validatePass }
+          ]
+        }
       }
     },
-    mounted() {
+    created(){
       this.getInfo();
+    },
+    mounted() {
+
     },
     methods:{
       // 获取用户信息
       getInfo(){
+        // this.userForm = JSON.parse(localStorage.getItem('userInfo'));
         axios.post("/api/blog/getInfo",{
           Id:JSON.parse(localStorage.getItem('userInfo')).Id
         }).then((response)=> {
@@ -92,27 +120,44 @@
           img:this.randomNum
         }).then((response)=> {
           this.showDialog = false;
+          if (response.data.code===0){
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
+          }else{
+            this.$message({
+              message: response.data.msg,
+              type: 'error'
+            });
+          }
         }).catch(function(error) {
           console.log(error);
         });
       },
       onSubmit(){
-        this.$refs.articleForm.validate(valid => {
+        this.$refs.userForm.validate(valid => {
           if(valid){
-            this.articleForm.create_time = Math.round(new Date() / 1000);
-            axios.post("/api/blog/addArticle", {
-              title: this.articleForm.title,
-              content: this.articleForm.content,
-              mark: this.articleForm.mark,
-              username: JSON.parse(localStorage.getItem('userInfo')).username,
-              create_time:this.articleForm.create_time
+            axios.post("/api/blog/updateUser", {
+              Id:JSON.parse(localStorage.getItem('userInfo')).Id,
+              oldPass: this.userForm.password0,
+              newPass: this.userForm.password1,
             }).then((response) => {
               if (response.data.code === 0) {
-                this.$message({
-                  message: response.data.msg,
-                  type: 'success'
+                // 重新登陆
+                axios.post("/api/blog/logout").then((response) => {
+                  if (response.data.code === 0) {
+                    localStorage.removeItem('userInfo');
+                    this.loginStatus = false;
+                    this.$router.go(0);
+                    this.$message({
+                      message: '修改信息成功，请重新登录',
+                      type: 'success'
+                    });
+                  }
+                }).catch(function (error) {
+                  console.log(error);
                 });
-                this.$router.go(-1);
               } else {
                 this.$message({
                   message: response.data.msg,
