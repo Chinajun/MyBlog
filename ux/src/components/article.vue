@@ -111,11 +111,6 @@
         this.page = val;
         this.getArticle();
       },
-      // 关键词搜索文章
-      // searchInput(){
-      //   console.log(this.selectArticle);
-      //
-      // }
     }
   }
 </script>

@@ -1,27 +1,32 @@
 <!-- 文章列表 -->
 <template>
   <div>
-<!--    <el-card class="box-card paper-card" :body-style="{ padding: '0px' }">-->
-<!--      <img :src="require('@/assets/a0.jpg')" class="paper-img">-->
-<!--      <div style="padding: 14px;">-->
-<!--        <span style="float: left;padding-bottom: 3px">好吃的汉堡</span>-->
-<!--        <div class="bottom clearfix">-->
-<!--          <el-button style="float: right; padding: 3px 0" type="text" @click="toDetail(item)">查看详情</el-button>-->
-<!--        </div>-->
+<!--    <div class="box-card">-->
+<!--      <div class="box-card-paper">-->
+<!--        <img class="article-img" :src="require('@/assets/a2.jpg')"/>-->
+<!--        <div class="layer"></div>-->
 <!--      </div>-->
-<!--    </el-card>-->
-    <div class="box-card">
-      <img class="article-img" :src="require('@/assets/a0.jpg')"/>
-    </div>
+<!--    </div>-->
+
     <div v-for="(item,index) in paperList" :key="index">
       <el-card class="box-card">
         <div slot="header">
-          <span>{{item.title}}</span>
-          <el-button style="float: right; padding: 3px 0" type="text" @click="toDetail(item)">查看详情</el-button>
+          <div style="text-align: center;font-weight: bold" @click="toDetail(item)">{{item.title}}</div>
         </div>
         <div class="paper-content">
-          {{item.content|ellipsis}}
+          <div class="paper-desc">
+            <div class="paper-info">
+              <i class="fa fa-user">{{item.username}}</i>
+              <i class="el-icon-time">{{item.create_time}}</i>
+              <i class="el-icon-view">{{item.view}}</i>
+              <el-tag>{{item.mark}}</el-tag>
+            </div>
+            <div class="paper-content">
+              {{item.content|ellipsis}}
+            </div>
+          </div>
         </div>
+        <div class="paper-btn"><el-button class="paper-btn-c" type="primary" @click="toDetail(item)">阅读全文</el-button></div>
       </el-card>
     </div>
     <div class="loadMore" v-if="page<page_count"><el-button @click='loadMore'>点击加载更多</el-button></div>
@@ -78,8 +83,48 @@
   }
 </script>
 <style>
+  .paper-btn{
+    display:flex;
+    justify-content:center;
+  }
+  .paper-btn-c{
+    /*width: 70px;*/
+    /*height: 30px;*/
+  }
+  .paper-desc{
+    /*margin: 0 30px;*/
+    /*line-height: 30px;*/
+  }
+  .paper-info i{
+    margin-right: 20px;
+  }
+  .paper-info{
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #8c939d;
+  }
+  .layer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color:#000;
+    width: 100vh;
+    /*height: 100%;*/
+    /*width: 100%;*/
+    /*height: 100px;*/
+    opacity: 0.4;
+    z-index: 4;
+  }
+  .box-card-paper{
+    display:flex;
+    justify-content:center;
+  }
   .article-img{
-    width: 100%;
+    width: 80%;
+    border-radius: 10px;
+    /*width: 100%;*/
   }
   /* test */
   .paper-content{

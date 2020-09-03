@@ -192,29 +192,31 @@
       },
       // 发表评论
       onSubmit(){
-        this.commentList.create_time = Math.round(new Date() / 1000);
-        axios.post("/api/blog/addComment", {
-          content: this.commentList.content,
-          uid: JSON.parse(localStorage.getItem('userInfo')).Id,
-          create_time:this.commentList.create_time,
-          aid:this.aid,
-          pid:this.pid
-        }).then((response) => {
-          if (response.data.code === 0) {
-            this.$message({
-              message: response.data.msg,
-              type: 'success'
-            });
-            this.$router.go(0);
-          } else {
-            this.$message({
-              message: response.data.msg,
-              type: 'error'
-            });
-          }
-        }).catch(function (error) {
-          console.log(error);
-        });
+        if(this.commentList.content!==""){
+          this.commentList.create_time = Math.round(new Date() / 1000);
+          axios.post("/api/blog/addComment", {
+            content: this.commentList.content,
+            uid: JSON.parse(localStorage.getItem('userInfo')).Id,
+            create_time:this.commentList.create_time,
+            aid:this.aid,
+            pid:this.pid
+          }).then((response) => {
+            if (response.data.code === 0) {
+              this.$message({
+                message: response.data.msg,
+                type: 'success'
+              });
+              this.$router.go(0);
+            } else {
+              this.$message({
+                message: response.data.msg,
+                type: 'error'
+              });
+            }
+          }).catch(function (error) {
+            console.log(error);
+          });
+        }
       },
       // 回复
       toReply(item){
