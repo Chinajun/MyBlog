@@ -1,13 +1,6 @@
 <!-- 文章列表 -->
 <template>
   <div>
-<!--    <div class="box-card">-->
-<!--      <div class="box-card-paper">-->
-<!--        <img class="article-img" :src="require('@/assets/a2.jpg')"/>-->
-<!--        <div class="layer"></div>-->
-<!--      </div>-->
-<!--    </div>-->
-
     <div v-for="(item,index) in paperList" :key="index">
       <el-card class="box-card">
         <div slot="header">
@@ -87,14 +80,6 @@
     display:flex;
     justify-content:center;
   }
-  .paper-btn-c{
-    /*width: 70px;*/
-    /*height: 30px;*/
-  }
-  .paper-desc{
-    /*margin: 0 30px;*/
-    /*line-height: 30px;*/
-  }
   .paper-info i{
     margin-right: 20px;
   }
@@ -105,28 +90,6 @@
     text-align: center;
     color: #8c939d;
   }
-  .layer{
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color:#000;
-    width: 100vh;
-    /*height: 100%;*/
-    /*width: 100%;*/
-    /*height: 100px;*/
-    opacity: 0.4;
-    z-index: 4;
-  }
-  .box-card-paper{
-    display:flex;
-    justify-content:center;
-  }
-  .article-img{
-    width: 80%;
-    border-radius: 10px;
-    /*width: 100%;*/
-  }
-  /* test */
   .paper-content{
     margin: 10px;
     line-height: 30px;
@@ -142,12 +105,5 @@
   .loadMore{
     margin: 50px 100px;
     text-align: center;
-  }
-  /* 新卡片*/
-  .paper-card{
-    /*border-radius: 3%;*/
-  }
-  .paper-img{
-    width: 810px;
   }
 </style>

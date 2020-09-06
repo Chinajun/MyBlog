@@ -33,7 +33,7 @@
         </div>
         <div class="users" v-for="(item,index) in userList" :key="index">
           <el-tooltip  class="item" :content="item.username">
-            <img :src="require('@/assets/tx'+item.img+'.jpg')" class="touxiang-small">
+            <img :src="require('@/assets/'+item.img)" class="touxiang-small">
           </el-tooltip>
         </div>
         <div class="users users-more" v-show="userList.length==7">

@@ -17,7 +17,7 @@ class User extends Model
                 'password' => substr(md5($data['password']),8,16),
                 'phone' => $data['phone'],
                 'create_time' => $data['create_time'],
-                'img' => $data['img']
+                'img' => 'tx'.$data['img'].'.jpg'
             ]);
             return $user->save();
         }catch (\Exception $e){

@@ -7,7 +7,7 @@
       </div>
       <div class="msg-container">
         <div class="headPicture">
-          <img :src="require('@/assets/tx'+this.userForm.img+'.jpg')">
+          <img :src="require('@/assets/'+this.userForm.img)">
           <!-- 遮罩层 -->
           <div class="changePicture" @mouseover="showMsg" @mouseout="removeMsg" @click="changePicture">
             <p id="changePicture"></p>
@@ -20,12 +20,24 @@
             :close-on-press-escape="false"
             width="550px">
             <div class="headPicture">
-              <img :src="require('@/assets/tx'+this.randomNum+'.jpg')">
+              <img v-if="imageUrl" :src="imageUrl">
+              <img v-else :src="require('@/assets/'+this.randomNum)">
             </div>
             <div class="headPicture">
               <span @click="randomPicture">随机头像</span>
               <el-divider direction="vertical"></el-divider>
-              <span>上传头像</span>
+              <div
+                class="select-picture"
+                @click="changePersonImage">
+                <span>上传头像</span>
+              </div>
+                <input
+                  v-show="false"
+                  id="inputFile"
+                  type="file"
+                  name="file"
+                  accept="image/png, image/jpeg, image/gif, image/jpg"
+                  @change="uploadFile">
             </div>
             <span slot="footer" class="dialog-footer">
               <el-button @click="showDialog = false">取 消</el-button>
@@ -60,10 +72,12 @@
         }
       };
       return{
+        imageUrl:"",
+        imgFile: [File],
         showDialog:false,
-        randomNum:0,
+        randomNum:'tx0.jpg',
         userForm:{
-          img:0
+          img:'tx0.jpg'
         },
         userRules:{
           password0: [
@@ -111,13 +125,22 @@
         this.showDialog = true;
       },
       randomPicture(){
-        this.randomNum = parseInt(Math.random()*6);
+        this.randomNum = 'tx'+parseInt(Math.random()*6)+'.jpg';
       },
       submitPicture(){
-        this.userForm.img = this.randomNum;
-        axios.post("/api/blog/updateUser",{
-          Id:JSON.parse(localStorage.getItem('userInfo')).Id,
-          img:this.randomNum
+        var param = new FormData();
+        if(this.imageUrl){
+          param.append("file",this.imgFile);
+          param.append("Id",JSON.parse(localStorage.getItem('userInfo')).Id);
+        }else{
+          param.append("img",this.randomNum);
+          param.append("Id",JSON.parse(localStorage.getItem('userInfo')).Id);
+          this.userForm.img = this.randomNum;
+        }
+        axios.post("/api/blog/updateUser", param,{
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         }).then((response)=> {
           this.showDialog = false;
           if (response.data.code===0){
@@ -125,6 +148,7 @@
               message: response.data.msg,
               type: 'success'
             });
+            this.$router.go(0);
           }else{
             this.$message({
               message: response.data.msg,
@@ -169,7 +193,42 @@
             });
           }
         });
-      }
+      },
+      changePersonImage() {
+        document.getElementById('inputFile').click();
+      },
+      /** 图片选择出发 */
+      uploadFile(event) {
+        var files = event.target.files;
+        const file = files[0];
+        this.imgFile = file;
+
+        // 上传头像前
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+          return;
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+          return;
+        }
+
+        const reader = new FileReader();
+        var self = this;
+        reader.onload = function(e) {
+          let result;
+          if (typeof e.target.result === 'object') {
+            // 把Array Buffer转化为blob 如果是base64不需要
+            result = window.URL.createObjectURL(new Blob([e.target.result]))
+          } else {
+            result = e.target.result
+          }
+          self.imageUrl = this.result;
+        };
+        reader.readAsDataURL(file);
+      },
     }
   }
 </script>
@@ -198,6 +257,7 @@
   }
   .headPicture img{
     width: 150px;
+    height: 150px;
     border-radius: 50%;
     margin-bottom: 20px;
   }

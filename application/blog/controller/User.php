@@ -1,6 +1,7 @@
 <?php
 namespace app\blog\controller;
 use think\Controller;
+use think\helper\Str;
 use think\Request;
 use think\Session;
 
@@ -114,6 +115,15 @@ class User extends Controller
      */
     public function updateUser(){
         $data = request()->param();
+        $file = request()->file("file");
+        if($file){
+            $info = $file->validate(['ext' => 'jpg,jpeg'])->rule('md5')->move(ROOT_PATH . 'ux/src/assets/upload');
+            if($info){
+                $fileSaveName = $info->getSaveName();
+                $fileSaveName = str_replace("\\",'/',$fileSaveName);
+                $data['img'] = 'upload/'.$fileSaveName;
+            }
+        }
         $user = new \app\blog\model\User();
         $result = $user->updateUser($data,$user);
         if($result==1){
