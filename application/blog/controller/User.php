@@ -111,6 +111,8 @@ class User extends Controller
     /**
      * 修改用户信息
      * 1. 头像
+     *  1.1 随机头像
+     *  1.2 上传图片（更改头像后原文件删除）
      * 2. 密码
      */
     public function updateUser(){
@@ -125,7 +127,11 @@ class User extends Controller
             }
         }
         $user = new \app\blog\model\User();
-        $result = $user->updateUser($data,$user);
+        if($data['oldPass']){
+            $result = $user->updatePassword($data,$user);
+        }else{
+            $result = $user->updateImg($data,$user);
+        }
         if($result==1){
             return [
                 'code' => 0,

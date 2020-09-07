@@ -87,26 +87,37 @@ class User extends Model
     }
 
     /**
-     * 更新用户信息
+     * 更新用户信息updateUser
+     * 1. 密码
      */
-    public function updateUser($data,$user){
+    public function updatePassword($data,$user){
         try {
-            if($data['oldPass']){
-                // 修改密码
-                $map = [];
-                $userInfo = $user->where('Id',$data['Id'])->find();
-                if (substr(md5($data['oldPass']), 8, 16) !== $userInfo['password']) {
-                    $this->error = '初始密码错误';
-                    return false;
-                }else{
-                    $map['password'] = substr(md5($data['newPass']),8,16);
-                }
+            $userInfo = $user->where('Id',$data['Id'])->find();
+            if (substr(md5($data['oldPass']), 8, 16) !== $userInfo['password']) {
+                $this->error = '初始密码错误';
+                return false;
             }else{
-                // 修改头像
-                $map = $data;
-                unset($map['Id']);
+                $data['password'] = substr(md5($data['newPass']),8,16);
             }
-            return $user->where('Id',$data['Id'])->update($map);
+            return $user->where('Id',$data['Id'])->update(['password'=>$data['password']]);
+        }catch (\Exception $e){
+            $this->error = '出现错误';
+            return false;
+        }
+    }
+
+    /**
+     * 更新用户信息
+     * 2. 头像
+     */
+    public function updateImg($data,$user){
+        try {
+            $userInfo = $user->where('Id',$data['Id'])->find();
+            if(strpos($userInfo['img'],'/')==true){
+                // 删除原本上传的头像
+                $res = unlink(ROOT_PATH . 'ux/src/assets/'.$userInfo['img']);
+            }
+            return $user->where('Id',$data['Id'])->update(['img'=>$data['img']]);
         }catch (\Exception $e){
             $this->error = '出现错误';
             return false;

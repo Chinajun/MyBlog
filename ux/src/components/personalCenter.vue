@@ -135,7 +135,6 @@
         }else{
           param.append("img",this.randomNum);
           param.append("Id",JSON.parse(localStorage.getItem('userInfo')).Id);
-          this.userForm.img = this.randomNum;
         }
         axios.post("/api/blog/updateUser", param,{
           headers: {
