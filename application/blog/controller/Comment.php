@@ -32,21 +32,31 @@ class Comment extends Controller
             array_push($uid,$val['uid']);
             $result_son[$key]['create_time'] = date('Y-m-d H:i:s',$val['create_time']);
         }
-        // 获取用户信息
+        // 获取用户信息(uid=0的是游客，给游客一个默认头像tx4)
         $userInfo = $user->getUserInfo($uid,$user);
         foreach ($result_fa as $key=>$val){
-            foreach ($userInfo as $k=>$v){
-                if($val['uid']==$v['Id']){
-                    $result_fa[$key]['username'] = $v['username'];
-                    $result_fa[$key]['img'] = $v['img'];
+            if($val['uid']==0){
+                $result_fa[$key]['username'] = "游客";
+                $result_fa[$key]['img'] = "tx4.jpg";
+            }else{
+                foreach ($userInfo as $k=>$v){
+                    if($val['uid']==$v['Id']){
+                        $result_fa[$key]['username'] = $v['username'];
+                        $result_fa[$key]['img'] = $v['img'];
+                    }
                 }
             }
         }
         foreach ($result_son as $key=>$val){
-            foreach ($userInfo as $k=>$v){
-                if($val['uid']==$v['Id']){
-                    $result_son[$key]['username'] = $v['username'];
-                    $result_son[$key]['img'] = $v['img'];
+            if($val['uid']==0){
+                $result_son[$key]['username'] = "游客";
+                $result_son[$key]['img'] = "tx4.jpg";
+            }else{
+                foreach ($userInfo as $k=>$v){
+                    if($val['uid']==$v['Id']){
+                        $result_son[$key]['username'] = $v['username'];
+                        $result_son[$key]['img'] = $v['img'];
+                    }
                 }
             }
         }

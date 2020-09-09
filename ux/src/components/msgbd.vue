@@ -205,10 +205,23 @@
       // 发表评论
       onSubmit(){
         if(this.commentList.content!==""){
+          var userId;
+          if(!JSON.parse(localStorage.getItem('userInfo'))){
+            // 未登录以游客身份发表 uid=0 img=tx4
+            userId = 0;
+            // this.$message({
+            //   message: '登陆后发表留言',
+            //   type: 'error'
+            // });
+            // return ;
+          }else{
+            userId = JSON.parse(localStorage.getItem('userInfo')).Id;
+          }
           this.commentList.create_time = Math.round(new Date() / 1000);
           axios.post("/api/blog/addComment", {
             content: this.commentList.content,
-            uid: JSON.parse(localStorage.getItem('userInfo')).Id,
+            uid: userId,
+            // uid: JSON.parse(localStorage.getItem('userInfo')).Id,
             create_time:this.commentList.create_time,
             aid:this.aid,
             pid:this.pid
@@ -232,30 +245,30 @@
       },
       // 回复
       toReply(item){
-        // console.log(this.$cookies.get("username"));
-        axios.post("/api/blog/addComment", {
-          content: this.reply,
-          uid: JSON.parse(localStorage.getItem('userInfo')).Id,
-          // username: this.$cookies.get("username"),
-          create_time: Math.round(new Date() / 1000),
-          aid:this.aid,
-          pid:item.Id
-        }).then((response) => {
-          if (response.data.code === 0) {
-            this.$message({
-              message: response.data.msg,
-              type: 'success'
-            });
-            this.$router.go(0);
-          } else {
-            this.$message({
-              message: response.data.msg,
-              type: 'error'
-            });
-          }
-        }).catch(function (error) {
-          console.log(error);
-        });
+        if(this.reply!==""){
+          axios.post("/api/blog/addComment", {
+            content: this.reply,
+            uid: JSON.parse(localStorage.getItem('userInfo')).Id,
+            create_time: Math.round(new Date() / 1000),
+            aid:this.aid,
+            pid:item.Id
+          }).then((response) => {
+            if (response.data.code === 0) {
+              this.$message({
+                message: response.data.msg,
+                type: 'success'
+              });
+              this.$router.go(0);
+            } else {
+              this.$message({
+                message: response.data.msg,
+                type: 'error'
+              });
+            }
+          }).catch(function (error) {
+            console.log(error);
+          });
+        }
       },
       // 下拉框关闭/打开执行的方法
       handleChange(){
