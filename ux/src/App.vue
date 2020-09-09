@@ -20,11 +20,16 @@ export default {
   data:function () {
     return{
       activeIndex: '1',
-      path:''
+      path:'',
+      bgImg:'',
     }
   },
   mounted() {
     this.path = this.$route.path;
+    // 随机更换背景图片
+    var index =parseInt(Math.random()*9);
+    this.bgImg = "/static/bg"+index+".jpg";
+    document.body.style.backgroundImage = "url("+this.bgImg+")";
   },
   watch:{
     $route(to,from){
@@ -44,7 +49,10 @@ a{
   color: #303133;
 }
 body{
-  background:url("assets/peach.jpg") repeat fixed;
+  /*background-image: url("assets/bg0.jpg");*/
+  background-image: url("/static/bg1.jpg");
+  background-attachment:fixed;
+  background-repeat:repeat;
   background-size: 30%;
   /*opacity: 0.8;*/
 }

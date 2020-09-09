@@ -31,6 +31,12 @@
           <i class="el-icon-view"></i>{{view}}
           <el-tag>{{mark}}</el-tag>
         </div>
+<!--        TODO-->
+        <div class="edit-dele" v-show="isAuthor">
+          <i class="el-icon-edit">编辑</i>
+          <i class="el-icon-delete">删除</i>
+        </div>
+<!--        TODO-->
         <pre>{{content}}</pre>
       </div>
       <div class="shareBox">
@@ -116,6 +122,8 @@
         create_time:"",
         mark:"",
         view:0,
+        // 编辑权限
+        isAuthor:false,
         // 评论
         msgList:[],
         // 发表评论
@@ -140,6 +148,7 @@
         this.getDetailArticle();
       }
       this.getMsgComment();
+
     },
     methods:{
       // 文章详情页
@@ -158,6 +167,9 @@
           this.create_time = response.data.create_time;
           this.mark = response.data.mark;
           this.view = response.data.view;
+          if(JSON.parse(localStorage.getItem('userInfo')).username==this.username){
+            this.isAuthor = true;
+          }
         }).catch(function (error) {
           console.log(error);
         });
@@ -364,6 +376,18 @@
   .article-info i{
     margin: 20px 10px 0 20px;
   }
+  /*TODO*/
+  .edit-dele{
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #3a8ee6;
+  }
+  .edit-dele i{
+    color: #8c939d;
+    margin: 20px 10px 0 20px;
+  }
+  /*TODO*/
   .info-title{
     color: #303133;
   }
