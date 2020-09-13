@@ -32,12 +32,21 @@
           <el-tag>{{mark}}</el-tag>
         </div>
 <!--        TODO-->
-        <div class="edit-dele" v-show="isAuthor">
-          <i class="el-icon-edit">编辑</i>
-          <i class="el-icon-delete">删除</i>
-        </div>
+<!--        <div class="edit-dele" v-show="isAuthor">-->
+<!--          <i class="el-icon-edit">编辑</i>-->
+<!--          <i class="el-icon-delete">删除</i>-->
+<!--        </div>-->
 <!--        TODO-->
-        <pre>{{content}}</pre>
+<!--        <pre>{{content}}</pre>-->
+        <mavon-editor
+          v-model="content"
+          :editable="isEdit"
+          :toolbarsFlag="isEdit"
+          :subfield="isEdit"
+          defaultOpen="preview"
+          :boxShadow="isEdit"
+          previewBackground="#fff"/>
+<!--        TODO 上传图片-->
       </div>
       <div class="shareBox">
         分享到:
@@ -123,7 +132,8 @@
         mark:"",
         view:0,
         // 编辑权限
-        isAuthor:false,
+        // isAuthor:false,
+        isEdit:false,
         // 评论
         msgList:[],
         // 发表评论
@@ -355,9 +365,12 @@
     margin-left: 30px;
   }
   .others-content{
-    width: 430px;
+    /*width: 430px;*/
+    width: 70%;
     font-size: 14px;
     margin: 10px;
+    /* 文字超过宽度换行 */
+    word-wrap:break-word;
   }
   .othersComment-username{
     font-weight: bold;
@@ -370,9 +383,12 @@
     margin-left: 30px;
   }
   .othersComment-content{
-    width: 360px;
+    /*width: 360px;*/
+    width: 70%;
     font-size: 14px;
     margin: 10px;
+    /* 文字超过宽度换行 */
+    word-wrap:break-word;
   }
   .othersComment{
     margin-left: 70px;
@@ -390,16 +406,16 @@
     margin: 20px 10px 0 20px;
   }
   /*TODO*/
-  .edit-dele{
-    font-size: 14px;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #3a8ee6;
-  }
-  .edit-dele i{
-    color: #8c939d;
-    margin: 20px 10px 0 20px;
-  }
+  /*.edit-dele{*/
+  /*  font-size: 14px;*/
+  /*  margin-bottom: 20px;*/
+  /*  text-align: center;*/
+  /*  color: #3a8ee6;*/
+  /*}*/
+  /*.edit-dele i{*/
+  /*  color: #8c939d;*/
+  /*  margin: 20px 10px 0 20px;*/
+  /*}*/
   /*TODO*/
   .info-title{
     color: #303133;

@@ -14,7 +14,17 @@
             <el-radio v-model="articleForm.mark" label="日常" border>日常</el-radio>
           </div>
           <el-form-item prop="title"><el-input v-model="articleForm.title" type="text" :rows="2" placeholder="标题"></el-input></el-form-item>
-          <el-form-item prop="content"><el-input v-model="articleForm.content" type="textarea" :rows="10" placeholder="内容"></el-input></el-form-item>
+          <el-form-item prop="content">
+<!--            <el-input v-model="articleForm.content" type="textarea" :rows="10" placeholder="内容"></el-input>-->
+<!--          </el-form-item>-->
+          <!--          TODO md文本编辑器 -->
+            <mavon-editor
+              v-model="articleForm.content"
+              @change="change"
+              style="min-height: 600px"
+            />
+          </el-form-item>
+          <!--          TODO md文本编辑器-->
           <el-form-item><el-button type="primary" class="msg-btn" @click="onSubmit">发布</el-button></el-form-item>
         </el-form>
       </div>
@@ -33,6 +43,7 @@
           mark:"笔记",
           create_time:"",
         },
+        html:"",
         articleRules:{
           title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
           content: [{ required: true, message: '请输入内容', trigger: 'blur' }]
@@ -43,9 +54,15 @@
       toLast(){
         this.$router.go(-1)
       },
+      change(value, render){
+        // render 为 markdown 解析后的结果[html]
+        this.html = render;
+      },
       onSubmit(){
         this.$refs.articleForm.validate(valid => {
           if(valid){
+            console.log(this.articleForm);
+            debugger
             this.articleForm.create_time = Math.round(new Date() / 1000);
             axios.post("/api/blog/addArticle", {
               title: this.articleForm.title,

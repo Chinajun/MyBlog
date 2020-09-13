@@ -16,6 +16,9 @@ Vue.use(Vuex);
 import store from './store'
 Vue.config.productionTip = false;
 import 'font-awesome/css/font-awesome.css' //引用fa
+import  mavonEditor  from 'mavon-editor' // 引用md文本编辑器
+import 'mavon-editor/dist/css/index.css'
+Vue.use(mavonEditor);
 
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
