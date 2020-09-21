@@ -17,14 +17,14 @@
           <el-form-item prop="content">
 <!--            <el-input v-model="articleForm.content" type="textarea" :rows="10" placeholder="内容"></el-input>-->
 <!--          </el-form-item>-->
-          <!--          TODO md文本编辑器 -->
             <mavon-editor
               v-model="articleForm.content"
+              ref="md"
+              @imgAdd="$imgAdd"
               @change="change"
               style="min-height: 600px"
             />
           </el-form-item>
-          <!--          TODO md文本编辑器-->
           <el-form-item><el-button type="primary" class="msg-btn" @click="onSubmit">发布</el-button></el-form-item>
         </el-form>
       </div>
@@ -58,11 +58,30 @@
         // render 为 markdown 解析后的结果[html]
         this.html = render;
       },
+      // 将图片上传到服务器，返回地址替换到md中
+      $imgAdd(pos, $file){
+        var param = new FormData();
+        param.append("file",$file);
+        axios.post("/api/blog/uploadImg", param,{
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then((response)=> {
+          if (response.data.code===0){
+            this.$refs.md.$img2Url(pos, response.data.data);
+          }else{
+            this.$message({
+              message: response.data.msg,
+              type: 'error'
+            });
+          }
+        }).catch(function(error) {
+          console.log(error);
+        });
+      },
       onSubmit(){
         this.$refs.articleForm.validate(valid => {
           if(valid){
-            console.log(this.articleForm);
-            debugger
             this.articleForm.create_time = Math.round(new Date() / 1000);
             axios.post("/api/blog/addArticle", {
               title: this.articleForm.title,

@@ -74,4 +74,28 @@ class Article extends Controller
         $result['create_time'] = date('Y-m-d H:i:s',$result['create_time']);
         return $result;
     }
+
+    /**
+     * 文章中上传图片
+     */
+    public function uploadImg(){
+        $file = request()->file("file");
+        if($file){
+            $info = $file->validate(['ext' => 'jpg,jpeg'])->rule('md5')->move(ROOT_PATH . 'public/static');
+            if($info){
+                $fileSaveName = $info->getSaveName();
+                $fileSaveName = 'http://localhost/public/static/'.str_replace("\\",'/',$fileSaveName);
+                return [
+                    'code' => 0,
+                    'msg' => '图片上传成功',
+                    'data' => $fileSaveName
+                ];
+            }
+        }else{
+            return[
+                "code"=>400,
+                "msg" => "图片上传失败"
+            ];
+        }
+    }
 }

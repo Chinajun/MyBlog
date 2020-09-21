@@ -14,16 +14,17 @@
               <i class="el-icon-view">{{item.view}}</i>
               <el-tag>{{item.mark}}</el-tag>
             </div>
-            <div class="paper-content" v-html="$options.filters.ellipsis(item.content)">
-<!--              {{item.content|ellipsis}}-->
-<!--              <mavon-editor-->
-<!--                v-model="item.content"-->
-<!--                :editable="isEdit"-->
-<!--                :toolbarsFlag="isEdit"-->
-<!--                :subfield="isEdit"-->
-<!--                defaultOpen="preview"-->
-<!--                :boxShadow="isEdit"-->
-<!--                previewBackground="#fff"/>-->
+            <div class="paper-content">
+<!--     v-html="$options.filters.ellipsis(item.content)"          {{item.content|ellipsis}}-->
+              <mavon-editor
+                v-model="item.content"
+                :editable="isEdit"
+                :toolbarsFlag="isEdit"
+                :subfield="isEdit"
+                defaultOpen="preview"
+                :boxShadow="isEdit"
+                style="min-height: 10px"
+                previewBackground="#fff"/>
             </div>
           </div>
         </div>
@@ -70,9 +71,10 @@
           // this.paperList = [];
           this.page_count = response.data.data.count/10;
           for(let i=0;i<response.data.data.result.length;i++){
-            console.log(response.data.data.result[i].content);
-            response.data.data.result[i].content = marked(response.data.data.result[i].content);
-            console.log(response.data.data.result[i].content);
+            if(response.data.data.result[i].content.length>150){
+              response.data.data.result[i].content = response.data.data.result[i].content.slice(0,150)+'...';
+            }
+            // response.data.data.result[i].content = marked(response.data.data.result[i].content);
             this.paperList.push(response.data.data.result[i]);
           }
         }).catch(function (error) {
