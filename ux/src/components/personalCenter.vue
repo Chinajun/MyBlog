@@ -33,6 +33,7 @@
               </div>
                 <input
                   v-show="false"
+                  ref="referenceUpload"
                   id="inputFile"
                   type="file"
                   name="file"
@@ -40,7 +41,7 @@
                   @change="uploadFile">
             </div>
             <span slot="footer" class="dialog-footer">
-              <el-button @click="showDialog = false">取 消</el-button>
+              <el-button @click="handleCancel">取 消</el-button>
               <el-button type="primary" @click="submitPicture">确 定</el-button>
             </span>
           </el-dialog>
@@ -113,6 +114,10 @@
           console.log(error);
         });
       },
+      handleCancel(){
+        this.showDialog = false;
+        this.imageUrl = "";
+      },
       showMsg(){
         var changePicture = document.getElementById('changePicture');
         changePicture.innerText = "修改头像";
@@ -125,6 +130,7 @@
         this.showDialog = true;
       },
       randomPicture(){
+        this.imageUrl = "";
         this.randomNum = 'tx'+parseInt(Math.random()*6)+'.jpg';
       },
       submitPicture(){
@@ -227,6 +233,8 @@
           self.imageUrl = this.result;
         };
         reader.readAsDataURL(file);
+        // 解决同一个文件无法上传两次问题
+        this.$refs.referenceUpload.value = null;
       },
     }
   }
