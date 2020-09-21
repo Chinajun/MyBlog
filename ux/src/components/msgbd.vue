@@ -38,6 +38,7 @@
 <!--        </div>-->
 <!--        TODO-->
 <!--        <pre>{{content}}</pre>-->
+<!--        <div id="content" class="article-content"></div>-->
         <mavon-editor
           v-model="content"
           :editable="isEdit"
@@ -121,6 +122,7 @@
 </template>
 <script>
   import axios from "axios";
+
   export default {
     data(){
       return{
@@ -158,7 +160,6 @@
         this.getDetailArticle();
       }
       this.getMsgComment();
-
     },
     methods:{
       // 文章详情页
@@ -173,6 +174,7 @@
         }).then((response) => {
           this.title = response.data.title;
           this.content = response.data.content;
+          // document.getElementById('content').innerHTML = marked(this.content);
           this.username = response.data.username;
           this.create_time = response.data.create_time;
           this.mark = response.data.mark;

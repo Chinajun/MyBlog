@@ -14,8 +14,16 @@
               <i class="el-icon-view">{{item.view}}</i>
               <el-tag>{{item.mark}}</el-tag>
             </div>
-            <div class="paper-content">
-              {{item.content|ellipsis}}
+            <div class="paper-content" v-html="$options.filters.ellipsis(item.content)">
+<!--              {{item.content|ellipsis}}-->
+<!--              <mavon-editor-->
+<!--                v-model="item.content"-->
+<!--                :editable="isEdit"-->
+<!--                :toolbarsFlag="isEdit"-->
+<!--                :subfield="isEdit"-->
+<!--                defaultOpen="preview"-->
+<!--                :boxShadow="isEdit"-->
+<!--                previewBackground="#fff"/>-->
             </div>
           </div>
         </div>
@@ -28,13 +36,14 @@
 </template>
 <script>
   import axios from "axios";
-
+  import marked from "marked";
   export default {
     data (){
       return{
         paperList:[],
         page:1,
-        page_count:''
+        page_count:'',
+        isEdit:false,
       }
     },
     mounted() {
@@ -61,6 +70,9 @@
           // this.paperList = [];
           this.page_count = response.data.data.count/10;
           for(let i=0;i<response.data.data.result.length;i++){
+            console.log(response.data.data.result[i].content);
+            response.data.data.result[i].content = marked(response.data.data.result[i].content);
+            console.log(response.data.data.result[i].content);
             this.paperList.push(response.data.data.result[i]);
           }
         }).catch(function (error) {
