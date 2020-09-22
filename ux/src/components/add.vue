@@ -42,6 +42,7 @@
           content:"",
           mark:"笔记",
           create_time:"",
+          aid:0,
         },
         html:"",
         articleRules:{
@@ -50,9 +51,35 @@
         }
       }
     },
+    mounted() {
+      if(this.$route.query.Id){
+        this.aid = this.$route.query.Id;
+        this.getDetailArticle();
+      }
+    },
     methods:{
       toLast(){
         this.$router.go(-1)
+      },
+      // 根据Id获取文章信息
+      getDetailArticle() {
+        axios.post("/api/blog/getDetailArticle",{
+          Id:this.aid
+        }).then((response) => {
+          this.articleForm.title = response.data.title;
+          this.articleForm.content = response.data.content;
+          this.articleForm.mark = response.data.mark;
+          this.articleForm.username = response.data.username;
+          if(JSON.parse(localStorage.getItem('userInfo')).username!==this.articleForm.username){
+            this.$message({
+              message: '您没有编辑权限！',
+              type: 'error'
+            });
+            this.$router.push('myArticle');
+          }
+        }).catch(function (error) {
+          console.log(error);
+        });
       },
       change(value, render){
         // render 为 markdown 解析后的结果[html]
@@ -83,19 +110,23 @@
         this.$refs.articleForm.validate(valid => {
           if(valid){
             this.articleForm.create_time = Math.round(new Date() / 1000);
-            axios.post("/api/blog/addArticle", {
-              title: this.articleForm.title,
-              content: this.articleForm.content,
-              mark: this.articleForm.mark,
-              username: JSON.parse(localStorage.getItem('userInfo')).username,
-              create_time:this.articleForm.create_time
-            }).then((response) => {
+            var param = new FormData();
+            param.append('title',this.articleForm.title);
+            param.append('content',this.articleForm.content);
+            param.append('mark',this.articleForm.mark);
+            param.append('username',JSON.parse(localStorage.getItem('userInfo')).username);
+            if(this.aid!==0){
+              param.append('Id',this.aid);
+            }else{
+              param.append('create_time',this.articleForm.create_time);
+            }
+            axios.post("/api/blog/addArticle",param).then((response) => {
               if (response.data.code === 0) {
                 this.$message({
                   message: response.data.msg,
                   type: 'success'
                 });
-                this.$router.go(-1);
+                this.$router.push('myArticle');
               } else {
                 this.$message({
                   message: response.data.msg,

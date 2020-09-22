@@ -86,9 +86,9 @@
         this.page = val;
         this.getArticle();
       },
-      // 编辑文章
-      editArticle(){
-
+      // 编辑文章(判断权限)
+      editArticle(row){
+        this.$router.push({path:"addArticle",query:{Id:row.Id}});
       },
       // 删除文章
       delArticle(row){

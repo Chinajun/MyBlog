@@ -16,7 +16,11 @@ class Article extends Model
                 'username' =>$data['username'],
                 'create_time' => $data['create_time']
             ]);
-            return $article->save();
+            if($data['Id']){
+                return $article->where('Id',$data['Id'])->update($data);
+            }else{
+                return $article->save();
+            }
         }catch (\Exception $e){
             return[
                 "code"=>400,

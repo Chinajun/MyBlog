@@ -6,7 +6,7 @@ use think\Db;
 class Article extends Controller
 {
     /**
-     * 新增文章控制器
+     * 新增、编辑文章控制器
      */
     public function addArticle(){
         $data = request()->param();
@@ -15,12 +15,12 @@ class Article extends Controller
         if($result==1){
             return[
                 "code"=>0,
-                "msg"=>"添加成功"
+                "msg"=>"操作成功"
             ];
         }else{
             return[
                 "code"=>400,
-                "msg"=>"添加失败"
+                "msg"=>"操作失败"
             ];
         }
     }
