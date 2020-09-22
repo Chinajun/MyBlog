@@ -20,7 +20,13 @@
               </div>
               <!-- 已登录 -->
               <div v-show="loginStatus">
-                <a @click="toCenter">个人中心</a>  |  <a @click="logout">退出登录</a>
+<!--                <a @click="toCenter">个人中心</a>  |  <a @click="logout">退出登录</a>-->
+                <el-submenu index="user">
+                  <template slot="title">个人中心</template>
+                  <el-menu-item index="center">我的资料</el-menu-item>
+                  <el-menu-item index="myArticle">我的文章</el-menu-item>
+                  <el-menu-item @click="logout">退出登录</el-menu-item>
+                </el-submenu>
               </div>
             </div>
           </el-menu>

@@ -35,15 +35,28 @@ class Article extends Controller
         if(sizeof($data)>1){
             // 文章列表页 前端传递的数据:mark,page
             // 文章列表搜索页 前端传递的数据:mark,page,search
+            // 我的文章页 前端传递的数据:username,page
+            // 我的文章搜索页 前端传递的数据:username,page,search
             $map = [];
             $map['title'] = ['like','%'.$data['search'].'%'];
-            $map['username'] = ['like','%'.$data['search'].'%'];
-            $count = $article->where('mark',$data['mark'])->where(function ($query) use ($map) {
-                $query->whereOr($map);
-            })->count();
-            $result = $article->where('mark',$data['mark'])->where(function ($query) use ($map) {
-                $query->whereOr($map);
-            })->limit(($data['page']-1)*10,10)->order("create_time desc")->select();
+            if($data['username']==null){
+                // 文章列表页
+                $map['username'] = ['like','%'.$data['search'].'%'];
+                $count = $article->where('mark',$data['mark'])->where(function ($query) use ($map) {
+                    $query->whereOr($map);
+                })->count();
+                $result = $article->where('mark',$data['mark'])->where(function ($query) use ($map) {
+                    $query->whereOr($map);
+                })->limit(($data['page']-1)*10,10)->order("create_time desc")->select();
+            }else{
+                // 我的文章
+                $count = $article->where('username',$data['username'])->where(function ($query) use ($map) {
+                    $query->whereOr($map);
+                })->count();
+                $result = $article->where('username',$data['username'])->where(function ($query) use ($map) {
+                    $query->whereOr($map);
+                })->limit(($data['page']-1)*10,10)->order("create_time desc")->select();
+            }
         }else{
             // 首页 前端传递的数据:page
             $count = $article->count();
@@ -95,6 +108,26 @@ class Article extends Controller
             return[
                 "code"=>400,
                 "msg" => "图片上传失败"
+            ];
+        }
+    }
+
+    /**
+     * 删除文章
+     */
+    public function delArticle(){
+        $data = request()->param();
+        $article = new \app\blog\model\Article();
+        $result = $article->where('Id',$data['Id'])->delete();
+        if($result){
+            return [
+                'code' => 0,
+                'msg' => '删除成功'
+            ];
+        }else{
+            return [
+                'code' => 400,
+                'msg' => '删除失败'
             ];
         }
     }

@@ -12,6 +12,7 @@ import register from "./views/register";
 import addArticle from "./views/addArticle";
 import NotFound from "./views/NotFound";
 import center from "./views/center";
+import myArticle from "./views/myArticle";
 
 const routes=[
     {path:"",component:home},
@@ -32,6 +33,11 @@ const routes=[
       title: '个人中心',
         type: 'login'
     }},//个人中心
+    {path:"/myArticle",component:myArticle,name:myArticle,
+    meta:{
+      title: '我的文章',
+      type: 'login'
+    }},//我的文章
     {path:"/articleDetail",component:articleDetail,name:articleDetail,meta:{title: '文章详情'}},// 文章详情页
     {path:'*',component:NotFound,name:NotFound,meta:{title: '404'}},//全不匹配的情况下，返回404，路由按顺序从上到下，依次匹配。最后一个*能匹配全部，
 ];

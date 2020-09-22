@@ -1,36 +1,12 @@
-<!-- 文章列表页 -->
 <template>
   <div>
-    <el-card class="box-card" v-if="isNote">
-      <div slot="header" class="msg-title">笔记</div>
-      <div class="article-img-note">
-        <img :src="require('@/assets/note.jpg')">
-      </div>
-      <div class="about-desc">
-        <p>
-          记录一些学习笔记~
-        </p>
-      </div>
-    </el-card>
-    <el-card class="box-card" v-else>
-      <div slot="header" class="msg-title">日常</div>
-      <div class="article-img-note">
-        <img :src="require('@/assets/daily.jpg')">
-      </div>
-      <div class="about-desc">
-        <p>
-          日常分享
-        </p>
-      </div>
-    </el-card>
     <el-card class="box-card">
       <div slot="header">
-        <span class="msg-title">文章列表</span>
-        <el-input placeholder="搜索文章标题或作者" v-model="selectArticle" class="select-article">
+        <el-button type="text" class="msg-title" id="myArticle" @click="toMyArticle">我的文章</el-button>
+        <el-button type="text" class="msg-title notActive" id="myCollect" @click="toMyCollect">我的收藏</el-button>
+        <el-input placeholder="搜索文章标题" v-model="selectArticle" class="select-article">
           <el-button slot="append" icon="el-icon-search" @click="getArticle"/>
         </el-input>
-<!--        <el-button style="float: right; padding: 3px 0" type="text"  @click="addArticle">发表文章</el-button>-->
-        <el-button style="float: right; padding: 10px 0" type="text"  @click="addArticle">发表文章</el-button>
       </div>
       <div>
         <el-table :data="articleList" style="width: 100%" :show-header="false" @row-click="articleDetail">
@@ -41,6 +17,12 @@
           </el-table-column>
           <el-table-column prop="title"></el-table-column>
           <el-table-column prop="username"></el-table-column>
+          <el-table-column fixed="right" width="100">
+            <template slot-scope="scope">
+              <el-button @click.native.stop="editArticle(scope.row)" type="text" size="small">编辑</el-button>
+              <el-button @click.native.stop="delArticle(scope.row)" type="text" size="small">删除</el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <el-pagination
           style="float: right"
@@ -58,33 +40,30 @@
   export default {
     data(){
       return{
-        articleMark:"",
         articleList:[],
         page:1,
         page_count:0,
         selectArticle:"", // 关键词搜索文章
       }
     },
-    props:{
-      isNote:"",
-    },
     mounted:function(){
-      this.judgeMark();
       this.getArticle();
     },
     methods:{
-      // 判断本页标签
-      judgeMark(){
-        if(this.isNote===true){
-          this.articleMark = "笔记"
-        }else{
-          this.articleMark = "日常"
-        }
+      // 我的文章
+      toMyArticle(){
+        document.getElementById('myArticle').style.color = '#409EFF';
+        document.getElementById('myCollect').style.color = 'black';
+      },
+      // 我的收藏
+      toMyCollect(){
+        document.getElementById('myCollect').style.color = '#409EFF';
+        document.getElementById('myArticle').style.color = 'black';
       },
       // 获取文章简略信息
       getArticle(){
         var param = new FormData();
-        param.append("mark",this.articleMark);
+        param.append("username",JSON.parse(localStorage.getItem('userInfo')).username);
         param.append("page",this.page);
         param.append("search",this.selectArticle);
         axios.post("/api/blog/getArticle",param).then((response) => {
@@ -102,14 +81,43 @@
         // console.log(row,event,column);
         this.$router.push({path:"articleDetail",query:{Id:row.Id}})
       },
-      // 跳转新增文章界面
-      addArticle(){
-        this.$router.push('addArticle');
-      },
       // 页码改变
       handleCurrentChange(val){
         this.page = val;
         this.getArticle();
+      },
+      // 编辑文章
+      editArticle(){
+
+      },
+      // 删除文章
+      delArticle(row){
+        this.$confirm('确认删除此文章?', '删除提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          axios.post("/api/blog/delArticle",{
+            Id:row.Id
+          }).then((response) => {
+            if (response.data.code === 0) {
+              this.$message({
+                message: response.data.msg,
+                type: 'success'
+              });
+              this.$router.go(0);
+            }else{
+              this.$message({
+                message: response.data.msg,
+                type: 'error'
+              });
+            }
+          }).catch(function (error) {
+            console.log(error);
+          });
+        }).catch((error) => {
+          console.log(error);
+        });
       },
     }
   }
@@ -123,24 +131,14 @@
     transform: translate(0,-5px);
     transition-delay: 0s !important;
   }
-  .article-img-note{
-    display:flex;
-    justify-content:center;
-    margin-bottom: 20px;
-  }
-  .article-img-note img{
-    width: 40%;
-  }
   .msg-title{
     font-weight: bold;
-  }
-  .about-desc p{
-    text-align: center;
-    font-size: 14px;
-    line-height: 30px;
   }
   .select-article{
     width: 50%;
     left: 10%;
+  }
+  .notActive{
+    color: black;
   }
 </style>
