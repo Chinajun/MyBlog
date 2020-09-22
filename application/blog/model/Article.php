@@ -16,7 +16,7 @@ class Article extends Model
                 'username' =>$data['username'],
                 'create_time' => $data['create_time']
             ]);
-            if($data['Id']){
+            if(isset($data['Id'])){
                 return $article->where('Id',$data['Id'])->update($data);
             }else{
                 return $article->save();

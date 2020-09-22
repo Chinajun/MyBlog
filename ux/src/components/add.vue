@@ -115,7 +115,7 @@
             param.append('content',this.articleForm.content);
             param.append('mark',this.articleForm.mark);
             param.append('username',JSON.parse(localStorage.getItem('userInfo')).username);
-            if(this.aid!==0){
+            if(this.aid){
               param.append('Id',this.aid);
             }else{
               param.append('create_time',this.articleForm.create_time);
@@ -126,7 +126,7 @@
                   message: response.data.msg,
                   type: 'success'
                 });
-                this.$router.push('myArticle');
+                this.$router.go(-1);
               } else {
                 this.$message({
                   message: response.data.msg,
