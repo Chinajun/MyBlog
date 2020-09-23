@@ -41,22 +41,15 @@ class Article extends Controller
             $map['title'] = ['like','%'.$data['search'].'%'];
             if($data['username']==null){
                 // 文章列表页
+                $keyWord['mark'] = $data['mark'];
                 $map['username'] = ['like','%'.$data['search'].'%'];
-                $count = $article->where('mark',$data['mark'])->where(function ($query) use ($map) {
-                    $query->whereOr($map);
-                })->count();
-                $result = $article->where('mark',$data['mark'])->where(function ($query) use ($map) {
-                    $query->whereOr($map);
-                })->limit(($data['page']-1)*10,10)->order("create_time desc")->select();
             }else{
                 // 我的文章
-                $count = $article->where('username',$data['username'])->where(function ($query) use ($map) {
-                    $query->whereOr($map);
-                })->count();
-                $result = $article->where('username',$data['username'])->where(function ($query) use ($map) {
-                    $query->whereOr($map);
-                })->limit(($data['page']-1)*10,10)->order("create_time desc")->select();
+                $keyWord['username'] = $data['username'];
             }
+            $res = $article->getArticleList($keyWord,$map,$data,$article);
+            $count = $res['count'];
+            $result = $res['result'];
         }else{
             // 首页 前端传递的数据:page
             $count = $article->count();
@@ -113,13 +106,17 @@ class Article extends Controller
     }
 
     /**
-     * 删除文章
+     * 删除文章(删除文章的收藏记录和评论)
      */
     public function delArticle(){
         $data = request()->param();
         $article = new \app\blog\model\Article();
-        $result = $article->where('Id',$data['Id'])->delete();
-        if($result){
+        $collect = new \app\blog\model\Collect();
+        $comment = new \app\blog\model\Comment();
+        $result1 = $article->where('Id',$data['Id'])->delete();
+        $result2 = $collect->where('aid',$data['Id'])->delete();
+        $result3 = $comment->where('aid',$data['Id'])->delete();
+        if($result1&&$result2&&$result3){
             return [
                 'code' => 0,
                 'msg' => '删除成功'

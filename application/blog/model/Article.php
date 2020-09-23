@@ -28,4 +28,17 @@ class Article extends Model
             ];
         }
     }
+
+    /**
+     * 获取文章列表
+     */
+    public function getArticleList($keyWord,$map,$data,$article){
+        $result['count'] = $article->where($keyWord)->where(function ($query) use ($map) {
+            $query->whereOr($map);
+        })->count();
+        $result['result'] = $article->where($keyWord)->where(function ($query) use ($map) {
+            $query->whereOr($map);
+        })->limit(($data['page']-1)*10,10)->order("create_time desc")->select();
+        return $result;
+    }
 }

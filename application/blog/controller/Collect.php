@@ -9,12 +9,27 @@ class Collect extends Controller{
     public function getCollect(){
         $data = request()->param();
         $collect = new \app\blog\model\Collect();
-        $result['collectCount'] = $collect->where('aid',$data['aid'])->count();
-        $isCollect = $collect->where('uid',$data['uid'])->where('aid',$data['aid'])->select();
-        if($isCollect){
-            $result['isCollect'] = true;
+        if(sizeof($data)<3){
+            // 文章详情页 aid uid
+            $result['collectCount'] = $collect->where('aid',$data['aid'])->count();
+            $isCollect = $collect->where('uid',$data['uid'])->where('aid',$data['aid'])->select();
+            if($isCollect){
+                $result['isCollect'] = true;
+            }else{
+                $result['isCollect'] = false;
+            }
         }else{
-            $result['isCollect'] = false;
+            // 我的收藏页 uid page search
+            $article = new \app\blog\model\Article();
+            $aidCount = $collect->where('uid',$data['uid'])->select();
+            foreach ($aidCount as $key=>$val){
+                $aid[$key] = $val['aid'];
+            }
+            $keyWord['Id'] = ['in',$aid];
+            $map = [];
+            $map['title'] = ['like','%'.$data['search'].'%'];
+            $map['username'] = ['like','%'.$data['search'].'%'];
+            $result = $article->getArticleList($keyWord,$map,$data,$article);
         }
         return[
             'code' => 0,
