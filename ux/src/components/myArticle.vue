@@ -6,7 +6,7 @@
         <el-button type="text" class="msg-title" id="myArticle" @click="toMyArticle">我的文章</el-button>
         <el-button type="text" class="msg-title notActive" id="myCollect" @click="toMyCollect">我的收藏</el-button>
         <el-input :placeholder="isArticle?'搜索文章标题':'搜索文章标题或作者'" v-model="selectArticle" class="select-article">
-          <el-button slot="append" icon="el-icon-search" @click="getArticle"/>
+          <el-button slot="append" icon="el-icon-search" @click="handleSearch"/>
         </el-input>
       </div>
       <div>
@@ -69,6 +69,14 @@
         this.page = 1;
         this.selectArticle = "";
         this.getMyCollect();
+      },
+      // 搜索
+      handleSearch(){
+        if(this.isArticle===true){
+          this.getArticle();
+        }else{
+          this.getMyCollect();
+        }
       },
       // 获取文章简略信息
       getArticle(){
