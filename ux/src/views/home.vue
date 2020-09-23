@@ -21,10 +21,11 @@
     </div>
     <div class="bodyBox" id="page">
       <el-row>
-        <el-col :sm="24" :md="16">
+<!--         xs手机 md电脑-->
+        <el-col :xs="16" :sm="16" :md="16">
           <cyj-paper></cyj-paper>
         </el-col>
-        <el-col :sm="24" :md="8">
+        <el-col :xs="8" :sm="8" :md="8">
           <cyj-right :isHome=true></cyj-right>
         </el-col>
       </el-row>
@@ -146,16 +147,17 @@
     top: 0;
     left: 0;
     background-color:#000;
+    min-width: 1200px;
     width: 100%;
     height: 100vh;
     opacity: 0.4;
   }
   .headWord{
+    min-width: 1200px;
     width: 100%;
     height: 350px;
-    /*height: 300px;*/
     position: absolute;
-    top:400px;
+    top: 50%;
     margin-top: -150px;
     z-index: 2;
     font-size: 45px;
@@ -195,8 +197,11 @@
     right: 20%;
   }
   .i-down{
+    width: 100%;
+    min-width: 1200px;
+    overflow: hidden;
+    text-align: center;
     position: absolute;
-    left: 50%;
     top: 80%;
   }
   .i-down i{

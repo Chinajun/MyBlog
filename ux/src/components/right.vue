@@ -136,7 +136,9 @@
     top: 10%;
   }
   .rightBox-1{
-    width: 400px;
+    width: 25%;
+    /*width: 400px;*/
+    /*margin: 50px 100px;*/
     margin: 50px 0;
     position: fixed;
   }
@@ -147,8 +149,10 @@
     top: 10%;
   }
   .rightBox-2{
-    width: 400px;
+    width: 25%;
+    /*width: 400px;*/
     position: fixed;
+    /*margin: 400px 100px;*/
     margin: 400px 0;
   }
   .rightBox-1:hover,.rightBox-2:hover,.rightBox-1-home:hover,.rightBox-2-home:hover{

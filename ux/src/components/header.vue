@@ -19,16 +19,16 @@
                 <a @click="toLogin">登录</a>  |  <a @click="toRegister">注册</a>
               </div>
               <!-- 已登录 -->
-              <div v-show="loginStatus">
+<!--              <div >-->
 <!--                <a @click="toCenter">个人中心</a>  |  <a @click="logout">退出登录</a>-->
-                <el-submenu index="user">
-                  <template slot="title">个人中心</template>
-                  <el-menu-item index="center">我的资料</el-menu-item>
-                  <el-menu-item index="myArticle">我的文章</el-menu-item>
-                  <el-menu-item @click="logout">退出登录</el-menu-item>
-                </el-submenu>
-              </div>
+<!--              </div>-->
             </div>
+            <el-submenu index="user" v-show="loginStatus" style="float: right;margin-right: 15%">
+              <template slot="title">个人中心</template>
+              <el-menu-item index="center">我的资料</el-menu-item>
+              <el-menu-item index="myArticle">我的文章</el-menu-item>
+              <el-menu-item @click="logout">退出登录</el-menu-item>
+            </el-submenu>
           </el-menu>
         </div>
       </el-col>

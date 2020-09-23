@@ -55,5 +55,6 @@ body{
   background-repeat:repeat;
   background-size: 30%;
   /*opacity: 0.8;*/
+  min-width: 1200px;/*防止手机端布局错乱*/
 }
 </style>
