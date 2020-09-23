@@ -300,9 +300,15 @@
       },
       // 收藏
       getCollect(){
+        var uid;
+        if(JSON.parse(localStorage.getItem('userInfo'))){
+          uid = JSON.parse(localStorage.getItem('userInfo')).Id;
+        }else{
+          uid = 0;
+        }
         axios.post("/api/blog/getCollect", {
           aid:this.aid,
-          uid:JSON.parse(localStorage.getItem('userInfo')).Id
+          uid:uid
         }).then((response) => {
           this.collectCount = response.data.data.collectCount;
           this.isCollect = response.data.data.isCollect;
@@ -311,31 +317,38 @@
         });
       },
       handleCollect(){
-        if(this.isCollect===false){
-          this.isCollect = true;
-          this.collectCount += 1;
-        }else{
-          this.isCollect = false;
-          this.collectCount -=1;
-        }
-        axios.post("/api/blog/handleCollect", {
-          aid:this.aid,
-          uid:JSON.parse(localStorage.getItem('userInfo')).Id
-        }).then((response) => {
-          if (response.data.code === 0) {
-            this.$message({
-              message: response.data.msg,
-              type: 'success'
-            });
-          } else {
-            this.$message({
-              message: response.data.msg,
-              type: 'error'
-            });
+        if(JSON.parse(localStorage.getItem('userInfo'))){
+          if(this.isCollect===false){
+            this.isCollect = true;
+            this.collectCount += 1;
+          }else{
+            this.isCollect = false;
+            this.collectCount -=1;
           }
-        }).catch(function (error) {
-          console.log(error);
-        });
+          axios.post("/api/blog/handleCollect", {
+            aid:this.aid,
+            uid:JSON.parse(localStorage.getItem('userInfo')).Id
+          }).then((response) => {
+            if (response.data.code === 0) {
+              this.$message({
+                message: response.data.msg,
+                type: 'success'
+              });
+            } else {
+              this.$message({
+                message: response.data.msg,
+                type: 'error'
+              });
+            }
+          }).catch(function (error) {
+            console.log(error);
+          });
+        }else{
+          this.$message({
+            message: '登陆后执行此操作',
+            type: 'error'
+          });
+        }
       },
     }
   }
