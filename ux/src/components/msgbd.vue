@@ -46,6 +46,7 @@
           :subfield="isEdit"
           defaultOpen="preview"
           :boxShadow="isEdit"
+          style="min-height: 10px"
           previewBackground="#fff"/>
 <!--        TODO 上传图片-->
       </div>
@@ -53,14 +54,13 @@
         分享到:
         <a href="#" class="ds-weibo fa fa-weibo" @click="shareWeibo()"></a>
         <a href="#" class="ds-qq fa fa-qq" @click="shareQQ()"></a>
-<!--        <div class="dlikeColBox">-->
-<!--          <div class="dlikeBox" @click="likecollectHandle(1)" >-->
-<!--            <i :class="likeArt?'fa fa-fw fa-heart':'fa fa-fw fa-heart-o'" ></i>喜欢 | {{likeCount}}-->
-<!--          </div>-->
-<!--          <div class="dcollectBox" @click="likecollectHandle(2)" >-->
-<!--            <i :class="collectArt?'fa fa-fw fa-star':'fa fa-fw fa-star-o'" ></i>收藏 | {{collectCount}}-->
-<!--          </div>-->
-<!--        </div>-->
+<!--        TODO-->
+        <div class="dlikeColBox">
+          <div class="dcollectBox" @click="handleCollect">
+            <i :class="isCollect?'fa fa-fw fa-star':'fa fa-fw fa-star-o'" ></i>收藏 | {{collectCount}}
+          </div>
+        </div>
+<!--        TODO-->
       </div>
     </el-card>
     <el-card class="box-card">
@@ -148,7 +148,10 @@
         aid:0,
         pid:0,
         page:1,
-        page_count:0
+        page_count:0,
+        // 收藏
+        isCollect:false,
+        collectCount:0,
       }
     },
     props:{
@@ -156,8 +159,10 @@
     },
     mounted() {
       if(this.isMsgbd===false){
+        // 文章详情界面
         this.aid = this.$route.query.Id;
         this.getDetailArticle();
+        this.getCollect();
       }
       this.getMsgComment();
     },
@@ -292,7 +297,46 @@
       },
       shareQQ(){
         window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://www.baidu.com&desc=《'+this.title+'》作者：'+this.username+'&summary=一起来看看吧');
-      }
+      },
+      // 收藏
+      getCollect(){
+        axios.post("/api/blog/getCollect", {
+          aid:this.aid,
+          uid:JSON.parse(localStorage.getItem('userInfo')).Id
+        }).then((response) => {
+          this.collectCount = response.data.data.collectCount;
+          this.isCollect = response.data.data.isCollect;
+        }).catch(function (error) {
+          console.log(error);
+        });
+      },
+      handleCollect(){
+        if(this.isCollect===false){
+          this.isCollect = true;
+          this.collectCount += 1;
+        }else{
+          this.isCollect = false;
+          this.collectCount -=1;
+        }
+        axios.post("/api/blog/handleCollect", {
+          aid:this.aid,
+          uid:JSON.parse(localStorage.getItem('userInfo')).Id
+        }).then((response) => {
+          if (response.data.code === 0) {
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
+          } else {
+            this.$message({
+              message: response.data.msg,
+              type: 'error'
+            });
+          }
+        }).catch(function (error) {
+          console.log(error);
+        });
+      },
     }
   }
 </script>
@@ -465,5 +509,20 @@
   .ds-qq:hover{
     color: #fff;
     background: #56b6e7;
+  }
+  /*收藏*/
+  .dlikeColBox{
+    display: inline-block;
+    float:right;
+  }
+  .dcollectBox{
+    display: inline-block;
+    padding:0 10px;
+    height:35px;
+    color: #e26d6d;
+    line-height: 35px;
+    border-radius: 35px;
+    border: 1px solid #e26d6d;
+    cursor: pointer;
   }
 </style>

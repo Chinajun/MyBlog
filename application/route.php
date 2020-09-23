@@ -17,3 +17,6 @@ Route::post('blog/delArticle','blog/Article/delArticle');
 
 Route::post('blog/addComment','blog/Comment/addComment');
 Route::post('blog/getComment','blog/Comment/getComment');
+
+Route::post('blog/getCollect','blog/Collect/getCollect');
+Route::post('blog/handleCollect','blog/Collect/handleCollect');
