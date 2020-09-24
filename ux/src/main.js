@@ -19,8 +19,7 @@ import 'font-awesome/css/font-awesome.css' //引用fa
 import  mavonEditor  from 'mavon-editor' // 引用md文本编辑器
 import 'mavon-editor/dist/css/index.css'
 Vue.use(mavonEditor);
-// import marked from 'marked/marked.min' // 引用marked
-// Vue.use(marked);
+//import 'assets/font/font.css';//引入字体
 
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {

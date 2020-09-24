@@ -174,6 +174,7 @@
     top: 60%;
   }
   .headWord .word{
+    line-height: 1.5;
     width: 80%;
     height: 50%;
     position: absolute;
@@ -183,17 +184,19 @@
     text-align: center;
     color: white;
     font-weight: 400 !important;
-    line-height: 1 !important;
     font-size: 2rem !important;
   }
   .word span{
+    font-family: 'helloFont';
+    font-size: 3rem;
     position: relative;
     left: -50%;
   }
   .headWord .i-from{
+    font-family: 'helloFont';
     font-size: 30px;
     position: absolute;
-    top: 90%;
+    top: 80%;
     right: 20%;
   }
   .i-down{

@@ -97,9 +97,11 @@
           if(t>PageId.offsetTop){
             pageScroll1.style.position = 'fixed';
             pageScroll2.style.position = 'fixed';
+            // pageScroll2.style.margin = '400px 0'
           }else{
             pageScroll1.style.position = 'static';
             pageScroll2.style.position = 'static';
+            // pageScroll2.style.margin = '0';
           }
         }
       }
@@ -136,21 +138,21 @@
     top: 10%;
   }
   .rightBox-1{
-    width: 25%;
-    /*width: 400px;*/
+    /*width: 25%;*/
+    width: 400px;
     /*margin: 50px 100px;*/
-    margin: 50px 0;
+    /*margin: 50px 0;*/
     position: fixed;
   }
   .rightBox-2-home{
     width: 400px;
-    margin: 400px 0;
+    /*margin: 400px 0;*/
     right: 7%;
     top: 10%;
   }
   .rightBox-2{
-    width: 25%;
-    /*width: 400px;*/
+    /*width: 25%;*/
+    width: 400px;
     position: fixed;
     /*margin: 400px 100px;*/
     margin: 400px 0;
