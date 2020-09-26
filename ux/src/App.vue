@@ -6,12 +6,6 @@
 </template>
 
 <script>
-  import product from "./components/product";
-  import admin from "./components/admin";
-  import change from "./components/change";
-  import login from "./views/login";
-  import page1 from "./components/page1";
-  import register from "./views/register";
 export default {
   name: 'App',
   comments:{

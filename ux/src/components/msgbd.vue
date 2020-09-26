@@ -31,14 +31,6 @@
           <i class="el-icon-view"></i>{{view}}
           <el-tag>{{mark}}</el-tag>
         </div>
-<!--        TODO-->
-<!--        <div class="edit-dele" v-show="isAuthor">-->
-<!--          <i class="el-icon-edit">编辑</i>-->
-<!--          <i class="el-icon-delete">删除</i>-->
-<!--        </div>-->
-<!--        TODO-->
-<!--        <pre>{{content}}</pre>-->
-<!--        <div id="content" class="article-content"></div>-->
         <mavon-editor
           v-model="content"
           :editable="isEdit"
@@ -48,19 +40,16 @@
           :boxShadow="isEdit"
           style="min-height: 10px"
           previewBackground="#fff"/>
-<!--        TODO 上传图片-->
       </div>
       <div class="shareBox">
         分享到:
         <a href="#" class="ds-weibo fa fa-weibo" @click="shareWeibo()"></a>
         <a href="#" class="ds-qq fa fa-qq" @click="shareQQ()"></a>
-<!--        TODO-->
         <div class="dlikeColBox">
           <div class="dcollectBox" @click="handleCollect">
             <i :class="isCollect?'fa fa-fw fa-star':'fa fa-fw fa-star-o'" ></i>收藏 | {{collectCount}}
           </div>
         </div>
-<!--        TODO-->
       </div>
     </el-card>
     <el-card class="box-card">
@@ -134,7 +123,6 @@
         mark:"",
         view:0,
         // 编辑权限
-        // isAuthor:false,
         isEdit:false,
         // 评论
         msgList:[],
@@ -385,6 +373,7 @@
     font-weight: bold;
   }
   .msg-desc p{
+    margin: 20px;
     font-size: 14px;
     line-height: 30px;
   }
@@ -464,18 +453,6 @@
   .article-info i{
     margin: 20px 10px 0 20px;
   }
-  /*TODO*/
-  /*.edit-dele{*/
-  /*  font-size: 14px;*/
-  /*  margin-bottom: 20px;*/
-  /*  text-align: center;*/
-  /*  color: #3a8ee6;*/
-  /*}*/
-  /*.edit-dele i{*/
-  /*  color: #8c939d;*/
-  /*  margin: 20px 10px 0 20px;*/
-  /*}*/
-  /*TODO*/
   .info-title{
     color: #303133;
   }
