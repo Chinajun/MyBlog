@@ -1,7 +1,8 @@
 <!-- 右侧列表 -->
 <template>
-  <div>
-      <div :class="isHome?'rightBox-1-home':'rightBox-1'" id="rightBox-1">
+  <div class="rightBox" id="rightBox">
+<!--      <div :class="isHome?'rightBox-1-home rightBox-1-static':'rightBox-1'" id="rightBox-1">-->
+    <div class="rightBox-1">
       <el-card>
         <img :src="require('@/assets/tx999.jpg')" class="touxiang">
         <div class="intro-1">
@@ -26,7 +27,8 @@
         </div>
       </el-card>
     </div>
-    <div :class="isHome?'rightBox-2-home':'rightBox-2'" id="rightBox-2">
+<!--    <div :class="isHome?'rightBox-2-home rightBox-2-static':'rightBox-2'" id="rightBox-2">-->
+    <div class="rightBox-2">
       <el-card>
         <div class="intro-2">
           <span>我的朋友们</span>
@@ -61,6 +63,7 @@
 </template>
 <script>
   import axios from "axios";
+  import $ from "jquery";
   export default {
     props:{
       isHome:''
@@ -81,32 +84,46 @@
     },
     mounted() {
       this.getUsers();
-      // window.addEventListener('beforeunload', e => this.beforeunloadHandler(e))
     },
-    // destroyed() {
-    //   window.removeEventListener('beforeunload', e => this.beforeunloadHandler(e))
-    // },
     created() {
+      // this.beforeRouteUpdate();
       var that_isHome = this.isHome;
       window.onscroll = function(){
         var t = document.documentElement.scrollTop || document.body.scrollTop;
+        var rightBox = document.getElementById("rightBox");
+        var footer = document.querySelector('#footer');
+        var screenHeight = window.screen.height; // 当前屏幕高度 864
+        // 监听首页头图的位置
         if(that_isHome===true){
-          var pageScroll1 = document.getElementById("rightBox-1");
-          var pageScroll2 = document.getElementById("rightBox-2");
           var PageId = document.querySelector('#page');
-          if(t>PageId.offsetTop){
-            pageScroll1.style.position = 'fixed';
-            pageScroll2.style.position = 'fixed';
-            // pageScroll2.style.margin = '400px 0'
+          if(t>PageId.offsetTop&&t<(footer.offsetTop-screenHeight)){
+            rightBox.style.position = 'fixed';
+            rightBox.style.top = '100px';
+          }else if(t<PageId.offsetTop){
+            // 头图部分
+            rightBox.style.position = 'absolute';
+            rightBox.style.top = '';
           }else{
-            pageScroll1.style.position = 'static';
-            pageScroll2.style.position = 'static';
-            // pageScroll2.style.margin = '0';
+            // 尾部
+            rightBox.style.position = 'absolute';
+            rightBox.style.top = (footer.offsetTop-screenHeight-PageId.offsetTop)+'px';
+          }
+        }else{
+          if(t>(footer.offsetTop-screenHeight)){
+            // 尾部
+            rightBox.style.position = 'absolute';
+            rightBox.style.top = (footer.offsetTop-screenHeight)+'px';
+          }else{
+            rightBox.style.position = 'fixed';
+            rightBox.style.top = '100px';
           }
         }
       }
     },
     methods:{
+      beforeRouteUpdate (to, from, next) {
+
+      },
       getUsers(){
         axios.post("/api/blog/getUsers",).then((response) => {
           for(let i=0;i<response.data.length;i++){
@@ -119,14 +136,6 @@
       // addLike(){
       //   // this.like = true;
       // },
-      // beforeunloadHandler(e){
-      //   // if (e) {
-      //   //   // e.returnValue = "您是否确认离开此页面-您输入的数据可能不会被保存";
-      //   //   e.returnValue = "aaa-bbb";
-      //   // }
-      //   // return "ccc-ddd";
-      //   // // return "您是否确认离开此页面-您输入的数据可能不会被保存";
-      // },
     }
   }
 </script>
@@ -137,25 +146,43 @@
     right: 7%;
     top: 10%;
   }
-  .rightBox-1{
-    /*width: 25%;*/
-    width: 400px;
-    /*margin: 50px 100px;*/
-    /*margin: 50px 0;*/
-    position: fixed;
+  .rightBox-1-static{
+    position: static;
   }
+  .rightBox-1-fixed{
+    position: fixed;
+
+  }
+  .rightBox-absolute{
+    position: absolute;
+  }
+  /*.rightBox-2-absolute{*/
+  /*  position: absolute;*/
+  /*}*/
   .rightBox-2-home{
     width: 400px;
     /*margin: 400px 0;*/
     right: 7%;
     top: 10%;
   }
-  .rightBox-2{
-    /*width: 25%;*/
-    width: 400px;
+  .rightBox-2-static{
+    position: static;
+    margin: 0;
+  }
+  .rightBox-2-fixed{
     position: fixed;
-    /*margin: 400px 100px;*/
     margin: 400px 0;
+  }
+  .rightBox{
+    position: fixed;
+  }
+  .rightBox-1{
+    width: 400px;
+    margin: 50px 0;
+  }
+  .rightBox-2{
+    width: 400px;
+    /*margin: 400px 0;*/
   }
   .rightBox-1:hover,.rightBox-2:hover,.rightBox-1-home:hover,.rightBox-2-home:hover{
     box-shadow: 0px 1rem 2rem 0px rgba(48, 55, 66, 0.15);

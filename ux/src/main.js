@@ -22,9 +22,14 @@ Vue.use(mavonEditor);
 //import 'assets/font/font.css';//引入字体
 
 router.beforeEach((to, from, next) => {
+  // 更换页面名
   if (to.meta.title) {
   document.title = to.meta.title
   }
+
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+
   // 判断该路由是否需要登录权限
   if (to.meta.type === 'login') {
     if (localStorage.getItem('userInfo')) {

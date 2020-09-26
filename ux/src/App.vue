@@ -30,6 +30,8 @@ export default {
     var index =parseInt(Math.random()*9);
     this.bgImg = "/static/bg"+index+".jpg";
     document.body.style.backgroundImage = "url("+this.bgImg+")";
+
+
   },
   watch:{
     $route(to,from){
@@ -55,7 +57,9 @@ body{
   background-attachment:fixed;
   background-repeat:repeat;
   background-size: 30%;
+  overflow-x: hidden;
   /*opacity: 0.8;*/
+  /*min-height: 2000px;*/
   min-width: 1200px;/*防止手机端布局错乱*/
 }
 </style>

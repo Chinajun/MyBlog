@@ -1,6 +1,6 @@
-<!-- 底部 -->
+<!-- 底部 TODO 手机端无法固定在底部 -->
 <template>
-<div class="footer">
+<div class="footer" id="footer">
   <div class="footerBox">
     <p class="footer-desc">回首向来萧瑟处，也无风雨也无晴</p>
     <p style="font-size: 16px">一个神秘的网站 - 菅野千寻的秘密基地</p>
@@ -42,7 +42,7 @@
 </script>
 <style>
   .footer{
-    min-width: 1200px;
+    min-width: 1400px;
     color:#888;
     font-size: 12px;
     line-height: 1.5;

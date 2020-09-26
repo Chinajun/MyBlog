@@ -3,10 +3,10 @@
     <cyj-header></cyj-header>
     <div class="bodyBox">
       <el-row>
-        <el-col :sm="24" :md="16">
+        <el-col :xs="16" :sm="16" :md="16">
           <cyj-msgbd :isMsgbd=false></cyj-msgbd>
         </el-col>
-        <el-col :sm="24" :md="8" >
+        <el-col :xs="8" :sm="8" :md="8">
           <cyj-right></cyj-right>
         </el-col>
       </el-row>
