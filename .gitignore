@@ -1,9 +1,9 @@
 .idea
-composer.lock
+# composer.lock
 *.log
-thinkphp
+# thinkphp
 runtime
-vendor
-extend
+# vendor
+# extend
 application/product
 application/register

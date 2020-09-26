@@ -32,5 +32,6 @@
 <style>
   .bodyBox{
     padding-top: 100px;
+    min-height: 1000px;
   }
 </style>

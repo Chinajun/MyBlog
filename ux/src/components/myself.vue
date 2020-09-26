@@ -13,7 +13,7 @@
           :show-header="false"
           style="width: 100%;margin: 20px 0">
           <el-table-column prop="title">
-            <template scope="scope"><span style="color: #f78989;font-weight: bold">{{scope.row.title}}</span></template>
+            <template slot-scope="scope"><span style="color: #f78989;font-weight: bold">{{scope.row.title}}</span></template>
           </el-table-column>
           <el-table-column prop="content"></el-table-column>
         </el-table>
