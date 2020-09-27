@@ -87,7 +87,7 @@
         param.append("mark",this.articleMark);
         param.append("page",this.page);
         param.append("search",this.selectArticle);
-        axios.post("/api/blog/getArticle",param).then((response) => {
+        axios.post("/blog/getArticle",param).then((response) => {
           this.articleList = [];
           this.page_count = response.data.data.count;
           for(let i=0;i<response.data.data.result.length;i++){

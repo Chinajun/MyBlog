@@ -51,7 +51,7 @@
     },
     methods: {
       onSubmit() {
-        axios.post("/api/blog/login", {
+        axios.post("/blog/login", {
           phone: this.form.phone,
           password: this.form.password
         }).then((response) => {
@@ -80,7 +80,6 @@
 <style>
   .loginBox{
     padding-top: 200px;
-    min-height: 1000px;
   }
   .text {
     font-size: 14px;

@@ -105,7 +105,7 @@
       // 获取用户信息
       getInfo(){
         // this.userForm = JSON.parse(localStorage.getItem('userInfo'));
-        axios.post("/api/blog/getInfo",{
+        axios.post("/blog/getInfo",{
           Id:JSON.parse(localStorage.getItem('userInfo')).Id
         }).then((response)=> {
           this.userForm = response.data.data[0];
@@ -142,7 +142,7 @@
           param.append("img",this.randomNum);
           param.append("Id",JSON.parse(localStorage.getItem('userInfo')).Id);
         }
-        axios.post("/api/blog/updateUser", param,{
+        axios.post("/blog/updateUser", param,{
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -167,14 +167,14 @@
       onSubmit(){
         this.$refs.userForm.validate(valid => {
           if(valid){
-            axios.post("/api/blog/updateUser", {
+            axios.post("/blog/updateUser", {
               Id:JSON.parse(localStorage.getItem('userInfo')).Id,
               oldPass: this.userForm.password0,
               newPass: this.userForm.password1,
             }).then((response) => {
               if (response.data.code === 0) {
                 // 重新登陆
-                axios.post("/api/blog/logout").then((response) => {
+                axios.post("/blog/logout").then((response) => {
                   if (response.data.code === 0) {
                     localStorage.removeItem('userInfo');
                     this.loginStatus = false;

@@ -64,7 +64,7 @@
         this.$router.push({path:"articleDetail",query:{Id:item.Id}})
       },
       getAllArticle(){
-        axios.post("/api/blog/getArticle",{
+        axios.post("/blog/getArticle",{
           page:this.page
         }).then((response) => {
           // this.paperList = [];

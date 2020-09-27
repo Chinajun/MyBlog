@@ -1,7 +1,6 @@
 <!-- 右侧列表 -->
 <template>
   <div class="rightBox" id="rightBox">
-<!--      <div :class="isHome?'rightBox-1-home rightBox-1-static':'rightBox-1'" id="rightBox-1">-->
     <div class="rightBox-1">
       <el-card>
         <img :src="require('@/assets/tx999.jpg')" class="touxiang">
@@ -27,7 +26,6 @@
         </div>
       </el-card>
     </div>
-<!--    <div :class="isHome?'rightBox-2-home rightBox-2-static':'rightBox-2'" id="rightBox-2">-->
     <div class="rightBox-2">
       <el-card>
         <div class="intro-2">
@@ -125,7 +123,7 @@
 
       },
       getUsers(){
-        axios.post("/api/blog/getUsers",).then((response) => {
+        axios.post("/blog/getUsers",).then((response) => {
           for(let i=0;i<response.data.length;i++){
             this.userList.push(response.data[i]);
           }
@@ -140,39 +138,6 @@
   }
 </script>
 <style>
-  .rightBox-1-home{
-    width: 400px;
-    margin: 50px 0;
-    right: 7%;
-    top: 10%;
-  }
-  .rightBox-1-static{
-    position: static;
-  }
-  .rightBox-1-fixed{
-    position: fixed;
-
-  }
-  .rightBox-absolute{
-    position: absolute;
-  }
-  /*.rightBox-2-absolute{*/
-  /*  position: absolute;*/
-  /*}*/
-  .rightBox-2-home{
-    width: 400px;
-    /*margin: 400px 0;*/
-    right: 7%;
-    top: 10%;
-  }
-  .rightBox-2-static{
-    position: static;
-    margin: 0;
-  }
-  .rightBox-2-fixed{
-    position: fixed;
-    margin: 400px 0;
-  }
   .rightBox{
     position: fixed;
   }
@@ -207,6 +172,9 @@
     text-align: center;
     font-weight: bold;
     margin-bottom: 20px;
+  }
+  .contact .item{
+    margin-bottom: 18px;
   }
   .contact .item i{
     background-color: #d9d9d9;

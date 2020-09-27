@@ -84,7 +84,7 @@
         param.append("username",JSON.parse(localStorage.getItem('userInfo')).username);
         param.append("page",this.page);
         param.append("search",this.selectArticle);
-        axios.post("/api/blog/getArticle",param).then((response) => {
+        axios.post("/blog/getArticle",param).then((response) => {
           this.articleList = [];
           this.page_count = response.data.data.count;
           for(let i=0;i<response.data.data.result.length;i++){
@@ -96,7 +96,7 @@
       },
       // 获取我收藏的文章
       getMyCollect(){
-        axios.post("/api/blog/getCollect", {
+        axios.post("/blog/getCollect", {
           uid:JSON.parse(localStorage.getItem('userInfo')).Id,
           page:this.page,
           search:this.selectArticle
@@ -132,7 +132,7 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            axios.post("/api/blog/delArticle",{
+            axios.post("/blog/delArticle",{
               Id:row.Id
             }).then((response) => {
               if (response.data.code === 0) {
@@ -159,7 +159,7 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            axios.post("/api/blog/handleCollect",{
+            axios.post("/blog/handleCollect",{
               aid:row.Id,
               uid:JSON.parse(localStorage.getItem('userInfo')).Id
             }).then((response) => {

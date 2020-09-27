@@ -75,7 +75,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        axios.post("/api/blog/logout").then((response) => {
+        axios.post("/blog/logout").then((response) => {
           if (response.data.code === 0) {
             localStorage.removeItem('userInfo');
             // this.$cookies.remove('uid');
