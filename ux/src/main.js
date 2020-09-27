@@ -19,7 +19,8 @@ import 'font-awesome/css/font-awesome.css' //引用fa
 import  mavonEditor  from 'mavon-editor' // 引用md文本编辑器
 import 'mavon-editor/dist/css/index.css'
 Vue.use(mavonEditor);
-//import 'assets/font/font.css';//引入字体
+import VueLazyload from 'vue-lazyload' // 图片懒加载
+Vue.use(VueLazyload)
 
 router.beforeEach((to, from, next) => {
   // 更换页面名

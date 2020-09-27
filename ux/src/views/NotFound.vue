@@ -1,5 +1,5 @@
 <template>
-  <div class="loginBox">
+  <div class="nfBox">
     <el-card class="box-card-login">
       <div slot="header">
         <h3>404 Not Found</h3>
@@ -22,8 +22,9 @@
   }
 </script>
 <style>
-  .loginBox{
+  .nfBox{
     padding-top: 200px;
+    min-height: 0;
   }
   .text {
     font-size: 14px;

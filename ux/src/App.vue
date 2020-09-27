@@ -24,8 +24,6 @@ export default {
     var index =parseInt(Math.random()*9);
     this.bgImg = "/static/bg"+index+".jpg";
     document.body.style.backgroundImage = "url("+this.bgImg+")";
-
-
   },
   watch:{
     $route(to,from){
@@ -46,8 +44,7 @@ a{
   color: #303133;
 }
 body{
-  /*background-image: url("assets/bg0.jpg");*/
-  background-image: url("/static/bg1.jpg");
+  /*background-image: url("/static/bg1.jpg");*/
   background-attachment:fixed;
   background-repeat:repeat;
   background-size: 30%;

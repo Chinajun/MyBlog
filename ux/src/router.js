@@ -1,18 +1,31 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
-import home from "./views/home";
-import message from "./views/message";
-import about from "./views/about";
-import login from "./views/login"
-import note from "./views/note";
-import daily from "./views/daily";
-import articleDetail from "./views/articleDetail";
-import register from "./views/register";
-import addArticle from "./views/addArticle";
-import NotFound from "./views/NotFound";
-import center from "./views/center";
-import myArticle from "./views/myArticle";
+// import home from "./views/home";
+// import message from "./views/message";
+// import about from "./views/about";
+// import login from "./views/login"
+// import note from "./views/note";
+// import daily from "./views/daily";
+// import articleDetail from "./views/articleDetail";
+// import register from "./views/register";
+// import addArticle from "./views/addArticle";
+// import NotFound from "./views/NotFound";
+// import center from "./views/center";
+// import myArticle from "./views/myArticle";
+
+const home = ()=>import("./views/home");
+const message = ()=>import("./views/message");
+const about = ()=>import("./views/about");
+const login = ()=>import("./views/login");
+const note = ()=>import("./views/note");
+const daily = ()=>import("./views/daily");
+const articleDetail = ()=>import("./views/articleDetail");
+const register = ()=>import("./views/register");
+const addArticle = ()=>import("./views/addArticle");
+const NotFound = ()=>import("./views/NotFound");
+const center = ()=>import("./views/center");
+const myArticle = ()=>import("./views/myArticle");
 
 const routes=[
     {path:"",component:home},

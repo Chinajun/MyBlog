@@ -21,19 +21,15 @@
         </div>
       </el-card>
     </div>
-    <cyj-footer></cyj-footer>
   </div>
 </template>
 <script>
   import axios from 'axios';
-  import header from "../components/header";
-  import footer from "../components/footer";
-
+  const header = ()=>import("../components/header");
   export default {
     name:'login',
     components:{
       'cyj-header':header,
-      'cyj-footer':footer
     },
     data :function() {
       return {
@@ -84,6 +80,7 @@
 <style>
   .loginBox{
     padding-top: 200px;
+    min-height: 1000px;
   }
   .text {
     font-size: 14px;

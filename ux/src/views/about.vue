@@ -15,10 +15,10 @@
   </div>
 </template>
 <script>
-  import header from '../components/header.vue';
-  import right from "../components/right";
-  import footer from "../components/footer";
-  import myself from "../components/myself"
+  const header = ()=>import("../components/header");
+  const right = ()=>import("../components/right");
+  const footer = ()=>import("../components/footer");
+  const myself = ()=>import("../components/myself");
   export default {
     components:{
       'cyj-header':header,

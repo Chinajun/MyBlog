@@ -3,7 +3,8 @@
   <div>
     <cyj-header></cyj-header>
     <div>
-      <img class="headImg" :src="require('@/assets/header.jpg')"/>
+<!--      <img class="headImg" :src="require('@/assets/header.jpg')"/>-->
+      <img class="headImg" v-lazy="headImg"/>
       <!-- 遮罩层 -->
       <div class="topLayer">
       </div>
@@ -34,10 +35,10 @@
   </div>
 </template>
 <script>
-  import header from '../components/header.vue';
-  import paper from "../components/paper";
-  import right from "../components/right";
-  import footer from "../components/footer";
+  const header = ()=>import("../components/header");
+  const right = ()=>import("../components/right");
+  const footer = ()=>import("../components/footer");
+  const paper = ()=>import("../components/paper");
   import axios from "axios";
   export default {
     components:{
@@ -48,6 +49,7 @@
     },
     data(){
       return{
+        headImg: require('@/assets/header.jpg'),
         hitokoto:{},
         words:[],               //字母数组push，pop的载体
         str:"Hello!",          //str初始化
