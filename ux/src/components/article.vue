@@ -4,7 +4,7 @@
     <el-card class="box-card" v-if="isNote">
       <div slot="header" class="msg-title">笔记</div>
       <div class="article-img-note">
-        <img :src="require('@/assets/note.jpg')">
+        <img v-lazy="noteImg">
       </div>
       <div class="about-desc">
         <p>
@@ -15,7 +15,7 @@
     <el-card class="box-card" v-else>
       <div slot="header" class="msg-title">日常</div>
       <div class="article-img-note">
-        <img :src="require('@/assets/daily.jpg')">
+        <img v-lazy="dailyImg">
       </div>
       <div class="about-desc">
         <p>
@@ -58,6 +58,8 @@
   export default {
     data(){
       return{
+        noteImg:require('@/assets/note.jpg'),
+        dailyImg:require('@/assets/daily.jpg'),
         articleMark:"",
         articleList:[],
         page:1,

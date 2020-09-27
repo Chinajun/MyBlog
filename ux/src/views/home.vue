@@ -49,7 +49,7 @@
     },
     data(){
       return{
-        headImg: require('@/assets/header.jpg'),
+        headImg: require('@/assets/header_tiny.jpg'),
         hitokoto:{},
         words:[],               //字母数组push，pop的载体
         str:"Hello!",          //str初始化

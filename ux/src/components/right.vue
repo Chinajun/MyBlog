@@ -3,24 +3,24 @@
   <div class="rightBox" id="rightBox">
     <div class="rightBox-1">
       <el-card>
-        <img :src="require('@/assets/tx999.jpg')" class="touxiang">
+        <img v-lazy="myImg" class="touxiang">
         <div class="intro-1">
           <span>菅野千寻</span>
         </div>
         <div class="contact">
-          <el-tooltip  class="item" content="Github">
+          <el-tooltip  class="contact-item" content="Github">
             <a :href="contactList.github" target="_blank"><i class="fa fa-github"></i></a>
           </el-tooltip>
-          <el-tooltip  class="item" content="QQ">
+          <el-tooltip  class="contact-item" content="QQ">
             <a :href="require('@/assets/qq.jpg')" target="_blank"><i class="fa fa-qq"></i></a>
           </el-tooltip>
-          <el-tooltip  class="item" content="微博">
+          <el-tooltip  class="contact-item" content="微博">
             <a :href="contactList.weibo" target="_blank"><i class="fa fa-weibo"></i></a>
           </el-tooltip>
-          <el-tooltip  class="item" content="微信">
+          <el-tooltip  class="contact-item" content="微信">
             <a :href="require('@/assets/wechat.png')" target="_blank"><i class="fa fa-wechat"></i></a>
           </el-tooltip>
-          <el-tooltip  class="item" content="简历">
+          <el-tooltip  class="contact-item" content="简历">
             <a target="_blank"><i class="fa fa-file-code-o"></i></a>
           </el-tooltip>
         </div>
@@ -68,6 +68,7 @@
     },
     data(){
       return{
+        myImg:require('@/assets/tx999.jpg'),
         contactList:{
           github:"https://github.com/Chinajun",
           weibo:"https://weibo.com/vitamin61/home",
@@ -173,10 +174,7 @@
     font-weight: bold;
     margin-bottom: 20px;
   }
-  .contact .item{
-    margin-bottom: 18px;
-  }
-  .contact .item i{
+  .contact .contact-item i{
     background-color: #d9d9d9;
     font-size: 18px;
     width:42px;

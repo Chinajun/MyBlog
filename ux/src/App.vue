@@ -22,8 +22,9 @@ export default {
     this.path = this.$route.path;
     // 随机更换背景图片
     var index =parseInt(Math.random()*9);
-    this.bgImg = "/static/bg"+index+".jpg";
+    this.bgImg = "/static/bg"+index+"_tiny.jpg";
     document.body.style.backgroundImage = "url("+this.bgImg+")";
+
   },
   watch:{
     $route(to,from){

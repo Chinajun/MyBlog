@@ -42,7 +42,7 @@
 </script>
 <style>
   .footer{
-    min-width: 1400px;
+    min-width: 1200px;
     color:#888;
     font-size: 12px;
     line-height: 1.5;

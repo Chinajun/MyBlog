@@ -4,7 +4,7 @@
     <el-card class="box-card" v-if="isMsgbd">
       <div slot="header" class="msg-title">留言板</div>
       <div class="msg-img">
-        <img :src="require('@/assets/msg.jpg')">
+        <img v-lazy="msgImg">
       </div>
       <div class="msg-desc">
         <p>
@@ -115,6 +115,8 @@
   export default {
     data(){
       return{
+        // 留言板头图
+        msgImg:require('@/assets/msg.jpg'),
         // 文章详情
         title:"",
         content:"",

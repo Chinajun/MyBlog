@@ -58,7 +58,8 @@ module.exports = {
      * Source Maps
      */
 
-    productionSourceMap: true,
+    // 去掉编译文件中map文件
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 
