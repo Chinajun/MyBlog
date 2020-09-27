@@ -5,7 +5,7 @@
       <div slot="header">
         <el-button type="text" class="msg-title" id="myArticle" @click="toMyArticle">我的文章</el-button>
         <el-button type="text" class="msg-title notActive" id="myCollect" @click="toMyCollect">我的收藏</el-button>
-        <el-input :placeholder="isArticle?'搜索文章标题':'搜索文章标题或作者'" v-model="selectArticle" class="select-article">
+        <el-input :placeholder="isArticle?'搜索文章标题':'搜索文章标题或作者'" v-model="selectArticle" style="width: 50%;left: 10%">
           <el-button slot="append" icon="el-icon-search" @click="handleSearch"/>
         </el-input>
       </div>
@@ -197,10 +197,6 @@
   }
   .msg-title{
     font-weight: bold;
-  }
-  .select-article{
-    width: 50%;
-    left: 10%;
   }
   .notActive{
     color: black;

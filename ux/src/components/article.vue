@@ -26,7 +26,7 @@
     <el-card class="box-card">
       <div slot="header">
         <span class="msg-title">文章列表</span>
-        <el-input placeholder="搜索文章标题或作者" v-model="selectArticle" class="select-article">
+        <el-input placeholder="搜索文章标题或作者" v-model="selectArticle" style="width: 50%;left: 10%">
           <el-button slot="append" icon="el-icon-search" @click="getArticle"/>
         </el-input>
 <!--        <el-button style="float: right; padding: 3px 0" type="text"  @click="addArticle">发表文章</el-button>-->
@@ -140,9 +140,5 @@
     text-align: center;
     font-size: 14px;
     line-height: 30px;
-  }
-  .select-article{
-    width: 50%;
-    left: 10%;
   }
 </style>
