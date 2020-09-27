@@ -20,7 +20,7 @@ import  mavonEditor  from 'mavon-editor' // 引用md文本编辑器
 import 'mavon-editor/dist/css/index.css'
 Vue.use(mavonEditor);
 import VueLazyload from 'vue-lazyload' // 图片懒加载
-Vue.use(VueLazyload)
+Vue.use(VueLazyload);
 
 router.beforeEach((to, from, next) => {
   // 更换页面名

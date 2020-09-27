@@ -199,68 +199,68 @@
   }
 
   /*!*************do you like me*******************!*/
-  .rs2{
-    /*padding:10px 0 4px 0;*/
-    min-height: 100px;
-  }
+  /*.rs2{*/
+  /*  !*padding:10px 0 4px 0;*!*/
+  /*  min-height: 100px;*/
+  /*}*/
   /*.rightlistBox .rs2.fixed{*/
   /*  position: fixed;*/
   /*  top:40px;*/
   /*  width:22%;*/
   /*}*/
-  .rs2 p{
-    color:#DF2050;
-    cursor: pointer;
-    font-size: 20px;
-    margin-bottom: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
-    margin-top:10px;
-    font-weight: 500;
-  }
-  .rs2-like{
-    color:#DF2050;
-    cursor: pointer;
-    text-align: center;
-    font-size: 40px;
-    position: absolute;
-    width:100%;
-    height:100px;
-    line-height: 100px;
-    left:0;
-    top:30px;
-  }
-  .heart{
-    width: 50px;
-    height: 50px;
-    /*test*/
-    display: inline-block;
-    text-align: center;
-    /*width: 100px;*/
-    /*height: 100px;*/
-    margin-left: -20px;
-    margin-top:-5px;
-    background-image: url("../assets/heart.png");
-    background-size: 100% 100%;
-    cursor: pointer;
-    -webkit-transition: background-position 1s steps(28);
-    transition: background-position 1s steps(28);
-    -webkit-transition-duration: 0s;
-    transition-duration: 0s;
-    vertical-align: middle;
-  }
-  .heart:hover{
-    transform: scale(1.15);
-    -webkit-transform: scale(1.15);
-  }
-  .heart-active{
-    -webkit-transition-duration: 1s;
-    transition-duration: 1s;
-    background-position: -2800px 0;
-  }
-  .rs2 div span{
-    margin-left: -30px;
-  }
+  /*.rs2 p{*/
+  /*  color:#DF2050;*/
+  /*  cursor: pointer;*/
+  /*  font-size: 20px;*/
+  /*  margin-bottom: 10px;*/
+  /*  white-space: nowrap;*/
+  /*  overflow: hidden;*/
+  /*  text-overflow: ellipsis;*/
+  /*  text-align: center;*/
+  /*  margin-top:10px;*/
+  /*  font-weight: 500;*/
+  /*}*/
+  /*.rs2-like{*/
+  /*  color:#DF2050;*/
+  /*  cursor: pointer;*/
+  /*  text-align: center;*/
+  /*  font-size: 40px;*/
+  /*  position: absolute;*/
+  /*  width:100%;*/
+  /*  height:100px;*/
+  /*  line-height: 100px;*/
+  /*  left:0;*/
+  /*  top:30px;*/
+  /*}*/
+  /*.heart{*/
+  /*  width: 50px;*/
+  /*  height: 50px;*/
+  /*  !*test*!*/
+  /*  display: inline-block;*/
+  /*  text-align: center;*/
+  /*  !*width: 100px;*!*/
+  /*  !*height: 100px;*!*/
+  /*  margin-left: -20px;*/
+  /*  margin-top:-5px;*/
+  /*  background-image: url("../assets/heart.png");*/
+  /*  background-size: 100% 100%;*/
+  /*  cursor: pointer;*/
+  /*  -webkit-transition: background-position 1s steps(28);*/
+  /*  transition: background-position 1s steps(28);*/
+  /*  -webkit-transition-duration: 0s;*/
+  /*  transition-duration: 0s;*/
+  /*  vertical-align: middle;*/
+  /*}*/
+  /*.heart:hover{*/
+  /*  transform: scale(1.15);*/
+  /*  -webkit-transform: scale(1.15);*/
+  /*}*/
+  /*.heart-active{*/
+  /*  -webkit-transition-duration: 1s;*/
+  /*  transition-duration: 1s;*/
+  /*  background-position: -2800px 0;*/
+  /*}*/
+  /*.rs2 div span{*/
+  /*  margin-left: -30px;*/
+  /*}*/
 </style>
