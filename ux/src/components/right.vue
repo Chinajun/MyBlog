@@ -124,7 +124,7 @@
 
       },
       getUsers(){
-        axios.post("/blog/getUsers",).then((response) => {
+        axios.post("/public/index.php/blog/getUsers",).then((response) => {
           for(let i=0;i<response.data.length;i++){
             this.userList.push(response.data[i]);
           }

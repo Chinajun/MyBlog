@@ -63,7 +63,7 @@
       },
       // 根据Id获取文章信息
       getDetailArticle() {
-        axios.post("/index.php/getDetailArticle",{
+        axios.post("/public/index.php/blog/getDetailArticle",{
           Id:this.aid
         }).then((response) => {
           this.articleForm.title = response.data.title;
@@ -89,7 +89,7 @@
       $imgAdd(pos, $file){
         var param = new FormData();
         param.append("file",$file);
-        axios.post("/blog/uploadImg", param,{
+        axios.post("/public/index.php/blog/uploadImg", param,{
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -120,7 +120,7 @@
             }else{
               param.append('create_time',this.articleForm.create_time);
             }
-            axios.post("/blog/addArticle",param).then((response) => {
+            axios.post("/public/index.php/blog/addArticle",param).then((response) => {
               if (response.data.code === 0) {
                 this.$message({
                   message: response.data.msg,

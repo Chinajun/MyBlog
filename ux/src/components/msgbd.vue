@@ -164,7 +164,7 @@
       // 根据Id获取文章信息
       getDetailArticle() {
         // console.log(this.$route.query);
-        axios.post("/blog/getDetailArticle",{
+        axios.post("/public/index.php/blog/getDetailArticle",{
           Id:this.$route.query.Id
         }).then((response) => {
           this.title = response.data.title;
@@ -183,7 +183,7 @@
       },
       // 获得评论（留言板aid=0,父评论pid=0）
       getMsgComment(){
-        axios.post("/blog/getComment",{
+        axios.post("/public/index.php/blog/getComment",{
           aid:this.aid,
           page:this.page
         }).then((response) => {
@@ -225,7 +225,7 @@
             userId = JSON.parse(localStorage.getItem('userInfo')).Id;
           }
           this.commentList.create_time = Math.round(new Date() / 1000);
-          axios.post("/blog/addComment", {
+          axios.post("/public/index.php/blog/addComment", {
             content: this.commentList.content,
             uid: userId,
             // uid: JSON.parse(localStorage.getItem('userInfo')).Id,
@@ -253,7 +253,7 @@
       // 回复
       toReply(item){
         if(this.reply!==""){
-          axios.post("/blog/addComment", {
+          axios.post("/public/index.php/blog/addComment", {
             content: this.reply,
             uid: JSON.parse(localStorage.getItem('userInfo')).Id,
             create_time: Math.round(new Date() / 1000),
@@ -296,7 +296,7 @@
         }else{
           uid = 0;
         }
-        axios.post("/blog/getCollect", {
+        axios.post("/public/index.php/blog/getCollect", {
           aid:this.aid,
           uid:uid
         }).then((response) => {
@@ -315,7 +315,7 @@
             this.isCollect = false;
             this.collectCount -=1;
           }
-          axios.post("/blog/handleCollect", {
+          axios.post("/public/index.php/blog/handleCollect", {
             aid:this.aid,
             uid:JSON.parse(localStorage.getItem('userInfo')).Id
           }).then((response) => {

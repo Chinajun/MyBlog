@@ -51,7 +51,7 @@
     },
     methods: {
       onSubmit() {
-        axios.post("/blog/login", {
+        axios.post("/public/index.php/blog/login", {
           phone: this.form.phone,
           password: this.form.password
         }).then((response) => {

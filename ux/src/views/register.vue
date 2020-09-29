@@ -52,7 +52,7 @@
             } else if (value.length>6||value.length<2) {
               callback(new Error('长度为2-6个字符'));
             } else {
-              axios.post("/blog/validateUser",{
+              axios.post("/public/index.php/blog/validateUser",{
                 type: 'username',
                 value: value
               }).then((response)=> {
@@ -73,7 +73,7 @@
             } else if (value.length!==11) {
               callback(new Error('手机号格式错误'));
             } else {
-              axios.post("/blog/validateUser",{
+              axios.post("/public/index.php/blog/validateUser",{
                 type: 'phone',
                 value: value
               }).then((response)=> {
@@ -125,7 +125,7 @@
           this.$refs.registerForm.validate(valid => {
             if (valid) {
               this.registerForm.create_time = Math.round(new Date() / 1000);
-              axios.post("/blog/register",{
+              axios.post("/public/index.php/blog/register",{
                 username: this.registerForm.username,
                 password: this.registerForm.password,
                 phone:this.registerForm.phone,
