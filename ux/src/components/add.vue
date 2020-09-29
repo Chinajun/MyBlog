@@ -63,7 +63,7 @@
       },
       // 根据Id获取文章信息
       getDetailArticle() {
-        axios.post("/getDetailArticle",{
+        axios.post("/index.php/getDetailArticle",{
           Id:this.aid
         }).then((response) => {
           this.articleForm.title = response.data.title;
