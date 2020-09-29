@@ -24,8 +24,6 @@ export default {
     if (this.isMobile()) {
       // 手机端背景图片横向不平铺，设定min-height
       document.body.style.backgroundSize = '100%';
-    } else {
-      // pc端
     }
     // 随机更换背景图片
     var index =parseInt(Math.random()*9);

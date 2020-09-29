@@ -64,8 +64,6 @@
         // 手机端背景图片横向不平铺，设定min-height
         var bodyBox = document.getElementById('bodyBox');
         bodyBox.style.minHeight = '2500px';
-      } else {
-        // pc端
       }
 
       this.getMotto();

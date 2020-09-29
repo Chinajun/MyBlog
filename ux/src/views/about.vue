@@ -31,8 +31,19 @@
 
       }
     },
+    mounted() {
+      if (this.isMobile()) {
+        // 手机端背景图片横向不平铺，设定min-height
+        var bodyBox = document.getElementById('bodyBox');
+        bodyBox.style.minHeight = '2500px';
+      }
+    },
     methods:{
-
+      // 识别手机端还是pc端
+      isMobile() {
+        let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+        return flag;
+      },
     }
   }
 </script>
