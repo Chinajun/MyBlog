@@ -4,7 +4,7 @@
     <cyj-header></cyj-header>
     <div>
 <!--      <img class="headImg" :src="require('@/assets/header.jpg')"/>-->
-      <img class="headImg" v-lazy="headImg"/>
+      <img class="headImg" v-lazy="headImg" id="headImg"/>
       <!-- 遮罩层 -->
       <div class="topLayer">
       </div>
@@ -59,8 +59,15 @@
     },
     mounted(){
       this.getMotto();
-      this.begin();
-      this.headImg = require('@/assets/header.jpg');
+      // this.begin();
+      // this.loadHeadImg();
+
+      var that = this;
+      var timer = setTimeout(function() {
+        that.begin();
+        that.headImg = require('@/assets/header.jpg');
+        clearTimeout(timer);
+      }, 500);
     },
     watch:{                     //监听order值的变化，改变str的内容
       order(old,newV){
@@ -72,6 +79,17 @@
       }
     },
     methods: {
+      loadHeadImg(){
+        // TODO
+        var headImg = document.getElementById('headImg');
+        headImg.onload = function(){
+          alert(headImg.complete);
+
+          console.log(this.headImg);
+          this.headImg = require('@/assets/header.jpg');
+          console.log(this.headImg);
+        };
+      },
       getMotto(){
         axios.get("https://v1.hitokoto.cn/",).then((response) => {
           this.hitokoto.content = response.data.hitokoto;
