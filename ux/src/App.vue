@@ -24,13 +24,12 @@ export default {
     var index =parseInt(Math.random()*9);
     this.bgImg = "/static/bg"+index+"_tiny.jpg";
     document.body.style.backgroundImage = "url("+this.bgImg+")";
-
   },
   watch:{
     $route(to,from){
       this.path = to.path
     }
-  }
+  },
 }
 </script>
 

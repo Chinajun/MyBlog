@@ -2,34 +2,36 @@
 <template>
   <div>
     <cyj-header></cyj-header>
-    <div>
-<!--      <img class="headImg" :src="require('@/assets/header.jpg')"/>-->
-      <img class="headImg" v-lazy="headImg"/>
-      <!-- 遮罩层 -->
-      <div class="topLayer">
-      </div>
-      <div class="headWord">
-        <i class="fa fa-quote-left i-left"></i>
-        <div class="word">
-          <span v-for="(letter,index) in words" :key="index">{{letter}}</span>
+    <div id="bodyBox">
+      <div>
+        <!--      <img class="headImg" :src="require('@/assets/header.jpg')"/>-->
+        <img class="headImg" v-lazy="headImg"/>
+        <!-- 遮罩层 -->
+        <div class="topLayer">
         </div>
-        <i class="fa fa-quote-right i-right"></i>
-        <span class="i-from">—— {{hitokoto.username}}</span>
+        <div class="headWord">
+          <i class="fa fa-quote-left i-left"></i>
+          <div class="word">
+            <span v-for="(letter,index) in words" :key="index">{{letter}}</span>
+          </div>
+          <i class="fa fa-quote-right i-right"></i>
+          <span class="i-from">—— {{hitokoto.username}}</span>
+        </div>
+        <div class="i-down">
+          <i class="el-icon-arrow-down" @click="toDown()"></i>
+        </div>
       </div>
-      <div class="i-down">
-        <i class="el-icon-arrow-down" @click="toDown()"></i>
+      <div class="bodyBox" id="page">
+        <el-row>
+          <!--         xs手机 md电脑-->
+          <el-col :xs="16" :sm="16" :md="16">
+            <cyj-paper></cyj-paper>
+          </el-col>
+          <el-col :xs="8" :sm="8" :md="8">
+            <cyj-right :isHome=true></cyj-right>
+          </el-col>
+        </el-row>
       </div>
-    </div>
-    <div class="bodyBox" id="page">
-      <el-row>
-<!--         xs手机 md电脑-->
-        <el-col :xs="16" :sm="16" :md="16">
-          <cyj-paper></cyj-paper>
-        </el-col>
-        <el-col :xs="8" :sm="8" :md="8">
-          <cyj-right :isHome=true></cyj-right>
-        </el-col>
-      </el-row>
     </div>
     <cyj-footer></cyj-footer>
   </div>
@@ -58,6 +60,14 @@
       }
     },
     mounted(){
+      if (this.isMobile()) {
+        // 手机端背景图片横向不平铺，设定min-height
+        var bodyBox = document.getElementById('bodyBox');
+        bodyBox.style.minHeight = '2500px';
+      } else {
+        // pc端
+      }
+
       this.getMotto();
       // this.begin();
       this.loadHeadImg();
@@ -78,6 +88,12 @@
       }
     },
     methods: {
+      // 识别手机端还是pc端
+      isMobile() {
+        let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+        return flag;
+      },
+      // 预加载图片
       loadHeadImg(){
         var newImg = new Image();
         newImg.src = require('@/assets/header.jpg');
@@ -204,7 +220,8 @@
   }
   .word span{
     font-family: 'helloFont';
-    font-size: 3rem;
+    /*font-size: 3rem;*/
+    font-size: 40px;
     position: relative;
     left: -50%;
   }

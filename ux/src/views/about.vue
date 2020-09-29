@@ -1,7 +1,7 @@
 <template>
   <div>
     <cyj-header></cyj-header>
-    <div class="bodyBox">
+    <div class="bodyBox" id="bodyBox">
       <el-row>
         <el-col :xs="16" :sm="16" :md="16">
           <cyj-myself></cyj-myself>
