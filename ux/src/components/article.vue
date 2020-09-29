@@ -132,7 +132,7 @@
   }
   .article-img-note img{
     width: 40%;
-    height: auto;
+    height: 40%;
   }
   .msg-title{
     font-weight: bold;
