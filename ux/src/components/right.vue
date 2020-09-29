@@ -32,7 +32,7 @@
           <span>我的朋友们</span>
         </div>
         <div class="users" v-for="(item,index) in userList" :key="index">
-          <el-tooltip  class="item" :content="item.username">
+          <el-tooltip :content="item.username">
             <img :src="require('@/assets/'+item.img)" class="touxiang-small">
           </el-tooltip>
         </div>
