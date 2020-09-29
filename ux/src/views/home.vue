@@ -60,6 +60,7 @@
     mounted(){
       this.getMotto();
       this.begin();
+      this.headImg = require('@/assets/header.jpg');
     },
     watch:{                     //监听order值的变化，改变str的内容
       order(old,newV){
