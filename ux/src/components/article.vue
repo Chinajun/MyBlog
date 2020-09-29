@@ -132,6 +132,7 @@
   }
   .article-img-note img{
     width: 40%;
+    height: auto;
   }
   .msg-title{
     font-weight: bold;
