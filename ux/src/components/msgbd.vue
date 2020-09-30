@@ -65,8 +65,8 @@
       <div v-for="(item,index) in msgList" :key="index" class="msg-box">
         <div>
           <div class="pict">
-<!--            <img :src="require('@/assets/tx2.jpg')" class="touxiang-mid">-->
-            <img :src="require('@/assets/'+item.img)" class="touxiang-mid">
+<!--            <img :src="require('@/assets/'+item.img)" class="touxiang-mid">-->
+            <img :src="'/static/'+item.img" class="touxiang-mid">
           </div>
           <div class="others">
             <div class="others-username">{{item.username}}</div>
@@ -90,7 +90,8 @@
         </div>
         <div class="underComment" v-for="(item2,index2) in msgList[index].comment" :key="index2">
           <div class="pict">
-            <img :src="require('@/assets/'+item2.img)" class="touxiang-small">
+<!--            <img :src="require('@/assets/'+item2.img)" class="touxiang-small">-->
+            <img :src="'/static/'+item2.img" class="touxiang-small">
           </div>
           <div class="othersComment">
             <div class="othersComment-username">{{item2.username}}</div>

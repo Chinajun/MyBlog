@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <router-view/>
-<!--  <el-image :src="require('@/assets/peach.jpg')"></el-image>-->
   </div>
 </template>
 
