@@ -8,7 +8,7 @@
       <div class="msg-container">
         <div class="headPicture">
 <!--          <img :src="require('@/assets/'+this.userForm.img)">-->
-          <img :src="'/static/'+this.userForm.img">
+          <img :src="'/album/'+this.userForm.img">
           <!-- 遮罩层 -->
           <div class="changePicture" @mouseover="showMsg" @mouseout="removeMsg" @click="changePicture">
             <p id="changePicture"></p>
@@ -23,7 +23,7 @@
             <div class="headPicture">
               <img v-if="imageUrl" :src="imageUrl">
 <!--              <img v-else :src="require('@/assets/'+this.randomNum)">-->
-              <img v-else :src="'/static/'+this.randomNum">
+              <img v-else :src="'/album/'+this.randomNum">
             </div>
             <div class="headPicture">
               <span @click="randomPicture">随机头像</span>

@@ -34,7 +34,7 @@
         <div class="users" v-for="(item,index) in userList" :key="index">
           <el-tooltip :content="item.username">
 <!--            <img :src="require('@/assets/'+item.img)" class="touxiang-small">-->
-            <img :src="'/static/'+item.img" class="touxiang-small">
+            <img :src="'/album/'+item.img" class="touxiang-small">
           </el-tooltip>
         </div>
         <div class="users users-more" v-show="userList.length==7">
@@ -70,7 +70,7 @@
     data(){
       return{
         // myImg:require('@/assets/tx999.jpg'),
-        myImg:"/static/tx999.jpg",
+        myImg:"/album/tx999.jpg",
         contactList:{
           github:"https://github.com/Chinajun",
           weibo:"https://weibo.com/vitamin61/home",

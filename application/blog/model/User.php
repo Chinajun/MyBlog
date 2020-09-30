@@ -116,7 +116,7 @@ class User extends Model
             if(strpos($userInfo['img'],'/')==true){
                 // 删除原本上传的头像
 //                $res = unlink(ROOT_PATH . 'ux/src/assets/'.$userInfo['img']);
-                $res = unlink(ROOT_PATH . 'ux/static/'.$userInfo['img']);
+                $res = unlink(ROOT_PATH . 'ux/static/album/'.$userInfo['img']);
             }
             return $user->where('Id',$data['Id'])->update(['img'=>$data['img']]);
         }catch (\Exception $e){

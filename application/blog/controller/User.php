@@ -125,7 +125,7 @@ class User extends Controller
                 $fileSaveName = $info->getSaveName();
                 $fileSaveName = str_replace("\\",'/',$fileSaveName);
 //                $data['img'] = 'upload/'.$fileSaveName;
-                $data['img'] = 'album/'.$fileSaveName;
+                $data['img'] = $fileSaveName;
             }
         }
         $user = new \app\blog\model\User();
