@@ -87,11 +87,12 @@ class Article extends Controller
     public function uploadImg(){
         $file = request()->file("file");
         if($file){
-            $info = $file->validate(['ext' => 'jpg,jpeg'])->rule('md5')->move(ROOT_PATH . 'public/static');
+//            $info = $file->validate(['ext' => 'jpg,jpeg'])->rule('md5')->move(ROOT_PATH . 'public/static');
+            $info = $file->validate(['ext' => 'jpg,jpeg'])->rule('md5')->move(ROOT_PATH . 'ux/static');
             if($info){
                 $fileSaveName = $info->getSaveName();
 //                $fileSaveName = 'http://localhost/public/static/'.str_replace("\\",'/',$fileSaveName);
-                $fileSaveName = 'http://47.98.213.131/public/static/'.str_replace("\\",'/',$fileSaveName);
+                $fileSaveName = 'http://47.98.213.131/static/'.str_replace("\\",'/',$fileSaveName);
                 return [
                     'code' => 0,
                     'msg' => '图片上传成功',
