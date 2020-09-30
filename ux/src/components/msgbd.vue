@@ -392,10 +392,12 @@
   }
   .touxiang-mid{
     width: 70px;
+    height: 70px;
     border-radius: 50%;
   }
   .touxiang-small{
     width: 50px;
+    height: 50px;
     border-radius: 50%;
   }
   .pict{

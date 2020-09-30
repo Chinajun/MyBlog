@@ -164,6 +164,7 @@
   }
   .touxiang-small{
     width: 50px;
+    height: 50px;
     border-radius: 50%;
   }
   .intro-1{
