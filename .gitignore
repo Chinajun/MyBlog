@@ -7,3 +7,4 @@ runtime
 # extend
 application/product
 application/register
+*.sql
