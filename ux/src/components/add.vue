@@ -40,7 +40,7 @@
         articleForm:{
           title:"",
           content:"",
-          mark:"笔记",
+          mark:"日常",
           create_time:"",
           aid:0,
         },

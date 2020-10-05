@@ -283,11 +283,11 @@
         this.reply = "";
       },
       // 分享
-      shareWeibo(){ // TODO 网站地址
-        window.open('http://service.weibo.com/share/share.php?title=一起来看看吧：《'+this.title+'》作者：'+this.username+'，地址：');
+      shareWeibo(){
+        window.open('http://service.weibo.com/share/share.php?title=一起来看看吧：《'+this.title+'》作者：'+this.username+'，地址：http://cyj1224.top/');
       },
       shareQQ(){
-        window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://www.baidu.com&desc=《'+this.title+'》作者：'+this.username+'&summary=一起来看看吧');
+        window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://www.baidu.com&desc=《'+this.title+'》作者：'+this.username+'&summary=一起来看看吧：http://cyj1224.top/');
       },
       // 收藏
       getCollect(){

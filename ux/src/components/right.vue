@@ -21,7 +21,7 @@
             <a :href="require('@/assets/wechat.png')" target="_blank"><i class="fa fa-wechat"></i></a>
           </el-tooltip>
           <el-tooltip  class="contact-item" content="简历">
-            <a target="_blank"><i class="fa fa-file-code-o"></i></a>
+            <a target="_blank" :href="'/static/cyj.pdf'"><i class="fa fa-file-code-o"></i></a>
           </el-tooltip>
         </div>
       </el-card>
