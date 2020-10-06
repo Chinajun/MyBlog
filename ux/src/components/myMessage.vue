@@ -19,13 +19,6 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination
-          style="float: right"
-          :page-size="10"
-          layout="prev, pager, next"
-          @current-change="handleCurrentChange"
-          :total="this.page_count">
-        </el-pagination>
       </div>
     </el-card>
   </div>
@@ -36,8 +29,6 @@
     data(){
       return{
         myMsgList:[],
-        page:1,
-        page_count:0,
         notSee:true,
       }
     },
@@ -82,11 +73,6 @@
         }else{
           this.$router.push({path:"articleDetail",query:{Id:row.aid}})
         }
-      },
-      // 页码改变
-      handleCurrentChange(val){
-        this.page = val;
-        this.getArticle();
       },
     }
   }
