@@ -41,4 +41,5 @@ class Article extends Model
         })->limit(($data['page']-1)*10,10)->order("create_time desc")->select();
         return $result;
     }
+
 }

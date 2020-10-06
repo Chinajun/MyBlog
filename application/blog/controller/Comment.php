@@ -89,4 +89,51 @@ class Comment extends Controller
             ];
         }
     }
+
+    /**
+     * 获取消息提醒
+     * TODO 留言板消息提醒
+     */
+    public function getCommentRes(){
+        $data = request()->param();
+        $article = new \app\blog\model\Article();
+        $comment = new \app\blog\model\Comment();
+        $userArticle = $article->where('username',$data['username'])->select();
+        $userArticleId[] = "";
+        foreach ($userArticle as $key=>$val){
+            $userArticleId[$key] = $val['Id'];
+        }
+        $map1['uid'] = ['neq',$data['Id']];
+//        $map['aid'] = ['=',0];
+//        $map['pid'] = ['=',$data['Id']];
+//        $map['uid'] = ['neq',$data['Id']];
+        $count = $comment->where('isView',0)->where('aid','in',$userArticleId)
+            ->where($map1)->count();
+        $result = $comment->where('isView',0)->where('aid','in',$userArticleId)
+            ->where($map1)->select();
+//        $count = $comment->where('isView',0)->where('aid','in',$userArticleId)
+//            ->whereOr(function ($query) use ($map) {
+//            $query->where($map);
+//        })->count();
+//        $result = $comment->where('isView',0)->where('aid','in',$userArticleId)
+//            ->whereOr(function ($query) use ($map) {
+//                $query->where($map);
+//        })->select();
+        return[
+            "code"=>0,
+            "data"=>[
+                'count'=>$count,
+                'result'=>$result
+            ]
+        ];
+    }
+
+    /**
+     * 消息提醒已读
+     */
+    public function readComment(){
+        $data = request()->param();
+        $comment = new \app\blog\model\Comment();
+        $comment->where('Id',$data['Id'])->update(['isView'=>1]);
+    }
 }

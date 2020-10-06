@@ -24,9 +24,14 @@
 <!--              </div>-->
             </div>
             <el-submenu index="user" v-show="loginStatus" style="float: right;margin-right: 15%">
-              <template slot="title">个人中心</template>
+              <template slot="title">个人中心
+                <el-badge is-dot v-show="isCommentRes"/>
+              </template>
               <el-menu-item index="center">我的资料</el-menu-item>
               <el-menu-item index="myArticle">我的文章</el-menu-item>
+              <el-menu-item index="myMessage">消息提醒
+                <el-badge :value="commentRes" v-show="isCommentRes"/>
+              </el-menu-item>
               <el-menu-item @click="logout">退出登录</el-menu-item>
             </el-submenu>
           </el-menu>
@@ -42,7 +47,9 @@ export default {
   data() {
     return {
       activeIndex:'',
-      loginStatus:false
+      loginStatus:false,
+      isCommentRes:false,
+      commentRes:0,
     }
   },
   mounted:function(){
@@ -53,9 +60,24 @@ export default {
     isLogin(){
       if(localStorage.getItem('userInfo')) {
         this.loginStatus = true;
+        this.getCommentRes();
       } else {
         this.loginStatus = false;
       }
+    },
+    // 获取新消息
+    getCommentRes(){
+      axios.post("/public/index.php/blog/getCommentRes",{
+        Id:JSON.parse(localStorage.getItem('userInfo')).Id,
+        username:JSON.parse(localStorage.getItem('userInfo')).username
+      }).then((response) => {
+        if (response.data.data.count>0) {
+          this.isCommentRes = true;
+          this.commentRes = response.data.data.count;
+        }
+      }).catch(function (error) {
+        console.log(error);
+      });
     },
     handleSelect(key, keyPath){
       // console.log(key, keyPath);
