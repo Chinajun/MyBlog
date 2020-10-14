@@ -8,7 +8,7 @@
       网站已经运行<span v-html='longTime'>{{longTime}}</span><span class="timeJump">(●'◡'●)ﾉ♥</span>
     </p>
     <p>
-
+      <a target="_blank" href="http://beian.miit.gov.cn" style="color: #888888">皖ICP备2020017399号</a>
     </p>
   </div>
 </div>
