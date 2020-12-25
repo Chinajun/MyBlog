@@ -34,7 +34,7 @@
           {title:'现在的梦想',content:'混吃混喝'},
           {title:'喜欢的食物',content:'火锅，多肉葡萄，巧克力，甜甜圈，以及巧克力甜甜圈'},
           {title:'喜欢的天气',content:'雨天'},
-          {title:'音乐品味',content:'Future bass、trap（我的音乐品味就是坠吊的！）'},
+          {title:'音乐品味',content:'我永远喜欢future bass'},
           {title:'座右铭',content:'保持独立思考'},
         ]
       }

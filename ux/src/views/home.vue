@@ -74,7 +74,7 @@
       var timer = setTimeout(function() {
         that.begin();
         clearTimeout(timer);
-      }, 5000);
+      }, 1000);
     },
     watch:{                     //监听order值的变化，改变str的内容
       order(old,newV){
