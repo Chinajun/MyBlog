@@ -118,7 +118,7 @@ class Article extends Controller
         $result1 = $article->where('Id',$data['Id'])->delete();
         $result2 = $collect->where('aid',$data['Id'])->delete();
         $result3 = $comment->where('aid',$data['Id'])->delete();
-        if($result1&&$result2&&$result3){
+        if($result1){
             return [
                 'code' => 0,
                 'msg' => '删除成功'
