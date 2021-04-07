@@ -92,7 +92,7 @@ class Article extends Controller
             if($info){
                 $fileSaveName = $info->getSaveName();
 //                $fileSaveName = 'http://localhost/public/static/'.str_replace("\\",'/',$fileSaveName);
-                $fileSaveName = 'http://47.98.213.131/album/'.str_replace("\\",'/',$fileSaveName);
+                $fileSaveName = 'http://101.37.152.70/album/'.str_replace("\\",'/',$fileSaveName);
                 return [
                     'code' => 0,
                     'msg' => '图片上传成功',
