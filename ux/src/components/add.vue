@@ -6,7 +6,7 @@
         <span class="msg-title">写文章</span>
         <el-button style="float: right; padding: 3px 0" type="text"  @click="toLast">返回</el-button>
       </div>
-      <div class="msg-container">
+      <div class="msg-container addpic">
         <el-form :model="articleForm" :rules="articleRules" ref="articleForm">
           <div class="add-btn">
             <span>请选择文章标签：</span>
@@ -160,6 +160,9 @@
   }
   .msg-container{
     margin-top: 20px;
+  }
+  .addpic img{
+    width: 100%;
   }
   .msg-btn{
     width: 100%;

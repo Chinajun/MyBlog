@@ -107,6 +107,9 @@
     margin: 10px;
     line-height: 30px;
   }
+  .paper-content img{
+    width: 50%;
+  }
   .box-card{
     margin: 50px 100px;
   }

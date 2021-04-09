@@ -359,6 +359,10 @@
     margin: 20px;
     line-height: 30px;
   }
+  .detail-desc img{
+    width: 60%;
+    margin: 10px;
+  }
   .box-card{
     margin: 50px 100px;
   }
